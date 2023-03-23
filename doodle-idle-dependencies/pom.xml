@@ -22,6 +22,16 @@
       </dependency>
       <dependency>
         <groupId>org.doodle</groupId>
+        <artifactId>doodle-idle-cross-server-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-idle-starter-cross-server</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
         <artifactId>doodle-idle-game-server-core</artifactId>
         <version>${project.version}</version>
       </dependency>

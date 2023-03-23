@@ -6,33 +6,23 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.doodle</groupId>
-    <artifactId>doodle-idle-parent</artifactId>
+    <artifactId>doodle-idle-starters</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../doodle-idle-parent/pom.xml</relativePath>
+    <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-idle-autoconfigure</artifactId>
-  <properties>
-    <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
-  </properties>
+  <artifactId>doodle-idle-starter-cross-server</artifactId>
   <dependencies>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <scope>provided</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-autoconfigure</artifactId>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-idle-autoconfigure</artifactId>
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
       <artifactId>doodle-idle-cross-server-core</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.doodle</groupId>
-      <artifactId>doodle-idle-game-server-core</artifactId>
-      <optional>true</optional>
     </dependency>
   </dependencies>
 </project>
