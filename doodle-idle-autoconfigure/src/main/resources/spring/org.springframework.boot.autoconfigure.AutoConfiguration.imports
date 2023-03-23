@@ -1,2 +1,3 @@
 org.doodle.idle.autoconfigure.cross.server.CrossServerAutoConfiguration
 org.doodle.idle.autoconfigure.game.server.GameServerAutoConfiguration
+org.doodle.idle.autoconfigure.zone.server.ZoneServerAutoConfiguration

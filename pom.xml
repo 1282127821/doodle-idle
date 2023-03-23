@@ -24,5 +24,7 @@
     <module>doodle-idle-game-server-core</module>
     <module>doodle-idle-parent</module>
     <module>doodle-idle-starters</module>
+    <module>doodle-idle-zone-server</module>
+    <module>doodle-idle-zone-server-core</module>
   </modules>
 </project>

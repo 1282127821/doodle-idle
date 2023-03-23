@@ -10,11 +10,19 @@
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../doodle-idle-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-idle-starters</artifactId>
-  <packaging>pom</packaging>
-  <modules>
-    <module>doodle-idle-starter-cross-server</module>
-    <module>doodle-idle-starter-game-server</module>
-    <module>doodle-idle-starter-zone-server</module>
-  </modules>
+  <artifactId>doodle-idle-zone-server-core</artifactId>
+  <properties>
+    <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot</artifactId>
+    </dependency>
+  </dependencies>
 </project>
