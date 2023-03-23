@@ -8,19 +8,12 @@
     <groupId>org.doodle</groupId>
     <artifactId>doodle-idle-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>doodle-idle-parent/pom.xml</relativePath>
+    <relativePath>../doodle-idle-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-idle</artifactId>
+  <artifactId>doodle-idle-starters</artifactId>
   <packaging>pom</packaging>
-  <properties>
-    <maven.deploy.skip>true</maven.deploy.skip>
-  </properties>
   <modules>
-    <module>doodle-idle-autoconfigure</module>
-    <module>doodle-idle-dependencies</module>
-    <module>doodle-idle-game-server</module>
-    <module>doodle-idle-game-server-core</module>
-    <module>doodle-idle-parent</module>
-    <module>doodle-idle-starters</module>
+    <module>doodle-idle-starter-game-server</module>
   </modules>
+
 </project>

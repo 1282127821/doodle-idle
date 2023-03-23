@@ -14,7 +14,7 @@
   <packaging>pom</packaging>
   <properties>
     <spotless.license-header.file>
-      ${project.basedir}/../../src/checkstyle/license-header.txt
+      ${project.basedir}/../src/checkstyle/license-header.txt
     </spotless.license-header.file>
   </properties>
 </project>

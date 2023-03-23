@@ -8,19 +8,22 @@
     <groupId>org.doodle</groupId>
     <artifactId>doodle-idle-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>doodle-idle-parent/pom.xml</relativePath>
+    <relativePath>../doodle-idle-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-idle</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>doodle-idle-game-server</artifactId>
   <properties>
+    <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
-  <modules>
-    <module>doodle-idle-autoconfigure</module>
-    <module>doodle-idle-dependencies</module>
-    <module>doodle-idle-game-server</module>
-    <module>doodle-idle-game-server-core</module>
-    <module>doodle-idle-parent</module>
-    <module>doodle-idle-starters</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-idle-starter-game-server</artifactId>
+    </dependency>
+  </dependencies>
 </project>
