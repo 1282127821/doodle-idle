@@ -6,15 +6,14 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.doodle</groupId>
-    <artifactId>doodle-idle-dependencies</artifactId>
+    <artifactId>doodle-idle-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../doodle-idle-dependencies/pom.xml</relativePath>
+    <relativePath>../doodle-idle-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-idle-parent</artifactId>
+  <artifactId>doodle-idle-game</artifactId>
   <packaging>pom</packaging>
-  <properties>
-    <spotless.license-header.file>
-      ${project.basedir}/../../src/checkstyle/license-header.txt
-    </spotless.license-header.file>
-  </properties>
+  <modules>
+    <module>doodle-idle-game-server</module>
+    <module>doodle-idle-game-server-core</module>
+  </modules>
 </project>

@@ -6,11 +6,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.doodle</groupId>
-    <artifactId>doodle-idle-parent</artifactId>
+    <artifactId>doodle-idle-cross</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../doodle-idle-parent/pom.xml</relativePath>
+    <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-idle-game-server</artifactId>
+  <artifactId>doodle-idle-cross-server</artifactId>
   <properties>
     <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
     <maven.deploy.skip>true</maven.deploy.skip>
@@ -23,7 +23,7 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
-      <artifactId>doodle-idle-starter-game-server</artifactId>
+      <artifactId>doodle-idle-starter-cross-server</artifactId>
     </dependency>
   </dependencies>
 </project>

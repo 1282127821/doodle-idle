@@ -6,11 +6,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.doodle</groupId>
-    <artifactId>doodle-idle-parent</artifactId>
+    <artifactId>doodle-idle-game</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../doodle-idle-parent/pom.xml</relativePath>
+    <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-idle-zone-server-core</artifactId>
+  <artifactId>doodle-idle-game-server-core</artifactId>
   <properties>
     <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
   </properties>

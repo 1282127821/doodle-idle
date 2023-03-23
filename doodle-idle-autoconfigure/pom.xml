@@ -13,6 +13,9 @@
   <artifactId>doodle-idle-autoconfigure</artifactId>
   <properties>
     <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
+    <spotless.license-header.file>
+      ${project.basedir}/../src/checkstyle/license-header.txt
+    </spotless.license-header.file>
   </properties>
   <dependencies>
     <dependency>
