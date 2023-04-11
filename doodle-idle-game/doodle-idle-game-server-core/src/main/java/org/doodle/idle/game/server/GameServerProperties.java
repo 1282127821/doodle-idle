@@ -19,5 +19,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
-@ConfigurationProperties(prefix = "doodle.idle.game.server")
-public class GameServerProperties {}
+@ConfigurationProperties(prefix = GameServerProperties.PREFIX)
+public class GameServerProperties {
+  public static final String PREFIX = "doodle.idle.game.server";
+}

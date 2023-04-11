@@ -13,16 +13,16 @@
   <artifactId>doodle-idle-starter-zone-server</artifactId>
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.doodle</groupId>
       <artifactId>doodle-idle-autoconfigure</artifactId>
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
       <artifactId>doodle-idle-zone-server-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-boot-starter</artifactId>
     </dependency>
   </dependencies>
 </project>

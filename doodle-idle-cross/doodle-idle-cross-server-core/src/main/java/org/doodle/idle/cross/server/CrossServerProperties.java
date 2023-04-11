@@ -19,5 +19,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
-@ConfigurationProperties(prefix = "doodle.idle.cross.server")
-public class CrossServerProperties {}
+@ConfigurationProperties(prefix = CrossServerProperties.PREFIX)
+public class CrossServerProperties {
+  public static final String PREFIX = "doodle.idle.cross.server";
+}
