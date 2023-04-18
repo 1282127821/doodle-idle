@@ -43,6 +43,60 @@ jobs:
         run: ./mvnw install
         working-directory: org-doodle/doodle-boot
 
+      - name: Checkout doodle-config
+        uses: actions/checkout@v3
+        with:
+          repository: org-doodle/doodle-config
+          path: org-doodle/doodle-config
+      - name: Install doodle-config
+        run: ./mvnw install
+        working-directory: org-doodle/doodle-config
+
+      - name: Checkout doodle-broker
+        uses: actions/checkout@v3
+        with:
+          repository: org-doodle/doodle-broker
+          path: org-doodle/doodle-broker
+      - name: Install doodle-broker
+        run: ./mvnw install
+        working-directory: org-doodle/doodle-broker
+
+      - name: Checkout doodle-login
+        uses: actions/checkout@v3
+        with:
+          repository: org-doodle/doodle-login
+          path: org-doodle/doodle-login
+      - name: Install doodle-login
+        run: ./mvnw install
+        working-directory: org-doodle/doodle-login
+
+      - name: Checkout doodle-payment
+        uses: actions/checkout@v3
+        with:
+          repository: org-doodle/doodle-payment
+          path: org-doodle/doodle-payment
+      - name: Install doodle-payment
+        run: ./mvnw install
+        working-directory: org-doodle/doodle-payment
+
+      - name: Checkout doodle-console
+        uses: actions/checkout@v3
+        with:
+          repository: org-doodle/doodle-console
+          path: org-doodle/doodle-console
+      - name: Install doodle-console
+        run: ./mvnw install
+        working-directory: org-doodle/doodle-console
+
+      - name: Checkout doodle-excel
+        uses: actions/checkout@v3
+        with:
+          repository: org-doodle/doodle-excel
+          path: org-doodle/doodle-excel
+      - name: Install doodle-excel
+        run: ./mvnw install
+        working-directory: org-doodle/doodle-excel
+
       - name: Checkout coding style
         run: ./mvnw spotless:check
 

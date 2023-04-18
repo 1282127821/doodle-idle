@@ -24,5 +24,21 @@
       <groupId>org.doodle</groupId>
       <artifactId>doodle-boot-starter</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-config-starter-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-broker-starter-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-console-starter-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-excel-starter-client</artifactId>
+    </dependency>
   </dependencies>
 </project>

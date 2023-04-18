@@ -15,6 +15,12 @@
   <properties>
     <doodle-design.version>0.0.1-SNAPSHOT</doodle-design.version>
     <doodle-boot.version>0.0.1-SNAPSHOT</doodle-boot.version>
+    <doodle-config.version>0.0.1-SNAPSHOT</doodle-config.version>
+    <doodle-broker.version>0.0.1-SNAPSHOT</doodle-broker.version>
+    <doodle-login.version>0.0.1-SNAPSHOT</doodle-login.version>
+    <doodle-payment.version>0.0.1-SNAPSHOT</doodle-payment.version>
+    <doodle-console.version>0.0.1-SNAPSHOT</doodle-console.version>
+    <doodle-excel.version>0.0.1-SNAPSHOT</doodle-excel.version>
     <spotless.license-header.file>
       ${project.basedir}/../../src/checkstyle/license-header.txt
     </spotless.license-header.file>
@@ -32,6 +38,48 @@
         <groupId>org.doodle</groupId>
         <artifactId>doodle-boot-dependencies</artifactId>
         <version>${doodle-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-config-dependencies</artifactId>
+        <version>${doodle-config.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-broker-dependencies</artifactId>
+        <version>${doodle-broker.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-login-dependencies</artifactId>
+        <version>${doodle-login.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-payment-dependencies</artifactId>
+        <version>${doodle-payment.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-console-dependencies</artifactId>
+        <version>${doodle-console.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-excel-dependencies</artifactId>
+        <version>${doodle-excel.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
