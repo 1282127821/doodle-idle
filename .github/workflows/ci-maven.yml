@@ -43,15 +43,6 @@ jobs:
         run: ./mvnw install
         working-directory: org-doodle/doodle-boot
 
-      - name: Checkout doodle-config
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-config
-          path: org-doodle/doodle-config
-      - name: Install doodle-config
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-config
-
       - name: Checkout doodle-broker
         uses: actions/checkout@v3
         with:
@@ -60,6 +51,15 @@ jobs:
       - name: Install doodle-broker
         run: ./mvnw install
         working-directory: org-doodle/doodle-broker
+
+      - name: Checkout doodle-config
+        uses: actions/checkout@v3
+        with:
+          repository: org-doodle/doodle-config
+          path: org-doodle/doodle-config
+      - name: Install doodle-config
+        run: ./mvnw install
+        working-directory: org-doodle/doodle-config
 
       - name: Checkout doodle-login
         uses: actions/checkout@v3
