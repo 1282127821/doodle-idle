@@ -15,12 +15,24 @@
  */
 package org.doodle.idle.autoconfigure.zone.server;
 
+import org.doodle.admin.autoconfigure.client.AdminClientAutoConfiguration;
+import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
+import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
+import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
+import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.zone.server.ZoneServerProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-@AutoConfiguration
+@AutoConfiguration(
+    after = {
+      BrokerClientAutoConfiguration.class,
+      ConfigClientAutoConfiguration.class,
+      ConsoleClientAutoConfiguration.class,
+      AdminClientAutoConfiguration.class,
+      ExcelClientAutoConfiguration.class
+    })
 @ConditionalOnClass(ZoneServerProperties.class)
 @EnableConfigurationProperties(ZoneServerProperties.class)
 public class ZoneServerAutoConfiguration {}
