@@ -38,6 +38,10 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
+      <artifactId>doodle-admin-starter-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
       <artifactId>doodle-excel-starter-client</artifactId>
     </dependency>
   </dependencies>

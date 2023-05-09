@@ -88,6 +88,15 @@ jobs:
         run: ./mvnw install
         working-directory: org-doodle/doodle-console
 
+      - name: Checkout doodle-admin
+        uses: actions/checkout@v3
+        with:
+          repository: org-doodle/doodle-admin
+          path: org-doodle/doodle-admin
+      - name: Install doodle-admin
+        run: ./mvnw install
+        working-directory: org-doodle/doodle-admin
+
       - name: Checkout doodle-excel
         uses: actions/checkout@v3
         with:
