@@ -15,6 +15,5 @@
   <modules>
     <module>doodle-idle-starter-cross-server</module>
     <module>doodle-idle-starter-game-server</module>
-    <module>doodle-idle-starter-zone-server</module>
   </modules>
 </project>

@@ -65,10 +65,5 @@
       <artifactId>doodle-idle-game-server-core</artifactId>
       <optional>true</optional>
     </dependency>
-    <dependency>
-      <groupId>org.doodle</groupId>
-      <artifactId>doodle-idle-zone-server-core</artifactId>
-      <optional>true</optional>
-    </dependency>
   </dependencies>
 </project>

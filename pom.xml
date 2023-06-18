@@ -22,6 +22,5 @@
     <module>doodle-idle-game</module>
     <module>doodle-idle-parent</module>
     <module>doodle-idle-starters</module>
-    <module>doodle-idle-zone</module>
   </modules>
 </project>
