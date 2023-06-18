@@ -106,6 +106,24 @@ jobs:
         run: ./mvnw install
         working-directory: org-doodle/doodle-excel
 
+      - name: Checkout doodle-chat
+        uses: actions/checkout@v3
+        with:
+          repository: org-doodle/doodle-chat
+          path: org-doodle/doodle-chat
+      - name: Install doodle-chat
+        run: ./mvnw install
+        working-directory: org-doodle/doodle-chat
+
+      - name: Checkout doodle-auction
+        uses: actions/checkout@v3
+        with:
+          repository: org-doodle/doodle-auction
+          path: org-doodle/doodle-auction
+      - name: Install doodle-auction
+        run: ./mvnw install
+        working-directory: org-doodle/doodle-auction
+
       - name: Checkout coding style
         run: ./mvnw spotless:check
 

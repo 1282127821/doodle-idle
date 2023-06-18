@@ -22,6 +22,8 @@
     <doodle-console.version>0.0.1-SNAPSHOT</doodle-console.version>
     <doodle-admin.version>0.0.1-SNAPSHOT</doodle-admin.version>
     <doodle-excel.version>0.0.1-SNAPSHOT</doodle-excel.version>
+    <doodle-chat.version>0.0.1-SNAPSHOT</doodle-chat.version>
+    <doodle-auction.version>0.0.1-SNAPSHOT</doodle-auction.version>
     <spotless.license-header.file>
       ${project.basedir}/../../src/checkstyle/license-header.txt
     </spotless.license-header.file>
@@ -88,6 +90,20 @@
         <groupId>org.doodle</groupId>
         <artifactId>doodle-excel-dependencies</artifactId>
         <version>${doodle-excel.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-chat-dependencies</artifactId>
+        <version>${doodle-chat.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-auction-dependencies</artifactId>
+        <version>${doodle-auction.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
