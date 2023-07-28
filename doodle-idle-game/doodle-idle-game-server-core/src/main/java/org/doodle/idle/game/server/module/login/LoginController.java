@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.cross.server;
+package org.doodle.idle.game.server.module.login;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.doodle.design.messaging.PacketMapping;
+import org.doodle.idle.game.server.module.ModuleId;
 
-@Data
-@FieldDefaults(level = AccessLevel.PROTECTED)
-@ConfigurationProperties(prefix = CrossServerProperties.PREFIX)
-public class CrossServerProperties {
-  public static final String PREFIX = "doodle.idle.cross.server";
-}
+/**
+ * 登录模块消息处理
+ *
+ * @author tingyanshen
+ */
+@PacketMapping(ModuleId.LOGIN)
+public class LoginController {}

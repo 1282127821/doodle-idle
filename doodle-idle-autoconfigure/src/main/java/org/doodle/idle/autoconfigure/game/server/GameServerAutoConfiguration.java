@@ -21,13 +21,19 @@ import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
 import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
+import org.doodle.idle.autoconfigure.game.server.module.*;
+import org.doodle.idle.game.server.DelegatingModule;
 import org.doodle.idle.game.server.GameServerProperties;
 import org.doodle.login.autoconfigure.client.LoginClientAutoConfiguration;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 @AutoConfiguration(
     after = {
@@ -43,4 +49,18 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @ConditionalOnClass(GameServerProperties.class)
 @ConditionalOnBean(BrokerClientRSocketRequester.class)
 @EnableConfigurationProperties(GameServerProperties.class)
-public class GameServerAutoConfiguration {}
+@Import({
+  BagModuleAutoConfiguration.class,
+  LoginModuleAutoConfiguration.class,
+  MailModuleAutoConfiguration.class,
+  PaymentModuleAutoConfiguration.class,
+  TaskModuleAutoConfiguration.class
+})
+public class GameServerAutoConfiguration {
+
+  @Bean
+  @ConditionalOnMissingBean
+  public GameServerBootstrap gameServerBootstrap(ObjectProvider<DelegatingModule> provider) {
+    return new GameServerBootstrap(provider.stream().toList());
+  }
+}

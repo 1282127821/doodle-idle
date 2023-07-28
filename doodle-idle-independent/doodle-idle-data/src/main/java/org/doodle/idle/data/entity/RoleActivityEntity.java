@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.cross.server;
+package org.doodle.idle.data.entity;
 
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.experimental.SuperBuilder;
 
+/**
+ * 玩家角色活动数据
+ *
+ * @author tingyanshen
+ */
+@SuperBuilder
 @Data
 @FieldDefaults(level = AccessLevel.PROTECTED)
-@ConfigurationProperties(prefix = CrossServerProperties.PREFIX)
-public class CrossServerProperties {
-  public static final String PREFIX = "doodle.idle.cross.server";
-}
+public class RoleActivityEntity {}

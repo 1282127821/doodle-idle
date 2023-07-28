@@ -15,10 +15,13 @@
  */
 package org.doodle.idle.game.server;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
+@FieldDefaults(level = AccessLevel.PROTECTED)
 @ConfigurationProperties(prefix = GameServerProperties.PREFIX)
 public class GameServerProperties {
   public static final String PREFIX = "doodle.idle.game.server";

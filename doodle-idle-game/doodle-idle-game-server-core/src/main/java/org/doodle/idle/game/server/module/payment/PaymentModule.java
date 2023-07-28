@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.cross.server;
+package org.doodle.idle.game.server.module.payment;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.doodle.idle.game.server.StatelessModule;
 
-@Data
-@FieldDefaults(level = AccessLevel.PROTECTED)
-@ConfigurationProperties(prefix = CrossServerProperties.PREFIX)
-public class CrossServerProperties {
-  public static final String PREFIX = "doodle.idle.cross.server";
+/**
+ * 支付模块
+ *
+ * @author tingyanshen
+ */
+public class PaymentModule extends StatelessModule {
+  @Override
+  public void onRefresh() {}
 }

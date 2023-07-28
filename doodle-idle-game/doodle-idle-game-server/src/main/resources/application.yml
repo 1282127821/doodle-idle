@@ -1,0 +1,13 @@
+doodle:
+  broker:
+    client:
+      enabled: true
+      auto-connected: true
+
+  login:
+    client:
+      enabled: true
+
+  payment:
+    client:
+      enabled: true
