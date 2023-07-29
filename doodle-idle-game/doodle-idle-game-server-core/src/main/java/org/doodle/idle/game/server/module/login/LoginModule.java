@@ -15,7 +15,7 @@
  */
 package org.doodle.idle.game.server.module.login;
 
-import org.doodle.idle.game.server.StatelessModule;
+import org.doodle.idle.framework.module.StatelessModule;
 
 /**
  * 登录模块

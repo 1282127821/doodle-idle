@@ -15,5 +15,6 @@
   <modules>
     <module>doodle-idle-data</module>
     <module>doodle-idle-fight</module>
+    <module>doodle-idle-framework</module>
   </modules>
 </project>

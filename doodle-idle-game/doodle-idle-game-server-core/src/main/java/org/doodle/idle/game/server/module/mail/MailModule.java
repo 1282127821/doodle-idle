@@ -16,7 +16,7 @@
 package org.doodle.idle.game.server.module.mail;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.game.server.StatefulModule;
+import org.doodle.idle.framework.module.StatefulModule;
 
 /**
  * 邮件模块

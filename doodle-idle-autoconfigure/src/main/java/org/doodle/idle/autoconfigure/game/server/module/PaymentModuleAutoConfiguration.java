@@ -15,7 +15,7 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
-import org.doodle.idle.game.server.DelegatingModule;
+import org.doodle.idle.framework.module.DelegatingModule;
 import org.doodle.idle.game.server.module.payment.PaymentModule;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
 import org.doodle.payment.client.PaymentClientDeliverHandler;

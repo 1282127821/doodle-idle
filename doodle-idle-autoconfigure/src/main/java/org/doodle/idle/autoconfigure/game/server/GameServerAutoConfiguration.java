@@ -22,7 +22,7 @@ import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
 import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.autoconfigure.game.server.module.*;
-import org.doodle.idle.game.server.DelegatingModule;
+import org.doodle.idle.framework.module.DelegatingModule;
 import org.doodle.idle.game.server.GameServerProperties;
 import org.doodle.login.autoconfigure.client.LoginClientAutoConfiguration;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;

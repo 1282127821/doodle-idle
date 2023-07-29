@@ -19,7 +19,7 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.doodle.idle.game.server.DelegatingModule;
+import org.doodle.idle.framework.module.DelegatingModule;
 import org.springframework.context.SmartLifecycle;
 
 /**

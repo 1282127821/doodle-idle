@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server;
+package org.doodle.idle.framework.module;
 
 import java.util.Objects;
 import lombok.AccessLevel;

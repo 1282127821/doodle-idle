@@ -15,7 +15,7 @@
  */
 package org.doodle.idle.game.server.module.task;
 
-import org.doodle.idle.game.server.StatelessModule;
+import org.doodle.idle.framework.module.StatelessModule;
 
 /**
  * 任务模块
