@@ -15,13 +15,14 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.idle.autoconfigure.game.server.GameServerAutoConfiguration;
 import org.doodle.idle.game.server.module.bag.BagController;
 import org.doodle.idle.game.server.module.bag.BagModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
-@AutoConfiguration
+@AutoConfiguration(before = GameServerAutoConfiguration.class)
 public class BagModuleConfiguration {
 
   @Bean

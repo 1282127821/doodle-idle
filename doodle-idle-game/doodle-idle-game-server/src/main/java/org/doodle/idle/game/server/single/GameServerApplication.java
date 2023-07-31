@@ -15,17 +15,42 @@
  */
 package org.doodle.idle.game.server.single;
 
+import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.module.ModuleOperationMessageHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.messaging.support.MessageHeaderAccessor;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.SimpleRouteMatcher;
 
 @Slf4j
 @SpringBootApplication
-public class GameServerApplication {
+public class GameServerApplication implements CommandLineRunner {
+
+  @Autowired ModuleOperationMessageHandler messageHandler;
+
   public static void main(String[] args) {
     Thread.setDefaultUncaughtExceptionHandler(
         (t, e) -> log.error("线程({})发生未捕获异常: {}", t.getName(), e.getMessage(), e));
 
     SpringApplication.run(GameServerApplication.class, args);
+  }
+
+  @Override
+  public void run(String... args) throws Exception {
+    MessageHeaderAccessor header = new MessageHeaderAccessor();
+    header.setHeader(
+        DestinationPatternsMessageCondition.LOOKUP_DESTINATION_HEADER,
+        new SimpleRouteMatcher(new AntPathMatcher())
+            .parseRoute("/org.doodle.idle.game.server.module.bag.BagModule/START"));
+    Message<Byte[]> message =
+        MessageBuilder.createMessage(new Byte[] {0}, header.getMessageHeaders());
+    messageHandler.handleMessage(message).block(Duration.ofMillis(1));
   }
 }

@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.bag;
+package org.doodle.idle.framework.operation.handler;
 
-import org.doodle.idle.framework.module.Module;
-import org.doodle.idle.framework.operation.annotation.OnStart;
+import org.doodle.idle.framework.context.Context;
 
-/**
- * 背包模块
- *
- * @author tingyanshen
- */
-@Module
-public class BagModule {
+public interface ContextOperationHandler<C extends Context> {
 
-  @OnStart
-  public void onStart() throws InterruptedException {}
+  void onStart(C context);
+
+  void onStop(C context);
+
+  void onSave(C context);
+
+  void onDayElapse(C context);
+
+  void onMonthElapse(C context);
+
+  void onYearElapse(C context);
 }
