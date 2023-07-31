@@ -15,15 +15,9 @@
  */
 package org.doodle.idle.game.server.module.login;
 
-import org.doodle.idle.framework.module.StatelessModule;
-
 /**
  * 登录模块
  *
  * @author tingyanshen
  */
-public class LoginModule extends StatelessModule {
-
-  @Override
-  public void onRefresh() {}
-}
+public class LoginModule {}

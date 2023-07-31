@@ -15,23 +15,36 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
-import org.doodle.idle.framework.module.DelegatingModule;
-import org.doodle.idle.game.server.module.mail.MailModule;
+import org.doodle.idle.game.server.module.payment.PaymentController;
+import org.doodle.idle.game.server.module.payment.PaymentModule;
+import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
+import org.doodle.payment.client.PaymentClientDeliverHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
-@AutoConfiguration
-public class MailModuleAutoConfiguration {
+@AutoConfiguration(after = PaymentClientAutoConfiguration.class)
+public class PaymentModuleConfiguration {
 
+  /**
+   * 为支付组件客户端提供 rsocket 支付回调
+   *
+   * @return 支付组件客户端订单兑现处理器
+   */
   @Bean
-  @ConditionalOnMissingBean
-  public MailModule mailModule() {
-    return new MailModule();
+  public PaymentClientDeliverHandler paymentClientDeliverHandler() {
+    return deliverRequest -> null;
   }
 
   @Bean
-  public DelegatingModule mailDelegatingModule(MailModule mail) {
-    return DelegatingModule.stateful(mail);
+  @ConditionalOnMissingBean
+  public PaymentController paymentController() {
+    return new PaymentController();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public PaymentModule paymentModule() {
+    return new PaymentModule();
   }
 }

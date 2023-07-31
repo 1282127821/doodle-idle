@@ -15,23 +15,24 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
-import org.doodle.idle.framework.module.DelegatingModule;
-import org.doodle.idle.game.server.module.task.TaskModule;
+import org.doodle.idle.game.server.module.mail.MailController;
+import org.doodle.idle.game.server.module.mail.MailModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
-public class TaskModuleAutoConfiguration {
+public class MailModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public TaskModule taskModule() {
-    return new TaskModule();
+  public MailController mailController() {
+    return new MailController();
   }
 
   @Bean
-  public DelegatingModule taskDelegatingModule(TaskModule task) {
-    return DelegatingModule.stateless(task);
+  @ConditionalOnMissingBean
+  public MailModule mailModule() {
+    return new MailModule();
   }
 }

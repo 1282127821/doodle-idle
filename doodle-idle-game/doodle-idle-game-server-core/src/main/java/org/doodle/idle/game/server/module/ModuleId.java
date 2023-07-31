@@ -24,11 +24,15 @@ public interface ModuleId {
 
   short LOGIN = 1;
 
-  short BAG = 2;
+  short ROLE = 2;
 
-  short MAIL = 3;
+  short FIGHT = 3;
 
-  short TASK = 4;
+  short BAG = 4;
 
-  short PAYMENT = 5;
+  short MAIL = 5;
+
+  short TASK = 6;
+
+  short PAYMENT = 7;
 }

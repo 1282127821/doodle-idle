@@ -15,15 +15,9 @@
  */
 package org.doodle.idle.game.server.module.task;
 
-import org.doodle.idle.framework.module.StatelessModule;
-
 /**
  * 任务模块
  *
  * @author tingyanshen
  */
-public class TaskModule extends StatelessModule {
-
-  @Override
-  public void onRefresh() {}
-}
+public class TaskModule {}

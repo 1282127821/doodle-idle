@@ -16,7 +16,6 @@
 package org.doodle.idle.game.server.module.mail;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.StatefulModule;
 
 /**
  * 邮件模块
@@ -24,14 +23,4 @@ import org.doodle.idle.framework.module.StatefulModule;
  * @author tingyanshen
  */
 @Slf4j
-public class MailModule extends StatefulModule {
-
-  @Override
-  public void afterPropertiesSet() throws Exception {}
-
-  @Override
-  public void onRefresh() {}
-
-  @Override
-  public void onShutdown() {}
-}
+public class MailModule {}

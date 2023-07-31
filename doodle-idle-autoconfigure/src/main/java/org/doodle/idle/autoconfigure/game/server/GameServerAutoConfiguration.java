@@ -22,17 +22,13 @@ import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
 import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.autoconfigure.game.server.module.*;
-import org.doodle.idle.framework.module.DelegatingModule;
 import org.doodle.idle.game.server.GameServerProperties;
 import org.doodle.login.autoconfigure.client.LoginClientAutoConfiguration;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 @AutoConfiguration(
@@ -50,17 +46,12 @@ import org.springframework.context.annotation.Import;
 @ConditionalOnBean(BrokerClientRSocketRequester.class)
 @EnableConfigurationProperties(GameServerProperties.class)
 @Import({
-  BagModuleAutoConfiguration.class,
-  LoginModuleAutoConfiguration.class,
-  MailModuleAutoConfiguration.class,
-  PaymentModuleAutoConfiguration.class,
-  TaskModuleAutoConfiguration.class
+  BagModuleConfiguration.class,
+  FightModuleConfiguration.class,
+  LoginModuleConfiguration.class,
+  MailModuleConfiguration.class,
+  PaymentModuleConfiguration.class,
+  RoleModuleConfiguration.class,
+  TaskModuleConfiguration.class
 })
-public class GameServerAutoConfiguration {
-
-  @Bean
-  @ConditionalOnMissingBean
-  public GameServerBootstrap gameServerBootstrap(ObjectProvider<DelegatingModule> provider) {
-    return new GameServerBootstrap(provider.stream().toList());
-  }
-}
+public class GameServerAutoConfiguration {}

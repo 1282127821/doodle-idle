@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module;
-
-import org.springframework.beans.factory.InitializingBean;
+package org.doodle.idle.game.server.module.role;
 
 /**
- * 有状态服务模块
+ * 玩家模块
  *
  * @author tingyanshen
  */
-public abstract class StatefulModule implements InitializingBean, ModuleRefresh, ModuleShutdown {}
+public class RoleModule {}

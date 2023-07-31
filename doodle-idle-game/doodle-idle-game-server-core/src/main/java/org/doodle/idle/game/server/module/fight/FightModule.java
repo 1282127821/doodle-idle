@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.bag;
+package org.doodle.idle.game.server.module.fight;
 
 /**
- * 背包模块
+ * 战斗模块
  *
  * @author tingyanshen
  */
-public class BagModule {}
+public class FightModule {}

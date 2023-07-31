@@ -13,9 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module;
+package org.doodle.idle.game.server.module.fight;
 
-@FunctionalInterface
-public interface ModuleRefresh {
-  void onRefresh();
-}
+import org.doodle.design.messaging.PacketMapping;
+import org.doodle.idle.game.server.module.ModuleId;
+
+/**
+ * 玩家战斗模块消息处理
+ *
+ * @author tingyanshen
+ */
+@PacketMapping(ModuleId.FIGHT)
+public class FightController {}

@@ -15,23 +15,24 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
-import org.doodle.idle.framework.module.DelegatingModule;
-import org.doodle.idle.game.server.module.task.TaskModule;
+import org.doodle.idle.game.server.module.role.RoleController;
+import org.doodle.idle.game.server.module.role.RoleModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
-public class LoginModuleAutoConfiguration {
+public class RoleModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public TaskModule taskModule() {
-    return new TaskModule();
+  public RoleController roleController() {
+    return new RoleController();
   }
 
   @Bean
-  public DelegatingModule loginDelegatingModule(TaskModule task) {
-    return DelegatingModule.stateless(task);
+  @ConditionalOnMissingBean
+  public RoleModule roleModule() {
+    return new RoleModule();
   }
 }

@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module;
+package org.doodle.idle.game.server.module.fight;
 
-@FunctionalInterface
-public interface ModuleShutdown {
-
-  void onShutdown();
-}
+/**
+ * 战斗消息ID
+ *
+ * @author tingyanshen
+ */
+public interface FightPacket {}

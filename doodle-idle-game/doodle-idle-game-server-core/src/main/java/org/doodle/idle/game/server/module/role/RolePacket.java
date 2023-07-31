@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module;
+package org.doodle.idle.game.server.module.role;
 
 /**
- * 无状态服务模块
+ * 玩家角色消息ID
  *
  * @author tingyanshen
  */
-public abstract class StatelessModule implements ModuleRefresh {}
+public interface RolePacket {}

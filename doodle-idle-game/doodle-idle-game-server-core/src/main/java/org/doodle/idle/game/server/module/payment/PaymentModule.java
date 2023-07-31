@@ -15,14 +15,9 @@
  */
 package org.doodle.idle.game.server.module.payment;
 
-import org.doodle.idle.framework.module.StatelessModule;
-
 /**
  * 支付模块
  *
  * @author tingyanshen
  */
-public class PaymentModule extends StatelessModule {
-  @Override
-  public void onRefresh() {}
-}
+public class PaymentModule {}
