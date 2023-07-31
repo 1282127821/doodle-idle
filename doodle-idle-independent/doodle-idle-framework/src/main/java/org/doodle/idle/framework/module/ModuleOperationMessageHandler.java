@@ -182,7 +182,7 @@ public class ModuleOperationMessageHandler
     OnMonthElapse onMonthElapse =
         AnnotatedElementUtils.findMergedAnnotation(element, OnMonthElapse.class);
     if (Objects.nonNull(onMonthElapse)) {
-      getCondition(element, OperationType.MONTH_ELAPSE);
+      return getCondition(element, OperationType.MONTH_ELAPSE);
     }
 
     OnYearElapse onYearElapse =
