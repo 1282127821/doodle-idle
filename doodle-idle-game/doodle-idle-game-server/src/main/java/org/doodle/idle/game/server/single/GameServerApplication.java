@@ -39,5 +39,6 @@ public class GameServerApplication implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     messageHandler.handleMessage(OperationType.START);
+    messageHandler.handleMessage(OperationType.DAY_ELAPSE);
   }
 }

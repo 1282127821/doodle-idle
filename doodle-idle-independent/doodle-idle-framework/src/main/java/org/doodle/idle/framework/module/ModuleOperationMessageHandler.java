@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 import lombok.Getter;
 import org.doodle.idle.framework.operation.OperationType;
-import org.doodle.idle.framework.operation.annotation.OnStart;
+import org.doodle.idle.framework.operation.annotation.*;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -165,13 +165,42 @@ public class ModuleOperationMessageHandler
 
     OnStart onStart = AnnotatedElementUtils.findMergedAnnotation(element, OnStart.class);
     if (Objects.nonNull(onStart)) {
-      operationHandlerMap
-          .computeIfAbsent(OperationType.START, type -> new ArrayList<>())
-          .add(((Method) element).getDeclaringClass());
-      return new CompositeMessageCondition(
-          new DestinationPatternsMessageCondition(String.valueOf(OperationType.START)));
+      return getCondition(element, OperationType.START);
     }
+
+    OnStop onStop = AnnotatedElementUtils.findMergedAnnotation(element, OnStop.class);
+    if (Objects.nonNull(onStop)) {
+      return getCondition(element, OperationType.STOP);
+    }
+
+    OnDayElapse onDayElapse =
+        AnnotatedElementUtils.findMergedAnnotation(element, OnDayElapse.class);
+    if (Objects.nonNull(onDayElapse)) {
+      return getCondition(element, OperationType.DAY_ELAPSE);
+    }
+
+    OnMonthElapse onMonthElapse =
+        AnnotatedElementUtils.findMergedAnnotation(element, OnMonthElapse.class);
+    if (Objects.nonNull(onMonthElapse)) {
+      getCondition(element, OperationType.MONTH_ELAPSE);
+    }
+
+    OnYearElapse onYearElapse =
+        AnnotatedElementUtils.findMergedAnnotation(element, OnYearElapse.class);
+    if (Objects.nonNull(onYearElapse)) {
+      return getCondition(element, OperationType.YEAR_ELAPSE);
+    }
+
     return null;
+  }
+
+  protected CompositeMessageCondition getCondition(
+      AnnotatedElement element, OperationType operationType) {
+    operationHandlerMap
+        .computeIfAbsent(operationType, type -> new ArrayList<>())
+        .add(((Method) element).getDeclaringClass());
+    return new CompositeMessageCondition(
+        new DestinationPatternsMessageCondition(operationType.name()));
   }
 
   @Override

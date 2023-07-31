@@ -15,9 +15,27 @@
  */
 package org.doodle.idle.game.server.module.task;
 
+import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.module.Module;
+import org.doodle.idle.framework.operation.annotation.OnDayElapse;
+import org.doodle.idle.framework.operation.annotation.OnStart;
+
 /**
  * 任务模块
  *
  * @author tingyanshen
  */
-public class TaskModule {}
+@Slf4j
+@Module
+public class TaskModule {
+
+  @OnStart
+  public void onStart() {
+    log.info("onStart: task-module");
+  }
+
+  @OnDayElapse
+  public void onDaySpan() {
+    log.info("onDaySpan: task-module");
+  }
+}
