@@ -15,6 +15,7 @@
  */
 package org.doodle.idle.game.server.module.bag;
 
+import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.module.Module;
 import org.doodle.idle.framework.operation.annotation.OnStart;
 
@@ -23,9 +24,12 @@ import org.doodle.idle.framework.operation.annotation.OnStart;
  *
  * @author tingyanshen
  */
+@Slf4j
 @Module
 public class BagModule {
 
   @OnStart
-  public void onStart() throws InterruptedException {}
+  public void onStart() {
+    log.info("bag-module");
+  }
 }

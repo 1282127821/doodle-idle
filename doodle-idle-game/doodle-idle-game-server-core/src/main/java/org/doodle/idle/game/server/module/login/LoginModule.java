@@ -15,9 +15,21 @@
  */
 package org.doodle.idle.game.server.module.login;
 
+import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.module.Module;
+import org.doodle.idle.framework.operation.annotation.OnStart;
+
 /**
  * 登录模块
  *
  * @author tingyanshen
  */
-public class LoginModule {}
+@Slf4j
+@Module
+public class LoginModule {
+
+  @OnStart
+  public void onStart() {
+    log.info("login-module");
+  }
+}

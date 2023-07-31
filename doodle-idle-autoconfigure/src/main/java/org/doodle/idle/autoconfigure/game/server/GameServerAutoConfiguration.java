@@ -25,7 +25,6 @@ import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.autoconfigure.game.server.module.*;
 import org.doodle.idle.framework.module.ModuleOperationMessageHandler;
 import org.doodle.idle.game.server.GameServerProperties;
-import org.doodle.idle.game.server.module.bag.BagModule;
 import org.doodle.login.autoconfigure.client.LoginClientAutoConfiguration;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -35,9 +34,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.MethodParameter;
 import org.springframework.core.codec.StringDecoder;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.invocation.reactive.HandlerMethodReturnValueHandler;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.SimpleRouteMatcher;
+import reactor.core.publisher.Mono;
 
 @AutoConfiguration(
     after = {
@@ -66,10 +69,25 @@ public class GameServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public ModuleOperationMessageHandler moduleOperationMessageHandler(BagModule bagModule) {
+  public ModuleOperationMessageHandler moduleOperationMessageHandler() {
     ModuleOperationMessageHandler messageHandler = new ModuleOperationMessageHandler();
     messageHandler.setDecoders(Collections.singletonList(StringDecoder.allMimeTypes()));
     messageHandler.setRouteMatcher(new SimpleRouteMatcher(new AntPathMatcher()));
+    messageHandler
+        .getReturnValueHandlerConfigurer()
+        .addCustomHandler(
+            new HandlerMethodReturnValueHandler() {
+              @Override
+              public boolean supportsReturnType(MethodParameter returnType) {
+                return true;
+              }
+
+              @Override
+              public Mono<Void> handleReturnValue(
+                  Object returnValue, MethodParameter returnType, Message<?> message) {
+                return Mono.empty();
+              }
+            });
     return messageHandler;
   }
 }

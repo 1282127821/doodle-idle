@@ -15,8 +15,9 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
-import org.doodle.idle.game.server.module.task.TaskController;
-import org.doodle.idle.game.server.module.task.TaskModule;
+import org.doodle.idle.game.server.module.bag.BagModule;
+import org.doodle.idle.game.server.module.login.LoginController;
+import org.doodle.idle.game.server.module.login.LoginModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -26,13 +27,13 @@ public class LoginModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public TaskController taskController() {
-    return new TaskController();
+  public LoginController loginController() {
+    return new LoginController();
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public TaskModule taskModule() {
-    return new TaskModule();
+  public LoginModule loginModule(BagModule bagModule) {
+    return new LoginModule();
   }
 }

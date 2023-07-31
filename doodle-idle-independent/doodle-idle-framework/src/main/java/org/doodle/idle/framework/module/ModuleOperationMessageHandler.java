@@ -39,6 +39,8 @@ import org.springframework.messaging.handler.invocation.AbstractExceptionHandler
 import org.springframework.messaging.handler.invocation.reactive.AbstractMethodMessageHandler;
 import org.springframework.messaging.handler.invocation.reactive.HandlerMethodArgumentResolver;
 import org.springframework.messaging.handler.invocation.reactive.HandlerMethodReturnValueHandler;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.Assert;
 import org.springframework.util.RouteMatcher;
@@ -48,6 +50,8 @@ import reactor.core.publisher.Mono;
 
 public class ModuleOperationMessageHandler
     extends AbstractMethodMessageHandler<CompositeMessageCondition> {
+
+  private final Map<OperationType, List<Class<?>>> operationHandlerMap = new HashMap<>();
 
   private final List<Decoder<?>> decoders = new ArrayList<>();
 
@@ -161,6 +165,9 @@ public class ModuleOperationMessageHandler
 
     OnStart onStart = AnnotatedElementUtils.findMergedAnnotation(element, OnStart.class);
     if (Objects.nonNull(onStart)) {
+      operationHandlerMap
+          .computeIfAbsent(OperationType.START, type -> new ArrayList<>())
+          .add(((Method) element).getDeclaringClass());
       return new CompositeMessageCondition(
           new DestinationPatternsMessageCondition(String.valueOf(OperationType.START)));
     }
@@ -210,4 +217,18 @@ public class ModuleOperationMessageHandler
 
   @Override
   protected void handleNoMatch(RouteMatcher.Route destination, Message<?> message) {}
+
+  public void handleMessage(OperationType type) {
+    List<Class<?>> handlers = operationHandlerMap.get(type);
+    for (Class<?> handleType : handlers) {
+      MessageHeaderAccessor header = new MessageHeaderAccessor();
+      header.setHeader(
+          DestinationPatternsMessageCondition.LOOKUP_DESTINATION_HEADER,
+          new SimpleRouteMatcher(new AntPathMatcher())
+              .parseRoute("/" + handleType.getName() + "/" + type.name()));
+      Message<byte[]> message =
+          MessageBuilder.createMessage(new byte[] {0}, header.getMessageHeaders());
+      handleMessage(message).block();
+    }
+  }
 }
