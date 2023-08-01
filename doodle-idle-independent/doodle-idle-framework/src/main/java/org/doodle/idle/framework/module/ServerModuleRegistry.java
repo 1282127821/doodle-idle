@@ -13,30 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.bag;
+package org.doodle.idle.framework.module;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.Module;
-import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
-import org.doodle.idle.framework.module.annotation.OnStart;
+import java.util.LinkedList;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
-/**
- * 背包模块
- *
- * @author tingyanshen
- */
-@Slf4j
-@Module
-public class BagModule {
+@Getter
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class ServerModuleRegistry<M> {
+  List<M> modules = new LinkedList<>();
 
-  @OnStart
-  public void onStart() {
-    log.info("bag-module");
-    throw new RuntimeException("测试"); // 测试
-  }
-
-  @ModuleExceptionHandler(Exception.class)
-  public void handleException(Exception e) {
-    log.error("未知错误", e);
+  public <T extends M> T add(T t) {
+    modules.add(t);
+    return t;
   }
 }

@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.mail;
+package org.doodle.idle.framework.module.annotation;
 
-import lombok.extern.slf4j.Slf4j;
+import java.lang.annotation.*;
 
 /**
- * 邮件模块
+ * 跨天操作
  *
  * @author tingyanshen
  */
-@Slf4j
-public class MailModule {}
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface OnDayElapse {}

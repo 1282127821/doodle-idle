@@ -15,8 +15,11 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.idle.framework.module.RoleModuleRegistry;
+import org.doodle.idle.framework.module.ServerModuleRegistry;
 import org.doodle.idle.game.server.module.mail.MailController;
-import org.doodle.idle.game.server.module.mail.MailModule;
+import org.doodle.idle.game.server.module.mail.MailRoleModule;
+import org.doodle.idle.game.server.module.mail.MailServerModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +35,13 @@ public class MailModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public MailModule mailModule() {
-    return new MailModule();
+  public MailServerModule mailServerModule(ServerModuleRegistry<Object> registry) {
+    return registry.add(new MailServerModule());
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public MailRoleModule mailRoleModule(RoleModuleRegistry<Object> registry) {
+    return registry.add(new MailRoleModule());
   }
 }

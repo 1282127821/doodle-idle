@@ -15,9 +15,11 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
-import org.doodle.idle.game.server.module.bag.BagModule;
+import org.doodle.idle.framework.module.RoleModuleRegistry;
+import org.doodle.idle.framework.module.ServerModuleRegistry;
 import org.doodle.idle.game.server.module.login.LoginController;
-import org.doodle.idle.game.server.module.login.LoginModule;
+import org.doodle.idle.game.server.module.login.LoginRoleModule;
+import org.doodle.idle.game.server.module.login.LoginServerModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +35,13 @@ public class LoginModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public LoginModule loginModule(BagModule bagModule) {
-    return new LoginModule();
+  public LoginServerModule loginServerModule(ServerModuleRegistry<Object> registry) {
+    return registry.add(new LoginServerModule());
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public LoginRoleModule loginRoleModule(RoleModuleRegistry<Object> registry) {
+    return registry.add(new LoginRoleModule());
   }
 }

@@ -15,9 +15,13 @@
  */
 package org.doodle.idle.game.server.single;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.module.annotation.OnStart;
-import org.doodle.idle.framework.module.reactive.ModuleOperationHandler;
+import org.doodle.idle.framework.module.annotation.OnStop;
+import org.doodle.idle.framework.module.reactive.RoleModuleOperationHandler;
+import org.doodle.idle.framework.module.reactive.ServerModuleOperationHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,7 +31,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GameServerApplication implements CommandLineRunner {
 
-  @Autowired ModuleOperationHandler operationHandler;
+  @Autowired ServerModuleOperationHandler serverOperationHandler;
+  @Autowired RoleModuleOperationHandler roleOperationHandler;
 
   public static void main(String[] args) {
     Thread.setDefaultUncaughtExceptionHandler(
@@ -38,6 +43,19 @@ public class GameServerApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    operationHandler.handleAnnotation(OnStart.class).block();
+    Executors.newSingleThreadScheduledExecutor()
+        .scheduleWithFixedDelay(
+            () -> {
+              serverOperationHandler.handleAnnotation(OnStart.class).block();
+              serverOperationHandler.handleAnnotation(OnStop.class).block();
+
+              roleOperationHandler.handleAnnotation(OnStart.class).block();
+              roleOperationHandler.handleAnnotation(OnStop.class).block();
+            },
+            10,
+            10,
+            TimeUnit.MICROSECONDS);
+
+    Thread.currentThread().join();
   }
 }

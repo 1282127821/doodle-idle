@@ -18,11 +18,11 @@ package org.doodle.idle.framework.module.annotation;
 import java.lang.annotation.*;
 
 /**
- * 开始操作
+ * 保存数据操作
  *
  * @author tingyanshen
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface OnStart {}
+public @interface OnSave {}

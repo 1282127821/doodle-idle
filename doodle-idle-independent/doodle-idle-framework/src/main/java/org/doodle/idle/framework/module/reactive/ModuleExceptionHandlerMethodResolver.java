@@ -22,6 +22,11 @@ import org.springframework.core.MethodIntrospector;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.messaging.handler.invocation.AbstractExceptionHandlerMethodResolver;
 
+/**
+ * 模块异常处理
+ *
+ * @author tingyanshen
+ */
 public class ModuleExceptionHandlerMethodResolver extends AbstractExceptionHandlerMethodResolver {
 
   public ModuleExceptionHandlerMethodResolver(Class<?> handlerType) {

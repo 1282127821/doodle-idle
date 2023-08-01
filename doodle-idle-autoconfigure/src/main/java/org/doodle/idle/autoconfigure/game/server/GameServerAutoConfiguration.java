@@ -22,8 +22,10 @@ import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
 import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.autoconfigure.game.server.module.*;
-import org.doodle.idle.framework.module.ModuleRegistry;
-import org.doodle.idle.framework.module.reactive.ModuleOperationHandler;
+import org.doodle.idle.framework.module.RoleModuleRegistry;
+import org.doodle.idle.framework.module.ServerModuleRegistry;
+import org.doodle.idle.framework.module.reactive.RoleModuleOperationHandler;
+import org.doodle.idle.framework.module.reactive.ServerModuleOperationHandler;
 import org.doodle.idle.game.server.GameServerProperties;
 import org.doodle.login.autoconfigure.client.LoginClientAutoConfiguration;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
@@ -34,12 +36,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.MethodParameter;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.handler.invocation.reactive.HandlerMethodReturnValueHandler;
-import org.springframework.util.AntPathMatcher;
-import org.springframework.util.SimpleRouteMatcher;
-import reactor.core.publisher.Mono;
 
 @AutoConfiguration(
     after = {
@@ -68,30 +64,27 @@ public class GameServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public ModuleRegistry<Object> moduleRegistry() {
-    return new ModuleRegistry<>();
+  public ServerModuleRegistry<Object> serverModuleRegistry() {
+    return new ServerModuleRegistry<>();
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public ModuleOperationHandler moduleOperationHandler(ModuleRegistry<Object> registry) {
-    ModuleOperationHandler operationHandler = new ModuleOperationHandler(registry::getModules);
-    operationHandler.setRouteMatcher(new SimpleRouteMatcher(new AntPathMatcher()));
-    operationHandler
-        .getReturnValueHandlerConfigurer()
-        .addCustomHandler(
-            new HandlerMethodReturnValueHandler() {
-              @Override
-              public boolean supportsReturnType(MethodParameter returnType) {
-                return true;
-              }
+  public ServerModuleOperationHandler serverModuleOperationHandler(
+      ServerModuleRegistry<Object> registry) {
+    return new ServerModuleOperationHandler(registry::getModules);
+  }
 
-              @Override
-              public Mono<Void> handleReturnValue(
-                  Object returnValue, MethodParameter returnType, Message<?> message) {
-                return Mono.empty();
-              }
-            });
-    return operationHandler;
+  @Bean
+  @ConditionalOnMissingBean
+  public RoleModuleRegistry<Object> roleModuleRegistry() {
+    return new RoleModuleRegistry<>();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public RoleModuleOperationHandler roleModuleOperationHandler(
+      RoleModuleRegistry<Object> registry) {
+    return new RoleModuleOperationHandler(registry::getModules);
   }
 }

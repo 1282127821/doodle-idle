@@ -15,10 +15,12 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
-import org.doodle.idle.framework.module.ModuleRegistry;
+import org.doodle.idle.framework.module.RoleModuleRegistry;
+import org.doodle.idle.framework.module.ServerModuleRegistry;
 import org.doodle.idle.game.server.module.bag.BagController;
-import org.doodle.idle.game.server.module.bag.BagModule;
-import org.doodle.idle.game.server.module.fight.FightModule;
+import org.doodle.idle.game.server.module.bag.BagRoleModule;
+import org.doodle.idle.game.server.module.bag.BagServerModule;
+import org.doodle.idle.game.server.module.fight.FightServerModule;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,9 +36,14 @@ public class BagModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public BagModule bagModule(ModuleRegistry<Object> registry, FightModule fightModule) {
-    BagModule bagModule = new BagModule();
-    registry.add(bagModule);
-    return bagModule;
+  public BagServerModule bagServerModule(
+      ServerModuleRegistry<Object> registry, FightServerModule fightServerModule) {
+    return registry.add(new BagServerModule(fightServerModule));
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public BagRoleModule bagRoleModule(RoleModuleRegistry<Object> registry) {
+    return registry.add(new BagRoleModule());
   }
 }

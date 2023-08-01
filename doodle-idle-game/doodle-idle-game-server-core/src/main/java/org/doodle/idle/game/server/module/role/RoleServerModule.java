@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.fight;
+package org.doodle.idle.game.server.module.role;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.Module;
 import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.ServerModule;
 
 /**
- * 战斗模块
+ * 服务角色模块
  *
  * @author tingyanshen
  */
 @Slf4j
-@Module
-public class FightModule {
+@ServerModule
+public class RoleServerModule {
 
   @OnStart
   public void onStart() {
-    log.info("onStart: fight-module");
+    log.info("onStart: role-module");
   }
 }

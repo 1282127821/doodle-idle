@@ -20,25 +20,30 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 import org.doodle.design.messaging.operation.reactive.OrderedOperationMessageHandler;
-import org.doodle.idle.framework.module.annotation.Module;
 import org.doodle.idle.framework.module.annotation.OnStart;
 import org.doodle.idle.framework.module.annotation.OnStop;
+import org.doodle.idle.framework.module.annotation.ServerModule;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.messaging.handler.CompositeMessageCondition;
 import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
 import org.springframework.messaging.handler.invocation.AbstractExceptionHandlerMethodResolver;
 
-public class ModuleOperationHandler extends OrderedOperationMessageHandler {
+/**
+ * 服务模块操作处理器
+ *
+ * @author tingyanshen
+ */
+public class ServerModuleOperationHandler extends OrderedOperationMessageHandler {
 
-  public ModuleOperationHandler(Supplier<List<Object>> handlerSupplier) {
+  public ServerModuleOperationHandler(Supplier<List<Object>> handlerSupplier) {
     super(handlerSupplier);
-    setHandlerPredicate(type -> AnnotatedElementUtils.hasAnnotation(type, Module.class));
+    setHandlerPredicate(type -> AnnotatedElementUtils.hasAnnotation(type, ServerModule.class));
     setAnnotations(List.of(OnStart.class, OnStop.class));
   }
 
   @Override
   protected CompositeMessageCondition getOperationCondition(AnnotatedElement element) {
-    Module module = AnnotatedElementUtils.findMergedAnnotation(element, Module.class);
+    ServerModule module = AnnotatedElementUtils.findMergedAnnotation(element, ServerModule.class);
     if (Objects.nonNull(module)) {
       return new CompositeMessageCondition(
           new DestinationPatternsMessageCondition(((Class<?>) element).getName()));

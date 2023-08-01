@@ -13,11 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module.annotation;
+package org.doodle.idle.game.server.module.mail;
 
-import java.lang.annotation.*;
+import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.ServerModule;
 
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Module {}
+/**
+ * 服务邮件模块
+ *
+ * @author tingyanshen
+ */
+@Slf4j
+@ServerModule
+public class MailServerModule {
+
+  @OnStart
+  public void onStart() {
+    log.info("onStart: mail-module");
+  }
+}

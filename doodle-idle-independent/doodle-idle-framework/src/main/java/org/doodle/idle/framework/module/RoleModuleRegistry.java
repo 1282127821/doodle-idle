@@ -13,11 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.payment;
+package org.doodle.idle.framework.module;
 
-/**
- * 支付模块
- *
- * @author tingyanshen
- */
-public class PaymentModule {}
+import java.util.LinkedList;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
+
+@Getter
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class RoleModuleRegistry<M> {
+  List<M> modules = new LinkedList<>();
+
+  public <T extends M> T add(T t) {
+    modules.add(t);
+    return t;
+  }
+}

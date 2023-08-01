@@ -13,22 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.login;
+package org.doodle.idle.framework.module.annotation;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.Module;
+import java.lang.annotation.*;
 
 /**
- * 登录模块
+ * 服务模块注解
  *
  * @author tingyanshen
  */
-@Slf4j
-@Module
-public class LoginModule {
-
-  public void onStart() {
-    log.info("onStart: login-module");
-    throw new RuntimeException();
-  }
-}
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface ServerModule {}

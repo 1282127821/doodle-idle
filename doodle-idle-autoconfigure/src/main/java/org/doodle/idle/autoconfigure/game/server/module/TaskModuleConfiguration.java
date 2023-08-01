@@ -15,8 +15,11 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.idle.framework.module.RoleModuleRegistry;
+import org.doodle.idle.framework.module.ServerModuleRegistry;
 import org.doodle.idle.game.server.module.task.TaskController;
-import org.doodle.idle.game.server.module.task.TaskModule;
+import org.doodle.idle.game.server.module.task.TaskRoleModule;
+import org.doodle.idle.game.server.module.task.TaskServerModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +35,13 @@ public class TaskModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public TaskModule taskModule() {
-    return new TaskModule();
+  public TaskServerModule taskServerModule(ServerModuleRegistry<Object> registry) {
+    return registry.add(new TaskServerModule());
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public TaskRoleModule taskRoleModule(RoleModuleRegistry<Object> registry) {
+    return registry.add(new TaskRoleModule());
   }
 }

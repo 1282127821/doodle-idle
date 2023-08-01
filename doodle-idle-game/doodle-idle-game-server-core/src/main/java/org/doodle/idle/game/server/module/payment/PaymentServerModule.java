@@ -13,16 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module.annotation;
+package org.doodle.idle.game.server.module.payment;
 
-import java.lang.annotation.*;
+import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.ServerModule;
 
 /**
- * 开始操作
+ * 服务支付模块
  *
  * @author tingyanshen
  */
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface OnStart {}
+@Slf4j
+@ServerModule
+public class PaymentServerModule {
+
+  @OnStart
+  public void onStart() {
+    log.info("onStart: payment-module");
+  }
+}

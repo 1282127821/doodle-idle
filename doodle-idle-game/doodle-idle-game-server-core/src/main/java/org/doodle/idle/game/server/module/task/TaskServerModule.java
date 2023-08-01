@@ -16,19 +16,27 @@
 package org.doodle.idle.game.server.module.task;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.Module;
+import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
+import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.ServerModule;
 
 /**
- * 任务模块
+ * 服务任务模块
  *
  * @author tingyanshen
  */
 @Slf4j
-@Module
-public class TaskModule {
+@ServerModule
+public class TaskServerModule {
 
+  @OnStart
   public void onStart() {
     log.info("onStart: task-module");
-    throw new RuntimeException();
+    //    throw new RuntimeException();
+  }
+
+  @ModuleExceptionHandler(Exception.class)
+  public void handleException(Exception e) {
+    log.info("任务模块未知异常", e);
   }
 }

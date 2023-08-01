@@ -15,8 +15,11 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.idle.framework.module.RoleModuleRegistry;
+import org.doodle.idle.framework.module.ServerModuleRegistry;
 import org.doodle.idle.game.server.module.payment.PaymentController;
-import org.doodle.idle.game.server.module.payment.PaymentModule;
+import org.doodle.idle.game.server.module.payment.PaymentRoleModule;
+import org.doodle.idle.game.server.module.payment.PaymentServerModule;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
 import org.doodle.payment.client.PaymentClientDeliverHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -44,7 +47,13 @@ public class PaymentModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public PaymentModule paymentModule() {
-    return new PaymentModule();
+  public PaymentServerModule paymentServerModule(ServerModuleRegistry<Object> registry) {
+    return registry.add(new PaymentServerModule());
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public PaymentRoleModule paymentRoleModule(RoleModuleRegistry<Object> registry) {
+    return registry.add(new PaymentRoleModule());
   }
 }

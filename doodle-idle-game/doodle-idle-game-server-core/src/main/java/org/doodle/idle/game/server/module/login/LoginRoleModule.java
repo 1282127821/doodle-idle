@@ -13,16 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module.annotation;
+package org.doodle.idle.game.server.module.login;
 
-import java.lang.annotation.*;
+import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
+import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.RoleModule;
 
 /**
- * 开始操作
+ * 玩家登录模块
  *
  * @author tingyanshen
  */
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface OnStart {}
+@Slf4j
+@RoleModule
+public class LoginRoleModule {
+
+  @OnStart
+  public void onStart() {
+    log.info("onStart: login-module");
+    throw new RuntimeException();
+  }
+
+  @ModuleExceptionHandler(Exception.class)
+  public void handleException(Exception e) {
+    log.info("登录模块未知异常", e);
+  }
+}

@@ -17,6 +17,11 @@ package org.doodle.idle.framework.module.annotation;
 
 import java.lang.annotation.*;
 
+/**
+ * 关闭操作
+ *
+ * @author tingyanshen
+ */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
