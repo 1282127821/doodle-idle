@@ -16,7 +16,7 @@
 package org.doodle.idle.game.server.module.task;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.design.messaging.operation.OperationModule;
+import org.doodle.idle.framework.module.annotation.Module;
 
 /**
  * 任务模块
@@ -24,7 +24,7 @@ import org.doodle.design.messaging.operation.OperationModule;
  * @author tingyanshen
  */
 @Slf4j
-@OperationModule
+@Module
 public class TaskModule {
 
   public void onStart() {
