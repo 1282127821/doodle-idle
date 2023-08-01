@@ -15,7 +15,6 @@
  */
 package org.doodle.idle.autoconfigure.game.server;
 
-import java.util.Collections;
 import org.doodle.admin.autoconfigure.client.AdminClientAutoConfiguration;
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
@@ -24,6 +23,7 @@ import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.autoconfigure.game.server.module.*;
 import org.doodle.idle.framework.module.ModuleOperationHandler;
+import org.doodle.idle.framework.module.ModuleRegistry;
 import org.doodle.idle.game.server.GameServerProperties;
 import org.doodle.login.autoconfigure.client.LoginClientAutoConfiguration;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
@@ -35,7 +35,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.MethodParameter;
-import org.springframework.core.codec.StringDecoder;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.invocation.reactive.HandlerMethodReturnValueHandler;
 import org.springframework.util.AntPathMatcher;
@@ -69,11 +68,16 @@ public class GameServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public ModuleOperationHandler moduleOperationMessageHandler() {
-    ModuleOperationHandler messageHandler = new ModuleOperationHandler();
-    messageHandler.setDecoders(Collections.singletonList(StringDecoder.allMimeTypes()));
-    messageHandler.setRouteMatcher(new SimpleRouteMatcher(new AntPathMatcher()));
-    messageHandler
+  public ModuleRegistry<Object> moduleRegistry() {
+    return new ModuleRegistry<>();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public ModuleOperationHandler moduleOperationHandler(ModuleRegistry<Object> registry) {
+    ModuleOperationHandler operationHandler = new ModuleOperationHandler(registry::getModules);
+    operationHandler.setRouteMatcher(new SimpleRouteMatcher(new AntPathMatcher()));
+    operationHandler
         .getReturnValueHandlerConfigurer()
         .addCustomHandler(
             new HandlerMethodReturnValueHandler() {
@@ -88,6 +92,6 @@ public class GameServerAutoConfiguration {
                 return Mono.empty();
               }
             });
-    return messageHandler;
+    return operationHandler;
   }
 }

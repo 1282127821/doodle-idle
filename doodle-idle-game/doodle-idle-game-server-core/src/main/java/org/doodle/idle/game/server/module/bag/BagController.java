@@ -15,7 +15,7 @@
  */
 package org.doodle.idle.game.server.module.bag;
 
-import org.doodle.design.messaging.PacketMapping;
+import org.doodle.design.messaging.packet.PacketMapping;
 import org.doodle.idle.game.server.module.ModuleId;
 
 /**

@@ -13,21 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.operation.handler;
+package org.doodle.idle.framework.module.annotation;
 
-import org.doodle.idle.framework.context.Context;
+import java.lang.annotation.*;
 
-public interface ContextOperationHandler<C extends Context> {
-
-  void onStart(C context);
-
-  void onStop(C context);
-
-  void onSave(C context);
-
-  void onDayElapse(C context);
-
-  void onMonthElapse(C context);
-
-  void onYearElapse(C context);
-}
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface OnStart {}

@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.operation.handler;
+package org.doodle.idle.framework.module;
 
-public interface OperationHandler {
-  void onStart();
+import java.util.LinkedList;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
-  void onStop();
+@Getter
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class ModuleRegistry<M> {
+  List<M> modules = new LinkedList<>();
 
-  void onSave();
-
-  void onDayElapse();
-
-  void onMonthElapse();
-
-  void onYearElapse();
+  public void add(M m) {
+    modules.add(m);
+  }
 }

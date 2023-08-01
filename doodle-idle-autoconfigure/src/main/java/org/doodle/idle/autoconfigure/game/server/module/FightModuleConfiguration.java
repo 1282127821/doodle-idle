@@ -15,6 +15,7 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.idle.framework.module.ModuleRegistry;
 import org.doodle.idle.game.server.module.fight.FightController;
 import org.doodle.idle.game.server.module.fight.FightModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -32,7 +33,9 @@ public class FightModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public FightModule fightModule() {
-    return new FightModule();
+  public FightModule fightModule(ModuleRegistry<Object> registry) {
+    FightModule fightModule = new FightModule();
+    registry.add(fightModule);
+    return fightModule;
   }
 }

@@ -16,249 +16,31 @@
 package org.doodle.idle.framework.module;
 
 import java.lang.reflect.AnnotatedElement;
-import java.lang.reflect.Method;
-import java.util.*;
-import lombok.Getter;
-import org.doodle.idle.framework.module.reactive.ModuleExceptionHandlerMethodResolver;
-import org.doodle.idle.framework.operation.OperationType;
-import org.doodle.idle.framework.operation.annotation.*;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.KotlinDetector;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Supplier;
+import org.doodle.design.messaging.operation.reactive.OrderedOperationMessageHandler;
+import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.OnStop;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.core.codec.Decoder;
-import org.springframework.core.convert.ConversionService;
-import org.springframework.format.support.DefaultFormattingConversionService;
-import org.springframework.lang.Nullable;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.CompositeMessageCondition;
 import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
-import org.springframework.messaging.handler.HandlerMethod;
-import org.springframework.messaging.handler.annotation.reactive.*;
-import org.springframework.messaging.handler.invocation.AbstractExceptionHandlerMethodResolver;
-import org.springframework.messaging.handler.invocation.reactive.AbstractMethodMessageHandler;
-import org.springframework.messaging.handler.invocation.reactive.HandlerMethodArgumentResolver;
-import org.springframework.messaging.handler.invocation.reactive.HandlerMethodReturnValueHandler;
-import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.util.AntPathMatcher;
-import org.springframework.util.Assert;
-import org.springframework.util.RouteMatcher;
-import org.springframework.util.SimpleRouteMatcher;
-import org.springframework.validation.Validator;
-import reactor.core.publisher.Mono;
 
-public class ModuleOperationHandler
-    extends AbstractMethodMessageHandler<CompositeMessageCondition> {
+public class ModuleOperationHandler extends OrderedOperationMessageHandler {
 
-  private final Map<OperationType, List<Class<?>>> operationHandlerMap = new HashMap<>();
-
-  private final List<Decoder<?>> decoders = new ArrayList<>();
-
-  @Nullable private Validator validator;
-
-  @Nullable private RouteMatcher routeMatcher;
-
-  @Getter private ConversionService conversionService = new DefaultFormattingConversionService();
-
-  public ModuleOperationHandler() {
+  public ModuleOperationHandler(Supplier<List<Object>> handlerSupplier) {
+    super(handlerSupplier);
     setHandlerPredicate(type -> AnnotatedElementUtils.hasAnnotation(type, Module.class));
-  }
-
-  public void setDecoders(List<? extends Decoder<?>> decoders) {
-    this.decoders.clear();
-    this.decoders.addAll(decoders);
-  }
-
-  public List<? extends Decoder<?>> getDecoders() {
-    return this.decoders;
-  }
-
-  public void setValidator(@Nullable Validator validator) {
-    this.validator = validator;
-  }
-
-  @Nullable
-  public Validator getValidator() {
-    return this.validator;
-  }
-
-  public void setRouteMatcher(@Nullable RouteMatcher routeMatcher) {
-    this.routeMatcher = routeMatcher;
-  }
-
-  @Nullable
-  public RouteMatcher getRouteMatcher() {
-    return this.routeMatcher;
-  }
-
-  protected RouteMatcher obtainRouteMatcher() {
-    RouteMatcher routeMatcher = getRouteMatcher();
-    Assert.state(routeMatcher != null, "No RouteMatcher set");
-    return routeMatcher;
-  }
-
-  public void setConversionService(ConversionService conversionService) {
-    this.conversionService = conversionService;
+    setAnnotations(List.of(OnStart.class, OnStop.class));
   }
 
   @Override
-  public void afterPropertiesSet() {
-
-    if (this.routeMatcher == null) {
-      AntPathMatcher pathMatcher = new AntPathMatcher();
-      pathMatcher.setPathSeparator(".");
-      this.routeMatcher = new SimpleRouteMatcher(pathMatcher);
-    }
-
-    super.afterPropertiesSet();
-  }
-
-  @Override
-  protected List<? extends HandlerMethodArgumentResolver> initArgumentResolvers() {
-    List<HandlerMethodArgumentResolver> resolvers = new ArrayList<>();
-
-    ApplicationContext context = getApplicationContext();
-    ConfigurableBeanFactory beanFactory =
-        (context instanceof ConfigurableApplicationContext cac ? cac.getBeanFactory() : null);
-
-    resolvers.add(new HeaderMethodArgumentResolver(this.conversionService, beanFactory));
-    resolvers.add(new HeadersMethodArgumentResolver());
-
-    if (KotlinDetector.isKotlinPresent()) {
-      resolvers.add(new ContinuationHandlerMethodArgumentResolver());
-    }
-
-    resolvers.addAll(getArgumentResolverConfigurer().getCustomResolvers());
-
-    resolvers.add(
-        new PayloadMethodArgumentResolver(
-            getDecoders(), this.validator, getReactiveAdapterRegistry(), true));
-
-    return resolvers;
-  }
-
-  @Override
-  protected List<? extends HandlerMethodReturnValueHandler> initReturnValueHandlers() {
-    return new ArrayList<>(getReturnValueHandlerConfigurer().getCustomHandlers());
-  }
-
-  @Override
-  protected CompositeMessageCondition getMappingForMethod(Method method, Class<?> handlerType) {
-    CompositeMessageCondition methodCondition = getCondition(method);
-    if (methodCondition != null) {
-      CompositeMessageCondition typeCondition = getCondition(handlerType);
-      if (typeCondition != null) {
-        return typeCondition.combine(methodCondition);
-      }
-    }
-    return methodCondition;
-  }
-
-  @Nullable
-  protected CompositeMessageCondition getCondition(AnnotatedElement element) {
-    Module ann = AnnotatedElementUtils.findMergedAnnotation(element, Module.class);
-    if (ann != null) {
+  protected CompositeMessageCondition getOperationCondition(AnnotatedElement element) {
+    Module module = AnnotatedElementUtils.findMergedAnnotation(element, Module.class);
+    if (Objects.nonNull(module)) {
       return new CompositeMessageCondition(
           new DestinationPatternsMessageCondition(((Class<?>) element).getName()));
     }
-
-    OnStart onStart = AnnotatedElementUtils.findMergedAnnotation(element, OnStart.class);
-    if (Objects.nonNull(onStart)) {
-      return getCondition(element, OperationType.START);
-    }
-
-    OnStop onStop = AnnotatedElementUtils.findMergedAnnotation(element, OnStop.class);
-    if (Objects.nonNull(onStop)) {
-      return getCondition(element, OperationType.STOP);
-    }
-
-    OnDayElapse onDayElapse =
-        AnnotatedElementUtils.findMergedAnnotation(element, OnDayElapse.class);
-    if (Objects.nonNull(onDayElapse)) {
-      return getCondition(element, OperationType.DAY_ELAPSE);
-    }
-
-    OnMonthElapse onMonthElapse =
-        AnnotatedElementUtils.findMergedAnnotation(element, OnMonthElapse.class);
-    if (Objects.nonNull(onMonthElapse)) {
-      return getCondition(element, OperationType.MONTH_ELAPSE);
-    }
-
-    OnYearElapse onYearElapse =
-        AnnotatedElementUtils.findMergedAnnotation(element, OnYearElapse.class);
-    if (Objects.nonNull(onYearElapse)) {
-      return getCondition(element, OperationType.YEAR_ELAPSE);
-    }
-
     return null;
-  }
-
-  protected CompositeMessageCondition getCondition(
-      AnnotatedElement element, OperationType operationType) {
-    operationHandlerMap
-        .computeIfAbsent(operationType, type -> new ArrayList<>())
-        .add(((Method) element).getDeclaringClass());
-    return new CompositeMessageCondition(
-        new DestinationPatternsMessageCondition(operationType.name()));
-  }
-
-  @Override
-  protected Set<String> getDirectLookupMappings(CompositeMessageCondition mapping) {
-    Set<String> result = new LinkedHashSet<>();
-    for (String pattern :
-        mapping.getCondition(DestinationPatternsMessageCondition.class).getPatterns()) {
-      if (!obtainRouteMatcher().isPattern(pattern)) {
-        result.add(pattern);
-      }
-    }
-    return result;
-  }
-
-  @Override
-  protected RouteMatcher.Route getDestination(Message<?> message) {
-    return (RouteMatcher.Route)
-        message.getHeaders().get(DestinationPatternsMessageCondition.LOOKUP_DESTINATION_HEADER);
-  }
-
-  @Override
-  protected CompositeMessageCondition getMatchingMapping(
-      CompositeMessageCondition mapping, Message<?> message) {
-    return mapping.getMatchingCondition(message);
-  }
-
-  @Override
-  protected Comparator<CompositeMessageCondition> getMappingComparator(Message<?> message) {
-    return (info1, info2) -> info1.compareTo(info2, message);
-  }
-
-  @Override
-  protected AbstractExceptionHandlerMethodResolver createExceptionMethodResolverFor(
-      Class<?> beanType) {
-    return new ModuleExceptionHandlerMethodResolver(beanType);
-  }
-
-  @Override
-  protected Mono<Void> handleMatch(
-      CompositeMessageCondition mapping, HandlerMethod handlerMethod, Message<?> message) {
-    return super.handleMatch(mapping, handlerMethod, message);
-  }
-
-  @Override
-  protected void handleNoMatch(RouteMatcher.Route destination, Message<?> message) {}
-
-  public void handleMessage(OperationType type) {
-    List<Class<?>> handlers = operationHandlerMap.get(type);
-    for (Class<?> handleType : handlers) {
-      MessageHeaderAccessor header = new MessageHeaderAccessor();
-      header.setHeader(
-          DestinationPatternsMessageCondition.LOOKUP_DESTINATION_HEADER,
-          new SimpleRouteMatcher(new AntPathMatcher())
-              .parseRoute("/" + handleType.getName() + "/" + type.name()));
-      Message<byte[]> message =
-          MessageBuilder.createMessage(new byte[] {0}, header.getMessageHeaders());
-      handleMessage(message).block();
-    }
   }
 }

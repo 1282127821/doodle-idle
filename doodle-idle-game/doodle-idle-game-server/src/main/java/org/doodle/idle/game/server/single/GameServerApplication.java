@@ -17,7 +17,7 @@ package org.doodle.idle.game.server.single;
 
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.module.ModuleOperationHandler;
-import org.doodle.idle.framework.operation.OperationType;
+import org.doodle.idle.framework.module.annotation.OnStart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,7 +27,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GameServerApplication implements CommandLineRunner {
 
-  @Autowired ModuleOperationHandler messageHandler;
+  @Autowired ModuleOperationHandler operationHandler;
 
   public static void main(String[] args) {
     Thread.setDefaultUncaughtExceptionHandler(
@@ -38,7 +38,6 @@ public class GameServerApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    messageHandler.handleMessage(OperationType.START);
-    messageHandler.handleMessage(OperationType.DAY_ELAPSE);
+    operationHandler.handleAnnotation(OnStart.class).block();
   }
 }

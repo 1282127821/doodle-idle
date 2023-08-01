@@ -16,9 +16,7 @@
 package org.doodle.idle.game.server.module.login;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.Module;
-import org.doodle.idle.framework.module.reactive.ModuleExceptionHandler;
-import org.doodle.idle.framework.operation.annotation.OnStart;
+import org.doodle.design.messaging.operation.OperationModule;
 
 /**
  * 登录模块
@@ -26,17 +24,11 @@ import org.doodle.idle.framework.operation.annotation.OnStart;
  * @author tingyanshen
  */
 @Slf4j
-@Module
+@OperationModule
 public class LoginModule {
 
-  @OnStart
   public void onStart() {
     log.info("onStart: login-module");
     throw new RuntimeException();
-  }
-
-  @ModuleExceptionHandler(Exception.class)
-  public void handleException(Exception e) {
-    log.error("处理异常", e);
   }
 }
