@@ -17,6 +17,7 @@ package org.doodle.idle.game.server.module.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.module.Module;
+import org.doodle.idle.framework.module.reactive.ModuleExceptionHandler;
 import org.doodle.idle.framework.operation.annotation.OnDayElapse;
 import org.doodle.idle.framework.operation.annotation.OnStart;
 
@@ -32,10 +33,16 @@ public class TaskModule {
   @OnStart
   public void onStart() {
     log.info("onStart: task-module");
+    throw new RuntimeException();
   }
 
   @OnDayElapse
   public void onDaySpan() {
     log.info("onDaySpan: task-module");
+  }
+
+  @ModuleExceptionHandler(Exception.class)
+  public void handleException(Exception e) {
+    log.error("处理异常", e);
   }
 }

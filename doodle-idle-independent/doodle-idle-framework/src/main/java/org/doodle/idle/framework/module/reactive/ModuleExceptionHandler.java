@@ -13,30 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.login;
+package org.doodle.idle.framework.module.reactive;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.Module;
-import org.doodle.idle.framework.module.reactive.ModuleExceptionHandler;
-import org.doodle.idle.framework.operation.annotation.OnStart;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-/**
- * 登录模块
- *
- * @author tingyanshen
- */
-@Slf4j
-@Module
-public class LoginModule {
-
-  @OnStart
-  public void onStart() {
-    log.info("onStart: login-module");
-    throw new RuntimeException();
-  }
-
-  @ModuleExceptionHandler(Exception.class)
-  public void handleException(Exception e) {
-    log.error("处理异常", e);
-  }
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ModuleExceptionHandler {
+  Class<? extends Throwable>[] value() default {};
 }

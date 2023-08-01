@@ -19,6 +19,7 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.*;
 import lombok.Getter;
+import org.doodle.idle.framework.module.reactive.ModuleExceptionHandlerMethodResolver;
 import org.doodle.idle.framework.operation.OperationType;
 import org.doodle.idle.framework.operation.annotation.*;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -48,7 +49,7 @@ import org.springframework.util.SimpleRouteMatcher;
 import org.springframework.validation.Validator;
 import reactor.core.publisher.Mono;
 
-public class ModuleOperationMessageHandler
+public class ModuleOperationHandler
     extends AbstractMethodMessageHandler<CompositeMessageCondition> {
 
   private final Map<OperationType, List<Class<?>>> operationHandlerMap = new HashMap<>();
@@ -61,7 +62,7 @@ public class ModuleOperationMessageHandler
 
   @Getter private ConversionService conversionService = new DefaultFormattingConversionService();
 
-  public ModuleOperationMessageHandler() {
+  public ModuleOperationHandler() {
     setHandlerPredicate(type -> AnnotatedElementUtils.hasAnnotation(type, Module.class));
   }
 
@@ -235,7 +236,7 @@ public class ModuleOperationMessageHandler
   @Override
   protected AbstractExceptionHandlerMethodResolver createExceptionMethodResolverFor(
       Class<?> beanType) {
-    return null;
+    return new ModuleExceptionHandlerMethodResolver(beanType);
   }
 
   @Override

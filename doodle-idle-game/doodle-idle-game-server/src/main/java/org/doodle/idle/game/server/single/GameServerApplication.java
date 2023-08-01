@@ -16,7 +16,7 @@
 package org.doodle.idle.game.server.single;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.ModuleOperationMessageHandler;
+import org.doodle.idle.framework.module.ModuleOperationHandler;
 import org.doodle.idle.framework.operation.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -27,7 +27,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GameServerApplication implements CommandLineRunner {
 
-  @Autowired ModuleOperationMessageHandler messageHandler;
+  @Autowired ModuleOperationHandler messageHandler;
 
   public static void main(String[] args) {
     Thread.setDefaultUncaughtExceptionHandler(

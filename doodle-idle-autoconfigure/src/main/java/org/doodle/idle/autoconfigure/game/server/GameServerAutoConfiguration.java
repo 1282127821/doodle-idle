@@ -23,7 +23,7 @@ import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
 import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.autoconfigure.game.server.module.*;
-import org.doodle.idle.framework.module.ModuleOperationMessageHandler;
+import org.doodle.idle.framework.module.ModuleOperationHandler;
 import org.doodle.idle.game.server.GameServerProperties;
 import org.doodle.login.autoconfigure.client.LoginClientAutoConfiguration;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
@@ -69,8 +69,8 @@ public class GameServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public ModuleOperationMessageHandler moduleOperationMessageHandler() {
-    ModuleOperationMessageHandler messageHandler = new ModuleOperationMessageHandler();
+  public ModuleOperationHandler moduleOperationMessageHandler() {
+    ModuleOperationHandler messageHandler = new ModuleOperationHandler();
     messageHandler.setDecoders(Collections.singletonList(StringDecoder.allMimeTypes()));
     messageHandler.setRouteMatcher(new SimpleRouteMatcher(new AntPathMatcher()));
     messageHandler
