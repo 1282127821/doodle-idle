@@ -13,30 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.bag;
+package org.doodle.idle.framework.module.annotation;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.Module;
-import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
-import org.doodle.idle.framework.module.annotation.OnStart;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-/**
- * 背包模块
- *
- * @author tingyanshen
- */
-@Slf4j
-@Module
-public class BagModule {
-
-  @OnStart
-  public void onStart() {
-    log.info("bag-module");
-    throw new RuntimeException("测试"); // 测试
-  }
-
-  @ModuleExceptionHandler(Exception.class)
-  public void handleException(Exception e) {
-    log.error("未知错误", e);
-  }
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ModuleExceptionHandler {
+  Class<? extends Throwable>[] value() default {};
 }

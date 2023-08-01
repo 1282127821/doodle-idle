@@ -16,7 +16,7 @@
 package org.doodle.idle.game.server.module.fight;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.Module;
+import org.doodle.idle.framework.module.annotation.Module;
 import org.doodle.idle.framework.module.annotation.OnStart;
 
 /**

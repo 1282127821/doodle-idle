@@ -16,8 +16,8 @@
 package org.doodle.idle.game.server.single;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.ModuleOperationHandler;
 import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.reactive.ModuleOperationHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

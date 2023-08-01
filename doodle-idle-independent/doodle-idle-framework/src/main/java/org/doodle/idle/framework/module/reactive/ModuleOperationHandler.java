@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module;
+package org.doodle.idle.framework.module.reactive;
 
 import java.lang.reflect.AnnotatedElement;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 import org.doodle.design.messaging.operation.reactive.OrderedOperationMessageHandler;
+import org.doodle.idle.framework.module.annotation.Module;
 import org.doodle.idle.framework.module.annotation.OnStart;
 import org.doodle.idle.framework.module.annotation.OnStop;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.messaging.handler.CompositeMessageCondition;
 import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
+import org.springframework.messaging.handler.invocation.AbstractExceptionHandlerMethodResolver;
 
 public class ModuleOperationHandler extends OrderedOperationMessageHandler {
 
@@ -42,5 +44,11 @@ public class ModuleOperationHandler extends OrderedOperationMessageHandler {
           new DestinationPatternsMessageCondition(((Class<?>) element).getName()));
     }
     return null;
+  }
+
+  @Override
+  protected AbstractExceptionHandlerMethodResolver createExceptionMethodResolverFor(
+      Class<?> beanType) {
+    return new ModuleExceptionHandlerMethodResolver(beanType);
   }
 }
