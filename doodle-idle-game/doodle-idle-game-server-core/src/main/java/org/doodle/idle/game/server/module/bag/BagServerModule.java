@@ -35,10 +35,8 @@ public class BagServerModule {
   private final FightServerModule fightServerModule;
 
   @OnStart
-  public void onStart() throws InterruptedException {
+  public void onStart() {
     log.info("onStart: bag-module");
-    Thread.sleep(10000);
-    //    throw new RuntimeException("测试"); // 测试
   }
 
   @OnStop

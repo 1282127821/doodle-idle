@@ -70,9 +70,8 @@ public class GameServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public ServerModuleOperationHandler serverModuleOperationHandler(
-      ServerModuleRegistry<Object> registry) {
-    return new ServerModuleOperationHandler(registry::getModules);
+  public ServerModuleOperationHandler serverModuleOperationHandler() {
+    return new ServerModuleOperationHandler();
   }
 
   @Bean
@@ -83,8 +82,7 @@ public class GameServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public RoleModuleOperationHandler roleModuleOperationHandler(
-      RoleModuleRegistry<Object> registry) {
-    return new RoleModuleOperationHandler(registry::getModules);
+  public RoleModuleOperationHandler roleModuleOperationHandler() {
+    return new RoleModuleOperationHandler();
   }
 }

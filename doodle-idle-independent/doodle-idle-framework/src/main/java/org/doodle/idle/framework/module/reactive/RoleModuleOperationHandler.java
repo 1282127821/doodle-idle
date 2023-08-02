@@ -15,17 +15,9 @@
  */
 package org.doodle.idle.framework.module.reactive;
 
-import java.lang.reflect.AnnotatedElement;
 import java.util.List;
-import java.util.Objects;
-import java.util.function.Supplier;
-import org.doodle.design.messaging.operation.reactive.OrderedOperationMessageHandler;
-import org.doodle.idle.framework.module.annotation.OnStart;
-import org.doodle.idle.framework.module.annotation.OnStop;
-import org.doodle.idle.framework.module.annotation.RoleModule;
-import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.messaging.handler.CompositeMessageCondition;
-import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
+import org.doodle.design.messaging.operation.reactive.OperationMessageHandler;
+import org.doodle.idle.framework.module.annotation.*;
 import org.springframework.messaging.handler.invocation.AbstractExceptionHandlerMethodResolver;
 
 /**
@@ -33,22 +25,19 @@ import org.springframework.messaging.handler.invocation.AbstractExceptionHandler
  *
  * @author tingyanshen
  */
-public class RoleModuleOperationHandler extends OrderedOperationMessageHandler {
+public class RoleModuleOperationHandler extends OperationMessageHandler {
 
-  public RoleModuleOperationHandler(Supplier<List<Object>> handlerSupplier) {
-    super(handlerSupplier);
-    setHandlerPredicate(type -> AnnotatedElementUtils.hasAnnotation(type, RoleModule.class));
-    setAnnotations(List.of(OnStart.class, OnStop.class));
-  }
-
-  @Override
-  protected CompositeMessageCondition getOperationCondition(AnnotatedElement element) {
-    RoleModule module = AnnotatedElementUtils.findMergedAnnotation(element, RoleModule.class);
-    if (Objects.nonNull(module)) {
-      return new CompositeMessageCondition(
-          new DestinationPatternsMessageCondition(((Class<?>) element).getName()));
-    }
-    return null;
+  public RoleModuleOperationHandler() {
+    super(
+        RoleModule.class,
+        List.of(
+            OnPrepare.class,
+            OnOneIteration.class,
+            OnStart.class,
+            OnStop.class,
+            OnDayElapse.class,
+            OnMonthElapse.class,
+            OnYearElapse.class));
   }
 
   @Override

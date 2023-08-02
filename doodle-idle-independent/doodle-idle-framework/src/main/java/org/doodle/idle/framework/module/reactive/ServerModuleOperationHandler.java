@@ -15,17 +15,9 @@
  */
 package org.doodle.idle.framework.module.reactive;
 
-import java.lang.reflect.AnnotatedElement;
 import java.util.List;
-import java.util.Objects;
-import java.util.function.Supplier;
-import org.doodle.design.messaging.operation.reactive.OrderedOperationMessageHandler;
-import org.doodle.idle.framework.module.annotation.OnStart;
-import org.doodle.idle.framework.module.annotation.OnStop;
-import org.doodle.idle.framework.module.annotation.ServerModule;
-import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.messaging.handler.CompositeMessageCondition;
-import org.springframework.messaging.handler.DestinationPatternsMessageCondition;
+import org.doodle.design.messaging.operation.reactive.OperationMessageHandler;
+import org.doodle.idle.framework.module.annotation.*;
 import org.springframework.messaging.handler.invocation.AbstractExceptionHandlerMethodResolver;
 
 /**
@@ -33,22 +25,19 @@ import org.springframework.messaging.handler.invocation.AbstractExceptionHandler
  *
  * @author tingyanshen
  */
-public class ServerModuleOperationHandler extends OrderedOperationMessageHandler {
+public class ServerModuleOperationHandler extends OperationMessageHandler {
 
-  public ServerModuleOperationHandler(Supplier<List<Object>> handlerSupplier) {
-    super(handlerSupplier);
-    setHandlerPredicate(type -> AnnotatedElementUtils.hasAnnotation(type, ServerModule.class));
-    setAnnotations(List.of(OnStart.class, OnStop.class));
-  }
-
-  @Override
-  protected CompositeMessageCondition getOperationCondition(AnnotatedElement element) {
-    ServerModule module = AnnotatedElementUtils.findMergedAnnotation(element, ServerModule.class);
-    if (Objects.nonNull(module)) {
-      return new CompositeMessageCondition(
-          new DestinationPatternsMessageCondition(((Class<?>) element).getName()));
-    }
-    return null;
+  public ServerModuleOperationHandler() {
+    super(
+        ServerModule.class,
+        List.of(
+            OnPrepare.class,
+            OnOneIteration.class,
+            OnStart.class,
+            OnStop.class,
+            OnDayElapse.class,
+            OnMonthElapse.class,
+            OnYearElapse.class));
   }
 
   @Override

@@ -15,24 +15,37 @@
  */
 package org.doodle.idle.game.server.single;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import com.google.common.collect.Lists;
+import java.util.stream.Collectors;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.design.messaging.operation.reactive.OperationRequester;
+import org.doodle.idle.framework.module.ServerModuleRegistry;
 import org.doodle.idle.framework.module.annotation.OnStart;
-import org.doodle.idle.framework.module.annotation.OnStop;
 import org.doodle.idle.framework.module.reactive.RoleModuleOperationHandler;
 import org.doodle.idle.framework.module.reactive.ServerModuleOperationHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j
 @SpringBootApplication
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class GameServerApplication implements CommandLineRunner {
+  ServerModuleRegistry<Object> serverRegistry;
+  OperationRequester serverOperationRequester;
 
-  @Autowired ServerModuleOperationHandler serverOperationHandler;
-  @Autowired RoleModuleOperationHandler roleOperationHandler;
+  OperationRequester roleOperationRequester;
+
+  public GameServerApplication(
+      ServerModuleOperationHandler serverOperationHandler,
+      ServerModuleRegistry<Object> serverRegistry,
+      RoleModuleOperationHandler roleOperationHandler) {
+    this.serverRegistry = serverRegistry;
+    this.serverOperationRequester = new OperationRequester(serverOperationHandler);
+    this.roleOperationRequester = new OperationRequester(roleOperationHandler);
+  }
 
   public static void main(String[] args) {
     Thread.setDefaultUncaughtExceptionHandler(
@@ -42,20 +55,15 @@ public class GameServerApplication implements CommandLineRunner {
   }
 
   @Override
-  public void run(String... args) throws Exception {
-    Executors.newSingleThreadScheduledExecutor()
-        .scheduleWithFixedDelay(
-            () -> {
-              serverOperationHandler.handleAnnotation(OnStart.class).block();
-              serverOperationHandler.handleAnnotation(OnStop.class).block();
-
-              roleOperationHandler.handleAnnotation(OnStart.class).block();
-              roleOperationHandler.handleAnnotation(OnStop.class).block();
-            },
-            10,
-            10,
-            TimeUnit.MICROSECONDS);
-
-    Thread.currentThread().join();
+  public void run(String... args) {
+    this.serverOperationRequester.annotation(OnStart.class).natureOrder().block();
+    this.serverOperationRequester
+        .annotation(OnStart.class)
+        .handlers(
+            Lists.reverse(serverRegistry.getModules()).stream()
+                .map(Object::getClass)
+                .collect(Collectors.toList()))
+        .natureOrder()
+        .block();
   }
 }
