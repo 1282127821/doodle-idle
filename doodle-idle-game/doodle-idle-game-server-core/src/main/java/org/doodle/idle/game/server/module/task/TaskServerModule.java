@@ -17,7 +17,7 @@ package org.doodle.idle.game.server.module.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
-import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.OnPrepare;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 
 /**
@@ -29,9 +29,9 @@ import org.doodle.idle.framework.module.annotation.ServerModule;
 @ServerModule
 public class TaskServerModule {
 
-  @OnStart
-  public void onStart() {
-    log.info("onStart: task-module");
+  @OnPrepare
+  public void onPrepare() {
+    log.info("OnPrepare: task-server-module");
     //    throw new RuntimeException();
   }
 

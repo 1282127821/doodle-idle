@@ -15,16 +15,11 @@
  */
 package org.doodle.idle.game.server.single;
 
-import com.google.common.collect.Lists;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.design.messaging.operation.reactive.OperationRequester;
-import org.doodle.idle.framework.module.ServerModuleRegistry;
-import org.doodle.idle.framework.module.annotation.OnStart;
-import org.doodle.idle.framework.module.reactive.RoleModuleOperationHandler;
-import org.doodle.idle.framework.module.reactive.ServerModuleOperationHandler;
+import org.doodle.idle.game.server.GameServerContext;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,20 +27,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Slf4j
 @SpringBootApplication
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequiredArgsConstructor
 public class GameServerApplication implements CommandLineRunner {
-  ServerModuleRegistry<Object> serverRegistry;
-  OperationRequester serverOperationRequester;
-
-  OperationRequester roleOperationRequester;
-
-  public GameServerApplication(
-      ServerModuleOperationHandler serverOperationHandler,
-      ServerModuleRegistry<Object> serverRegistry,
-      RoleModuleOperationHandler roleOperationHandler) {
-    this.serverRegistry = serverRegistry;
-    this.serverOperationRequester = new OperationRequester(serverOperationHandler);
-    this.roleOperationRequester = new OperationRequester(roleOperationHandler);
-  }
+  GameServerContext serverContext;
 
   public static void main(String[] args) {
     Thread.setDefaultUncaughtExceptionHandler(
@@ -56,14 +40,7 @@ public class GameServerApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
-    this.serverOperationRequester.annotation(OnStart.class).natureOrder().block();
-    this.serverOperationRequester
-        .annotation(OnStart.class)
-        .handlers(
-            Lists.reverse(serverRegistry.getModules()).stream()
-                .map(Object::getClass)
-                .collect(Collectors.toList()))
-        .natureOrder()
-        .block();
+    serverContext.prepare();
+    serverContext.start();
   }
 }

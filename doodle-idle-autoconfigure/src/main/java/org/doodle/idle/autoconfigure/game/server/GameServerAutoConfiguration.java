@@ -15,17 +15,20 @@
  */
 package org.doodle.idle.autoconfigure.game.server;
 
+import java.util.stream.Collectors;
 import org.doodle.admin.autoconfigure.client.AdminClientAutoConfiguration;
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
 import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
+import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.autoconfigure.game.server.module.*;
 import org.doodle.idle.framework.module.RoleModuleRegistry;
 import org.doodle.idle.framework.module.ServerModuleRegistry;
 import org.doodle.idle.framework.module.reactive.RoleModuleOperationHandler;
 import org.doodle.idle.framework.module.reactive.ServerModuleOperationHandler;
+import org.doodle.idle.game.server.GameServerContext;
 import org.doodle.idle.game.server.GameServerProperties;
 import org.doodle.login.autoconfigure.client.LoginClientAutoConfiguration;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
@@ -84,5 +87,14 @@ public class GameServerAutoConfiguration {
   @ConditionalOnMissingBean
   public RoleModuleOperationHandler roleModuleOperationHandler() {
     return new RoleModuleOperationHandler();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public GameServerContext gameServerContext(
+      ServerModuleOperationHandler operationHandler, ServerModuleRegistry<Object> registry) {
+    return new GameServerContext(
+        new OperationRequester(operationHandler),
+        registry.getModules().stream().map(Object::getClass).collect(Collectors.toList()));
   }
 }

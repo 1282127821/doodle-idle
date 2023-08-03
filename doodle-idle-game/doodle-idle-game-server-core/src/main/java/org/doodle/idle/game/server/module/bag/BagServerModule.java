@@ -17,10 +17,7 @@ package org.doodle.idle.game.server.module.bag;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
-import org.doodle.idle.framework.module.annotation.OnStart;
-import org.doodle.idle.framework.module.annotation.OnStop;
-import org.doodle.idle.framework.module.annotation.ServerModule;
+import org.doodle.idle.framework.module.annotation.*;
 import org.doodle.idle.game.server.module.fight.FightServerModule;
 
 /**
@@ -34,14 +31,9 @@ import org.doodle.idle.game.server.module.fight.FightServerModule;
 public class BagServerModule {
   private final FightServerModule fightServerModule;
 
-  @OnStart
-  public void onStart() {
-    log.info("onStart: bag-module");
-  }
-
-  @OnStop
-  public void onStop() {
-    log.info("onStop: bag-module");
+  @OnPrepare
+  public void onPrepare() {
+    log.info("OnPrepare: bag-server-module");
   }
 
   @ModuleExceptionHandler(Exception.class)

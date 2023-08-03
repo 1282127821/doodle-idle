@@ -13,29 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.login;
+package org.doodle.idle.framework.module.annotation;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
-import org.doodle.idle.framework.module.annotation.OnPrepare;
-import org.doodle.idle.framework.module.annotation.ServerModule;
+import java.lang.annotation.*;
 
 /**
- * 服务登录模块
+ * 跨周操作
  *
  * @author tingyanshen
  */
-@Slf4j
-@ServerModule
-public class LoginServerModule {
-
-  @OnPrepare
-  public void onPrepare() {
-    log.info("OnPrepare: login-server-module");
-  }
-
-  @ModuleExceptionHandler(Exception.class)
-  public void handleException(Exception e) {
-    log.info("登录模块未知异常", e);
-  }
-}
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface OnWeekElapse {}

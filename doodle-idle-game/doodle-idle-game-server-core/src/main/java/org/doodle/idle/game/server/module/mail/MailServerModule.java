@@ -16,7 +16,7 @@
 package org.doodle.idle.game.server.module.mail;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.OnPrepare;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 
 /**
@@ -28,8 +28,8 @@ import org.doodle.idle.framework.module.annotation.ServerModule;
 @ServerModule
 public class MailServerModule {
 
-  @OnStart
-  public void onStart() {
-    log.info("onStart: mail-module");
+  @OnPrepare
+  public void onPrepare() {
+    log.info("OnPrepare: mail-server-module");
   }
 }

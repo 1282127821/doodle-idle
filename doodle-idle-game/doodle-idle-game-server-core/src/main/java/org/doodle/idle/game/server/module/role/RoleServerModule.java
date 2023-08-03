@@ -16,7 +16,7 @@
 package org.doodle.idle.game.server.module.role;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.OnPrepare;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 
 /**
@@ -28,8 +28,8 @@ import org.doodle.idle.framework.module.annotation.ServerModule;
 @ServerModule
 public class RoleServerModule {
 
-  @OnStart
-  public void onStart() {
-    log.info("onStart: role-module");
+  @OnPrepare
+  public void onPrepare() {
+    log.info("OnPrepare: role-server-module");
   }
 }

@@ -16,7 +16,7 @@
 package org.doodle.idle.game.server.module.fight;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.OnPrepare;
 import org.doodle.idle.framework.module.annotation.OnStop;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 
@@ -29,13 +29,13 @@ import org.doodle.idle.framework.module.annotation.ServerModule;
 @ServerModule
 public class FightServerModule {
 
-  @OnStart
-  public void onStart() {
-    log.info("onStart: fight-module");
+  @OnPrepare
+  public void onPrepare() {
+    log.info("OnPrepare: fight-server-module");
   }
 
   @OnStop
   public void onStop() {
-    log.info("onStop: fight-module");
+    log.info("onStop: fight-server-module");
   }
 }
