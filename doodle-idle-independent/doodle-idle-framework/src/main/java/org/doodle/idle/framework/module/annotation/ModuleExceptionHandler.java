@@ -21,7 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 服务模块操作异常处理，阻止因模块未处理异常导致操作流程中断
+ * 模块操作异常处理，阻止因模块未处理异常导致操作流程中断
  *
  * @author tingyanshen
  */
