@@ -15,8 +15,8 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
-import org.doodle.idle.framework.module.RoleModuleRegistry;
-import org.doodle.idle.framework.module.ServerModuleRegistry;
+import org.doodle.idle.game.server.bootstrap.RoleBootstrapModule;
+import org.doodle.idle.game.server.bootstrap.ServerBootstrapModule;
 import org.doodle.idle.game.server.module.role.RoleController;
 import org.doodle.idle.game.server.module.role.RoleRoleModule;
 import org.doodle.idle.game.server.module.role.RoleServerModule;
@@ -35,13 +35,13 @@ public class RoleModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public RoleServerModule roleServerModule(ServerModuleRegistry<Object> registry) {
+  public RoleServerModule roleServerModule(ServerBootstrapModule registry) {
     return registry.add(new RoleServerModule());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public RoleRoleModule roleRoleModule(RoleModuleRegistry<Object> registry) {
+  public RoleRoleModule roleRoleModule(RoleBootstrapModule registry) {
     return registry.add(new RoleRoleModule());
   }
 }

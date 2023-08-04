@@ -13,19 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.single;
+package org.doodle.idle.game.server.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.doodle.idle.framework.ModuleRegistry;
+import org.doodle.idle.framework.module.annotation.OnStart;
+import org.doodle.idle.framework.module.annotation.OnStop;
+import org.doodle.idle.framework.module.annotation.RoleModule;
 
+/**
+ * 玩家角色启动模块
+ *
+ * @author tingyanshen
+ */
 @Slf4j
-@SpringBootApplication
-public class GameServerApplication {
-  public static void main(String[] args) {
-    Thread.setDefaultUncaughtExceptionHandler(
-        (t, e) -> log.error("线程({})发生未捕获异常: {}", t.getName(), e.getMessage(), e));
+@RoleModule
+public class RoleBootstrapModule extends ModuleRegistry {
+  public RoleBootstrapModule() {
+    add(this);
+  }
 
-    SpringApplication.run(GameServerApplication.class, args);
+  @OnStart
+  public void onStart() {
+    log.info("OnStart: role-bootstrap-module");
+  }
+
+  @OnStop
+  public void onStop() {
+    log.info("OnStop: role-bootstrap-module");
   }
 }

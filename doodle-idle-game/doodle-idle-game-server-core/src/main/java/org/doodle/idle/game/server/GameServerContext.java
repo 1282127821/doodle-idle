@@ -39,14 +39,14 @@ public class GameServerContext {
   public static final String GAME_SERVER_CONTEXT = "GAME_SERVER_CONTEXT";
 
   OperationRequester requester;
-  List<Class<?>> handlers;
+  List<Object> handlers;
 
   public void initHeaders(@NonNull MessageHeaderAccessor headerAccessor) {
     headerAccessor.setHeader(GAME_SERVER_CONTEXT, this);
   }
 
   public void prepare() {
-    requester
+    this.requester
         .annotation(OnPrepare.class)
         .handlers(handlers)
         .header(this::initHeaders)
@@ -55,7 +55,7 @@ public class GameServerContext {
   }
 
   public void oneIteration() {
-    requester
+    this.requester
         .annotation(OnOneIteration.class)
         .handlers(handlers)
         .header(this::initHeaders)
@@ -64,7 +64,7 @@ public class GameServerContext {
   }
 
   public void start() {
-    requester
+    this.requester
         .annotation(OnStart.class)
         .handlers(handlers)
         .header(this::initHeaders)
@@ -73,7 +73,7 @@ public class GameServerContext {
   }
 
   public void stop() {
-    requester
+    this.requester
         .annotation(OnStop.class)
         .handlers(handlers)
         .header(this::initHeaders)
@@ -82,7 +82,7 @@ public class GameServerContext {
   }
 
   public void save() {
-    requester
+    this.requester
         .annotation(OnSave.class)
         .handlers(handlers)
         .header(this::initHeaders)
@@ -91,7 +91,7 @@ public class GameServerContext {
   }
 
   public void dayElapse() {
-    requester
+    this.requester
         .annotation(OnDayElapse.class)
         .handlers(handlers)
         .header(this::initHeaders)
@@ -100,7 +100,7 @@ public class GameServerContext {
   }
 
   public void weekElapse() {
-    requester
+    this.requester
         .annotation(OnWeekElapse.class)
         .handlers(handlers)
         .header(this::initHeaders)
@@ -109,7 +109,7 @@ public class GameServerContext {
   }
 
   public void monthElapse() {
-    requester
+    this.requester
         .annotation(OnMonthElapse.class)
         .handlers(handlers)
         .header(this::initHeaders)
@@ -118,7 +118,7 @@ public class GameServerContext {
   }
 
   public void yearElapse() {
-    requester
+    this.requester
         .annotation(OnYearElapse.class)
         .handlers(handlers)
         .header(this::initHeaders)

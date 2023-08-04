@@ -15,10 +15,8 @@
  */
 package org.doodle.idle.game.server.module.bag;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.module.annotation.*;
-import org.doodle.idle.game.server.module.fight.FightServerModule;
 
 /**
  * 服务背包模块
@@ -26,10 +24,8 @@ import org.doodle.idle.game.server.module.fight.FightServerModule;
  * @author tingyanshen
  */
 @Slf4j
-@RequiredArgsConstructor
 @ServerModule
 public class BagServerModule {
-  private final FightServerModule fightServerModule;
 
   @OnPrepare
   public void onPrepare() {

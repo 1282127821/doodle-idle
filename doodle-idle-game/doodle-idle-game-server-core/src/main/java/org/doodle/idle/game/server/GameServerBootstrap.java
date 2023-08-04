@@ -13,21 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module;
+package org.doodle.idle.game.server;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.context.SmartLifecycle;
 
-@Getter
+/**
+ * 游戏服启动
+ *
+ * @author tingyanshen
+ */
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class ServerModuleRegistry<M> {
-  List<M> modules = new LinkedList<>();
+@RequiredArgsConstructor
+public class GameServerBootstrap implements SmartLifecycle {
+  GameServerContext serverContext;
+  AtomicBoolean running = new AtomicBoolean(false);
 
-  public <T extends M> T add(T t) {
-    modules.add(t);
-    return t;
+  @Override
+  public void start() {
+    if (running.compareAndSet(false, true)) {
+      serverContext.prepare();
+      serverContext.start();
+    }
+  }
+
+  @Override
+  public void stop() {
+    serverContext.stop();
+    serverContext.save();
+  }
+
+  @Override
+  public boolean isRunning() {
+    return running.get();
   }
 }

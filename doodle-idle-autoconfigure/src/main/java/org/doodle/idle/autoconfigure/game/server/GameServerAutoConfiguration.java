@@ -15,7 +15,6 @@
  */
 package org.doodle.idle.autoconfigure.game.server;
 
-import java.util.stream.Collectors;
 import org.doodle.admin.autoconfigure.client.AdminClientAutoConfiguration;
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
@@ -24,12 +23,13 @@ import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.autoconfigure.game.server.module.*;
-import org.doodle.idle.framework.module.RoleModuleRegistry;
-import org.doodle.idle.framework.module.ServerModuleRegistry;
 import org.doodle.idle.framework.module.reactive.RoleModuleOperationHandler;
 import org.doodle.idle.framework.module.reactive.ServerModuleOperationHandler;
+import org.doodle.idle.game.server.GameServerBootstrap;
 import org.doodle.idle.game.server.GameServerContext;
 import org.doodle.idle.game.server.GameServerProperties;
+import org.doodle.idle.game.server.bootstrap.RoleBootstrapModule;
+import org.doodle.idle.game.server.bootstrap.ServerBootstrapModule;
 import org.doodle.login.autoconfigure.client.LoginClientAutoConfiguration;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -67,8 +67,8 @@ public class GameServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public ServerModuleRegistry<Object> serverModuleRegistry() {
-    return new ServerModuleRegistry<>();
+  public ServerBootstrapModule serverBootstrapModule() {
+    return new ServerBootstrapModule();
   }
 
   @Bean
@@ -79,8 +79,8 @@ public class GameServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public RoleModuleRegistry<Object> roleModuleRegistry() {
-    return new RoleModuleRegistry<>();
+  public RoleBootstrapModule roleBootstrapModule() {
+    return new RoleBootstrapModule();
   }
 
   @Bean
@@ -92,9 +92,13 @@ public class GameServerAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public GameServerContext gameServerContext(
-      ServerModuleOperationHandler operationHandler, ServerModuleRegistry<Object> registry) {
-    return new GameServerContext(
-        new OperationRequester(operationHandler),
-        registry.getModules().stream().map(Object::getClass).collect(Collectors.toList()));
+      ServerModuleOperationHandler operationHandler, ServerBootstrapModule registry) {
+    return new GameServerContext(new OperationRequester(operationHandler), registry.getModules());
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public GameServerBootstrap gameServerBootstrap(GameServerContext serverContext) {
+    return new GameServerBootstrap(serverContext);
   }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module;
+package org.doodle.idle.framework;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,12 +22,12 @@ import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 @Getter
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class RoleModuleRegistry<M> {
-  List<M> modules = new LinkedList<>();
+@FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
+public class ModuleRegistry {
+  List<Object> modules = new LinkedList<>();
 
-  public <T extends M> T add(T t) {
-    modules.add(t);
-    return t;
+  public <M> M add(M module) {
+    modules.add(module);
+    return module;
   }
 }
