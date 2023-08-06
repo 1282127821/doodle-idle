@@ -15,6 +15,8 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.idle.game.server.GameRoleContext;
+import org.doodle.idle.game.server.GameServerContext;
 import org.doodle.idle.game.server.bootstrap.RoleBootstrapModule;
 import org.doodle.idle.game.server.bootstrap.ServerBootstrapModule;
 import org.doodle.idle.game.server.module.mail.MailController;
@@ -35,13 +37,14 @@ public class MailModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public MailServerModule mailServerModule(ServerBootstrapModule registry) {
-    return registry.add(new MailServerModule());
+  public MailServerModule<? extends GameServerContext> mailServerModule(
+      ServerBootstrapModule registry) {
+    return registry.add(new MailServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public MailRoleModule mailRoleModule(RoleBootstrapModule registry) {
-    return registry.add(new MailRoleModule());
+  public MailRoleModule<? extends GameRoleContext> mailRoleModule(RoleBootstrapModule registry) {
+    return registry.add(new MailRoleModule<>());
   }
 }

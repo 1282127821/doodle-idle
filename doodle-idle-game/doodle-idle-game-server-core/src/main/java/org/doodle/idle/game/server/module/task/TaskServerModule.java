@@ -16,9 +16,11 @@
 package org.doodle.idle.game.server.module.task;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
 import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
 import org.doodle.idle.framework.module.annotation.ServerModule;
+import org.doodle.idle.game.server.GameServerContext;
 
 /**
  * 服务任务模块
@@ -27,13 +29,16 @@ import org.doodle.idle.framework.module.annotation.ServerModule;
  */
 @Slf4j
 @ServerModule
-public class TaskServerModule {
+public class TaskServerModule<S extends GameServerContext> {
 
   @OnPrepare
-  public void onPrepare() {
+  public void onPrepare(S server) {
     log.info("OnPrepare: task-server-module");
     //    throw new RuntimeException();
   }
+
+  @OnPatch
+  public void onPatch(S server) {}
 
   @ModuleExceptionHandler(Exception.class)
   public void handleException(Exception e) {

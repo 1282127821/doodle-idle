@@ -15,6 +15,8 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.idle.game.server.GameRoleContext;
+import org.doodle.idle.game.server.GameServerContext;
 import org.doodle.idle.game.server.bootstrap.RoleBootstrapModule;
 import org.doodle.idle.game.server.bootstrap.ServerBootstrapModule;
 import org.doodle.idle.game.server.module.task.TaskController;
@@ -35,13 +37,14 @@ public class TaskModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public TaskServerModule taskServerModule(RoleBootstrapModule registry) {
-    return registry.add(new TaskServerModule());
+  public TaskServerModule<? extends GameServerContext> taskServerModule(
+      RoleBootstrapModule registry) {
+    return registry.add(new TaskServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public TaskRoleModule taskRoleModule(ServerBootstrapModule registry) {
-    return registry.add(new TaskRoleModule());
+  public TaskRoleModule<? extends GameRoleContext> taskRoleModule(ServerBootstrapModule registry) {
+    return registry.add(new TaskRoleModule<>());
   }
 }

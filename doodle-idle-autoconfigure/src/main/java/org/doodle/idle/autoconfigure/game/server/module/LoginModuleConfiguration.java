@@ -15,6 +15,8 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.idle.game.server.GameRoleContext;
+import org.doodle.idle.game.server.GameServerContext;
 import org.doodle.idle.game.server.bootstrap.RoleBootstrapModule;
 import org.doodle.idle.game.server.bootstrap.ServerBootstrapModule;
 import org.doodle.idle.game.server.module.login.LoginController;
@@ -35,13 +37,14 @@ public class LoginModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public LoginServerModule loginServerModule(ServerBootstrapModule registry) {
-    return registry.add(new LoginServerModule());
+  public LoginServerModule<? extends GameServerContext> loginServerModule(
+      ServerBootstrapModule registry) {
+    return registry.add(new LoginServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public LoginRoleModule loginRoleModule(RoleBootstrapModule registry) {
-    return registry.add(new LoginRoleModule());
+  public LoginRoleModule<? extends GameRoleContext> loginRoleModule(RoleBootstrapModule registry) {
+    return registry.add(new LoginRoleModule<>());
   }
 }

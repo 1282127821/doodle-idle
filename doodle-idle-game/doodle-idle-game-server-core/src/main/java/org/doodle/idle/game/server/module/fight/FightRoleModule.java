@@ -16,9 +16,11 @@
 package org.doodle.idle.game.server.module.fight;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.annotation.RoleModule;
+import org.doodle.idle.game.server.GameRoleContext;
 
 /**
  * 玩家战斗模块
@@ -27,15 +29,20 @@ import org.doodle.idle.framework.module.annotation.RoleModule;
  */
 @Slf4j
 @RoleModule
-public class FightRoleModule {
+public class FightRoleModule<R extends GameRoleContext> {
 
   @OnStart
-  public void onStart() {
-    log.info("onStart: fight-module");
+  public void onStart(R role) {
+    log.info("onStart: fight-role-module");
+  }
+
+  @OnPatch
+  public void onPatch(R role) {
+    log.info("OnPatch: fight-role-module");
   }
 
   @OnStop
-  public void onStop() {
-    log.info("onStop: fight-module");
+  public void onStop(R role) {
+    log.info("onStop: fight-role-module");
   }
 }

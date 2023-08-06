@@ -17,6 +17,8 @@ package org.doodle.idle.game.server.activity.sign;
 
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.activity.annotation.RoleActivity;
+import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
+import org.doodle.idle.game.server.GameRoleContext;
 
 /**
  * 签到玩家活动
@@ -25,4 +27,10 @@ import org.doodle.idle.framework.activity.annotation.RoleActivity;
  */
 @Slf4j
 @RoleActivity
-public class SignRoleActivity {}
+public class SignRoleActivity<R extends GameRoleContext> {
+
+  @OnPatch
+  public void onPatch(R role) {
+    log.info("OnPatch: sign-role-activity");
+  }
+}

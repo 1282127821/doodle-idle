@@ -20,6 +20,7 @@ import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.ModuleRegistry;
 import org.doodle.idle.framework.module.annotation.RoleModule;
+import org.doodle.idle.game.server.GameRoleContext;
 
 /**
  * 玩家角色启动模块
@@ -28,18 +29,18 @@ import org.doodle.idle.framework.module.annotation.RoleModule;
  */
 @Slf4j
 @RoleModule
-public class RoleBootstrapModule extends ModuleRegistry {
+public class RoleBootstrapModule<R extends GameRoleContext> extends ModuleRegistry {
   public RoleBootstrapModule() {
     add(this);
   }
 
   @OnStart
-  public void onStart() {
+  public void onStart(R role) {
     log.info("OnStart: role-bootstrap-module");
   }
 
   @OnStop
-  public void onStop() {
+  public void onStop(R role) {
     log.info("OnStop: role-bootstrap-module");
   }
 }

@@ -27,6 +27,8 @@ import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.annotation.*;
 import org.doodle.idle.framework.timer.annotation.*;
+import org.doodle.idle.game.server.GameServerContext;
+import org.springframework.messaging.support.MessageHeaderInitializer;
 
 /**
  * 活动服务模块
@@ -37,51 +39,98 @@ import org.doodle.idle.framework.timer.annotation.*;
 @ServerModule
 @FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
 @RequiredArgsConstructor
-public class ActivityServerModule extends ActivityRegistry {
+public class ActivityServerModule<S extends GameServerContext> extends ActivityRegistry {
   OperationRequester requester;
 
+  protected MessageHeaderInitializer createHeaders(S server) {
+    return headerAccessor ->
+        headerAccessor.setHeader(GameServerContext.GAME_SERVER_CONTEXT, server);
+  }
+
   @OnStart
-  public void onStart() {
-    this.requester.annotation(OnPrepare.class).handlers(getActivities()).naturalOrder().block();
-    this.requester.annotation(OnStart.class).handlers(getActivities()).naturalOrder().block();
+  public void onStart(S server) {
+    MessageHeaderInitializer headers = createHeaders(server);
+    this.requester
+        .annotation(OnPrepare.class)
+        .handlers(getActivities())
+        .header(headers)
+        .naturalOrder()
+        .block();
+    this.requester
+        .annotation(OnStart.class)
+        .handlers(getActivities())
+        .header(headers)
+        .naturalOrder()
+        .block();
   }
 
   @OnStop
-  public void onStop() {
-    this.requester.annotation(OnStop.class).handlers(getActivities()).naturalOrder().block();
+  public void onStop(S server) {
+    this.requester
+        .annotation(OnStop.class)
+        .handlers(getActivities())
+        .header(createHeaders(server))
+        .naturalOrder()
+        .block();
   }
 
   @OnSave
-  public void onSave() {
-    this.requester.annotation(OnSave.class).handlers(getActivities()).naturalOrder().block();
+  public void onSave(S server) {
+    this.requester
+        .annotation(OnSave.class)
+        .handlers(getActivities())
+        .header(createHeaders(server))
+        .naturalOrder()
+        .block();
   }
 
   @OnOneIteration
-  public void onOneIteration() {
+  public void onOneIteration(S server) {
     this.requester
         .annotation(OnOneIteration.class)
         .handlers(getActivities())
+        .header(createHeaders(server))
         .naturalOrder()
         .block();
   }
 
   @OnDayElapse
-  public void onDayElapse() {
-    this.requester.annotation(OnDayElapse.class).handlers(getActivities()).naturalOrder().block();
+  public void onDayElapse(S server) {
+    this.requester
+        .annotation(OnDayElapse.class)
+        .handlers(getActivities())
+        .header(createHeaders(server))
+        .naturalOrder()
+        .block();
   }
 
   @OnWeekElapse
-  public void onWeekElapse() {
-    this.requester.annotation(OnWeekElapse.class).handlers(getActivities()).naturalOrder().block();
+  public void onWeekElapse(S server) {
+    this.requester
+        .annotation(OnWeekElapse.class)
+        .handlers(getActivities())
+        .header(createHeaders(server))
+        .naturalOrder()
+        .block();
   }
 
   @OnMonthElapse
-  public void onMonthElapse() {
-    this.requester.annotation(OnMonthElapse.class).handlers(getActivities()).naturalOrder().block();
+  public void onMonthElapse(S server) {
+    this.requester
+        .annotation(OnMonthElapse.class)
+        .handlers(getActivities())
+        .header(createHeaders(server))
+        .naturalOrder()
+        .block();
   }
 
   @OnYearElapse
-  public void onYearElapse() {
-    this.requester.annotation(OnYearElapse.class).handlers(getActivities()).naturalOrder().block();
+  public void onYearElapse(S server) {
+    this.requester
+        .annotation(OnYearElapse.class)
+        .handlers(getActivities())
+        .header(createHeaders(server))
+        .naturalOrder()
+        .block();
   }
 }

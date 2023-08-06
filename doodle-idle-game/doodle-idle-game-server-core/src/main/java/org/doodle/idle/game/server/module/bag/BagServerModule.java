@@ -16,8 +16,10 @@
 package org.doodle.idle.game.server.module.bag;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
 import org.doodle.idle.framework.module.annotation.*;
+import org.doodle.idle.game.server.GameServerContext;
 
 /**
  * 服务背包模块
@@ -26,11 +28,16 @@ import org.doodle.idle.framework.module.annotation.*;
  */
 @Slf4j
 @ServerModule
-public class BagServerModule {
+public class BagServerModule<S extends GameServerContext> {
 
   @OnPrepare
-  public void onPrepare() {
+  public void onPrepare(S server) {
     log.info("OnPrepare: bag-server-module");
+  }
+
+  @OnPatch
+  public void onPatch(S server) {
+    log.info("OnPatch: bag-server-module");
   }
 
   @ModuleExceptionHandler(Exception.class)

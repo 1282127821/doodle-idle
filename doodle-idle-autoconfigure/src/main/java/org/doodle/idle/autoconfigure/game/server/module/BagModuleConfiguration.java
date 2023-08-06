@@ -15,6 +15,8 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.idle.game.server.GameRoleContext;
+import org.doodle.idle.game.server.GameServerContext;
 import org.doodle.idle.game.server.bootstrap.RoleBootstrapModule;
 import org.doodle.idle.game.server.bootstrap.ServerBootstrapModule;
 import org.doodle.idle.game.server.module.bag.BagController;
@@ -35,13 +37,14 @@ public class BagModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public BagServerModule bagServerModule(ServerBootstrapModule registry) {
-    return registry.add(new BagServerModule());
+  public BagServerModule<? extends GameServerContext> bagServerModule(
+      ServerBootstrapModule registry) {
+    return registry.add(new BagServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public BagRoleModule bagRoleModule(RoleBootstrapModule registry) {
-    return registry.add(new BagRoleModule());
+  public BagRoleModule<? extends GameRoleContext> bagRoleModule(RoleBootstrapModule registry) {
+    return registry.add(new BagRoleModule<>());
   }
 }

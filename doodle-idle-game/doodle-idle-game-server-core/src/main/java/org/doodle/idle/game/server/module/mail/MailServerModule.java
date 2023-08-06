@@ -16,8 +16,10 @@
 package org.doodle.idle.game.server.module.mail;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
 import org.doodle.idle.framework.module.annotation.ServerModule;
+import org.doodle.idle.game.server.GameServerContext;
 
 /**
  * 服务邮件模块
@@ -26,10 +28,13 @@ import org.doodle.idle.framework.module.annotation.ServerModule;
  */
 @Slf4j
 @ServerModule
-public class MailServerModule {
+public class MailServerModule<S extends GameServerContext> {
 
   @OnPrepare
-  public void onPrepare() {
+  public void onPrepare(S server) {
     log.info("OnPrepare: mail-server-module");
   }
+
+  @OnPatch
+  public void onPatch(S server) {}
 }

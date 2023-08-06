@@ -16,8 +16,10 @@
 package org.doodle.idle.game.server.module.mail;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.module.annotation.RoleModule;
+import org.doodle.idle.game.server.GameRoleContext;
 
 /**
  * 玩家服务邮件模块
@@ -26,10 +28,13 @@ import org.doodle.idle.framework.module.annotation.RoleModule;
  */
 @Slf4j
 @RoleModule
-public class MailRoleModule {
+public class MailRoleModule<R extends GameRoleContext> {
 
   @OnStart
-  public void onStart() {
+  public void onStart(R role) {
     log.info("onStart: mail-module");
   }
+
+  @OnPatch
+  public void onPatch(R role) {}
 }

@@ -16,10 +16,12 @@
 package org.doodle.idle.game.server.module.fight;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.annotation.ServerModule;
+import org.doodle.idle.game.server.GameServerContext;
 
 /**
  * 服务战斗模块
@@ -28,20 +30,25 @@ import org.doodle.idle.framework.module.annotation.ServerModule;
  */
 @Slf4j
 @ServerModule
-public class FightServerModule {
+public class FightServerModule<S extends GameServerContext> {
 
   @OnPrepare
-  public void onPrepare() {
+  public void onPrepare(S server) {
     log.info("OnPrepare: fight-server-module");
   }
 
+  @OnPatch
+  public void onPatch(S server) {
+    log.info("OnPatch: fight-server-module");
+  }
+
   @OnStart
-  public void onStart() {
+  public void onStart(S server) {
     log.info("OnStart: fight-server-module");
   }
 
   @OnStop
-  public void onStop() {
+  public void onStop(S server) {
     log.info("onStop: fight-server-module");
   }
 }

@@ -17,9 +17,11 @@ package org.doodle.idle.game.server.activity.sign;
 
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.activity.annotation.ServerActivity;
+import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.game.server.GameServerContext;
 
 /**
  * 签到服务活动
@@ -28,20 +30,25 @@ import org.doodle.idle.framework.lifecycle.annotation.OnStop;
  */
 @Slf4j
 @ServerActivity
-public class SignServerActivity {
+public class SignServerActivity<S extends GameServerContext> {
 
   @OnPrepare
-  public void onPrepare() {
+  public void onPrepare(S server) {
     log.info("OnPrepare: sign-server-activity");
   }
 
+  @OnPatch
+  public void onPatch(S server) {
+    log.info("OnPatch: sign-server-activity");
+  }
+
   @OnStart
-  public void onStart() {
+  public void onStart(S server) {
     log.info("OnStart: sign-server-activity");
   }
 
   @OnStop
-  public void onStop() {
+  public void onStop(S server) {
     log.info("OnStop: sign-server-activity");
   }
 }

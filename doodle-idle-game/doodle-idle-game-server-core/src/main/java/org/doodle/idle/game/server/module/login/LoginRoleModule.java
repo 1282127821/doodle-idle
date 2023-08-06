@@ -16,9 +16,11 @@
 package org.doodle.idle.game.server.module.login;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
 import org.doodle.idle.framework.module.annotation.RoleModule;
+import org.doodle.idle.game.server.GameRoleContext;
 
 /**
  * 玩家登录模块
@@ -27,12 +29,17 @@ import org.doodle.idle.framework.module.annotation.RoleModule;
  */
 @Slf4j
 @RoleModule
-public class LoginRoleModule {
+public class LoginRoleModule<R extends GameRoleContext> {
 
   @OnStart
-  public void onStart() {
-    log.info("onStart: login-module");
+  public void onStart(R role) {
+    log.info("onStart: login-role-module");
     throw new RuntimeException();
+  }
+
+  @OnPatch
+  public void onPatch(R role) {
+    log.info("OnPatch: login-role-module");
   }
 
   @ModuleExceptionHandler(Exception.class)

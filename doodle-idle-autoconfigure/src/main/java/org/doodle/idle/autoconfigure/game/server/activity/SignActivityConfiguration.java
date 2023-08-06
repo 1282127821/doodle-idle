@@ -15,6 +15,8 @@
  */
 package org.doodle.idle.autoconfigure.game.server.activity;
 
+import org.doodle.idle.game.server.GameRoleContext;
+import org.doodle.idle.game.server.GameServerContext;
 import org.doodle.idle.game.server.activity.sign.SignController;
 import org.doodle.idle.game.server.activity.sign.SignRoleActivity;
 import org.doodle.idle.game.server.activity.sign.SignServerActivity;
@@ -35,13 +37,15 @@ public class SignActivityConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public SignServerActivity signServerActivity(ActivityServerModule registry) {
-    return registry.add(new SignServerActivity());
+  public SignServerActivity<? extends GameServerContext> signServerActivity(
+      ActivityServerModule<? extends GameServerContext> registry) {
+    return registry.add(new SignServerActivity<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public SignRoleActivity signRoleActivity(ActivityRoleModule registry) {
-    return registry.add(new SignRoleActivity());
+  public SignRoleActivity<? extends GameRoleContext> signRoleActivity(
+      ActivityRoleModule<? extends GameRoleContext> registry) {
+    return registry.add(new SignRoleActivity<>());
   }
 }

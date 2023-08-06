@@ -26,11 +26,14 @@ import org.doodle.idle.autoconfigure.game.server.activity.SignActivityConfigurat
 import org.doodle.idle.autoconfigure.game.server.module.*;
 import org.doodle.idle.framework.module.reactive.RoleModuleOperationHandler;
 import org.doodle.idle.framework.module.reactive.ServerModuleOperationHandler;
+import org.doodle.idle.game.server.GameRoleContext;
 import org.doodle.idle.game.server.GameServerBootstrap;
 import org.doodle.idle.game.server.GameServerContext;
 import org.doodle.idle.game.server.GameServerProperties;
 import org.doodle.idle.game.server.bootstrap.RoleBootstrapModule;
 import org.doodle.idle.game.server.bootstrap.ServerBootstrapModule;
+import org.doodle.idle.game.server.support.GameRoleContextMethodArgumentResolver;
+import org.doodle.idle.game.server.support.GameServerContextMethodArgumentResolver;
 import org.doodle.login.autoconfigure.client.LoginClientAutoConfiguration;
 import org.doodle.payment.autoconfigure.client.PaymentClientAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -70,26 +73,34 @@ public class GameServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public ServerBootstrapModule serverBootstrapModule() {
-    return new ServerBootstrapModule();
+  public ServerBootstrapModule<? extends GameServerContext> serverBootstrapModule() {
+    return new ServerBootstrapModule<>();
   }
 
   @Bean
   @ConditionalOnMissingBean
   public ServerModuleOperationHandler serverModuleOperationHandler() {
-    return new ServerModuleOperationHandler();
+    ServerModuleOperationHandler operationHandler = new ServerModuleOperationHandler();
+    operationHandler
+        .getArgumentResolverConfigurer()
+        .addCustomResolver(new GameServerContextMethodArgumentResolver());
+    return operationHandler;
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public RoleBootstrapModule roleBootstrapModule() {
-    return new RoleBootstrapModule();
+  public RoleBootstrapModule<? extends GameRoleContext> roleBootstrapModule() {
+    return new RoleBootstrapModule<>();
   }
 
   @Bean
   @ConditionalOnMissingBean
   public RoleModuleOperationHandler roleModuleOperationHandler() {
-    return new RoleModuleOperationHandler();
+    RoleModuleOperationHandler operationHandler = new RoleModuleOperationHandler();
+    operationHandler
+        .getArgumentResolverConfigurer()
+        .addCustomResolver(new GameRoleContextMethodArgumentResolver());
+    return operationHandler;
   }
 
   @Bean

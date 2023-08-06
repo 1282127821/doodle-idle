@@ -15,6 +15,8 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.idle.game.server.GameRoleContext;
+import org.doodle.idle.game.server.GameServerContext;
 import org.doodle.idle.game.server.bootstrap.RoleBootstrapModule;
 import org.doodle.idle.game.server.bootstrap.ServerBootstrapModule;
 import org.doodle.idle.game.server.module.fight.FightController;
@@ -35,13 +37,14 @@ public class FightModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public FightServerModule fightServerModule(ServerBootstrapModule registry) {
-    return registry.add(new FightServerModule());
+  public FightServerModule<? extends GameServerContext> fightServerModule(
+      ServerBootstrapModule registry) {
+    return registry.add(new FightServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public FightRoleModule fightRoleModule(RoleBootstrapModule registry) {
-    return registry.add(new FightRoleModule());
+  public FightRoleModule<? extends GameRoleContext> fightRoleModule(RoleBootstrapModule registry) {
+    return registry.add(new FightRoleModule<>());
   }
 }

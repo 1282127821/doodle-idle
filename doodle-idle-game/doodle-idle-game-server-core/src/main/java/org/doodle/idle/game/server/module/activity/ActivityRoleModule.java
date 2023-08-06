@@ -15,12 +15,20 @@
  */
 package org.doodle.idle.game.server.module.activity;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.idle.framework.activity.ActivityRegistry;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
+import org.doodle.idle.framework.lifecycle.annotation.OnSave;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.annotation.RoleModule;
+import org.doodle.idle.framework.timer.annotation.*;
+import org.doodle.idle.game.server.GameRoleContext;
+import org.springframework.messaging.support.MessageHeaderInitializer;
 
 /**
  * 玩家活动模块
@@ -29,20 +37,99 @@ import org.doodle.idle.framework.module.annotation.RoleModule;
  */
 @Slf4j
 @RoleModule
-public class ActivityRoleModule extends ActivityRegistry {
+@FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
+@RequiredArgsConstructor
+public class ActivityRoleModule<R extends GameRoleContext> extends ActivityRegistry {
+  OperationRequester requester;
 
-  @OnPrepare
-  public void onPrepare() {
-    log.info("OnPrepare: activity-role-module");
+  protected MessageHeaderInitializer createHeaders(R role) {
+    return headerAccessor -> headerAccessor.setHeader(GameRoleContext.GAME_ROLE_CONTEXT, role);
   }
 
   @OnStart
-  public void onStart() {
-    log.info("OnStart: activity-role-module");
+  public void onStart(R role) {
+    MessageHeaderInitializer headers = createHeaders(role);
+    this.requester
+        .annotation(OnPrepare.class)
+        .handlers(getActivities())
+        .header(headers)
+        .naturalOrder()
+        .block();
+    this.requester
+        .annotation(OnStart.class)
+        .handlers(getActivities())
+        .header(headers)
+        .naturalOrder()
+        .block();
   }
 
   @OnStop
-  public void onStop() {
-    log.info("OnStop: activity-role-module");
+  public void onStop(R role) {
+    this.requester
+        .annotation(OnStop.class)
+        .handlers(getActivities())
+        .header(createHeaders(role))
+        .naturalOrder()
+        .block();
+  }
+
+  @OnSave
+  public void onSave(R role) {
+    this.requester
+        .annotation(OnSave.class)
+        .handlers(getActivities())
+        .header(createHeaders(role))
+        .naturalOrder()
+        .block();
+  }
+
+  @OnOneIteration
+  public void onOneIteration(R role) {
+    this.requester
+        .annotation(OnOneIteration.class)
+        .handlers(getActivities())
+        .header(createHeaders(role))
+        .naturalOrder()
+        .block();
+  }
+
+  @OnDayElapse
+  public void onDayElapse(R role) {
+    this.requester
+        .annotation(OnDayElapse.class)
+        .handlers(getActivities())
+        .header(createHeaders(role))
+        .naturalOrder()
+        .block();
+  }
+
+  @OnWeekElapse
+  public void onWeekElapse(R role) {
+    this.requester
+        .annotation(OnWeekElapse.class)
+        .handlers(getActivities())
+        .header(createHeaders(role))
+        .naturalOrder()
+        .block();
+  }
+
+  @OnMonthElapse
+  public void onMonthElapse(R role) {
+    this.requester
+        .annotation(OnMonthElapse.class)
+        .handlers(getActivities())
+        .header(createHeaders(role))
+        .naturalOrder()
+        .block();
+  }
+
+  @OnYearElapse
+  public void onYearElapse(R role) {
+    this.requester
+        .annotation(OnYearElapse.class)
+        .handlers(getActivities())
+        .header(createHeaders(role))
+        .naturalOrder()
+        .block();
   }
 }

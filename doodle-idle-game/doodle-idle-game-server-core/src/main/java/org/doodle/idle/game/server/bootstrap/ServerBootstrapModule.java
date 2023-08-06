@@ -20,6 +20,7 @@ import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.ModuleRegistry;
 import org.doodle.idle.framework.module.annotation.ServerModule;
+import org.doodle.idle.game.server.GameServerContext;
 
 /**
  * 服务启动模块
@@ -28,18 +29,18 @@ import org.doodle.idle.framework.module.annotation.ServerModule;
  */
 @Slf4j
 @ServerModule
-public class ServerBootstrapModule extends ModuleRegistry {
+public class ServerBootstrapModule<S extends GameServerContext> extends ModuleRegistry {
   public ServerBootstrapModule() {
     add(this);
   }
 
   @OnStart
-  public void onStart() {
+  public void onStart(S server) {
     log.info("OnStart: server-registry-module");
   }
 
   @OnStop
-  public void onStop() {
+  public void onStop(S server) {
     log.info("OnStop: server-registry-module");
   }
 }

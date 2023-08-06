@@ -17,33 +17,30 @@ package org.doodle.idle.game.server;
 
 import java.util.List;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.idle.framework.lifecycle.annotation.*;
 import org.doodle.idle.framework.timer.annotation.*;
-import org.springframework.lang.NonNull;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 
 /**
- * 游戏服上下文
+ * 玩家角色上下文
  *
  * @author tingyanshen
  */
 @Slf4j
-@Getter
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
 @RequiredArgsConstructor
-public class GameServerContext {
-  public static final String GAME_SERVER_CONTEXT = "GAME_SERVER_CONTEXT";
+public class GameRoleContext {
+  public static final String GAME_ROLE_CONTEXT = "GAME_ROLE_CONTEXT";
 
   OperationRequester requester;
   List<Object> handlers;
 
-  protected void initHeaders(@NonNull MessageHeaderAccessor headerAccessor) {
-    headerAccessor.setHeader(GAME_SERVER_CONTEXT, this);
+  public void initHeaders(MessageHeaderAccessor headerAccessor) {
+    headerAccessor.setHeader(GAME_ROLE_CONTEXT, this);
   }
 
   public void prepare() {
@@ -78,7 +75,7 @@ public class GameServerContext {
         .annotation(OnStart.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .reverseOrder()
+        .naturalOrder()
         .block();
   }
 

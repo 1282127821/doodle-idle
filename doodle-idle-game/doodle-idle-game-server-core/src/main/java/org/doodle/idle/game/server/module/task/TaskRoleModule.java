@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
 import org.doodle.idle.framework.module.annotation.RoleModule;
+import org.doodle.idle.game.server.GameRoleContext;
 
 /**
  * 玩家任务模块
@@ -27,10 +28,10 @@ import org.doodle.idle.framework.module.annotation.RoleModule;
  */
 @Slf4j
 @RoleModule
-public class TaskRoleModule {
+public class TaskRoleModule<R extends GameRoleContext> {
 
   @OnStart
-  public void onStart() {
+  public void onStart(R role) {
     log.info("onStart: task-module");
     //    throw new RuntimeException();
   }
