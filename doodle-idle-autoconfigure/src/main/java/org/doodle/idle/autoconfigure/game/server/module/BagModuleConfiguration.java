@@ -31,20 +31,21 @@ public class BagModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public BagController bagController() {
-    return new BagController();
+  public BagController<? extends GameRoleContext> bagController() {
+    return new BagController<>();
   }
 
   @Bean
   @ConditionalOnMissingBean
   public BagServerModule<? extends GameServerContext> bagServerModule(
-      ServerBootstrapModule registry) {
+      ServerBootstrapModule<? extends GameServerContext> registry) {
     return registry.add(new BagServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public BagRoleModule<? extends GameRoleContext> bagRoleModule(RoleBootstrapModule registry) {
+  public BagRoleModule<? extends GameRoleContext> bagRoleModule(
+      RoleBootstrapModule<? extends GameRoleContext> registry) {
     return registry.add(new BagRoleModule<>());
   }
 }

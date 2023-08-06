@@ -31,20 +31,21 @@ public class RoleModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public RoleController roleController() {
-    return new RoleController();
+  public RoleController<? extends GameRoleContext> roleController() {
+    return new RoleController<>();
   }
 
   @Bean
   @ConditionalOnMissingBean
   public RoleServerModule<? extends GameServerContext> roleServerModule(
-      ServerBootstrapModule registry) {
+      ServerBootstrapModule<? extends GameServerContext> registry) {
     return registry.add(new RoleServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public RoleRoleModule<? extends GameRoleContext> roleRoleModule(RoleBootstrapModule registry) {
+  public RoleRoleModule<? extends GameRoleContext> roleRoleModule(
+      RoleBootstrapModule<? extends GameRoleContext> registry) {
     return registry.add(new RoleRoleModule<>());
   }
 }

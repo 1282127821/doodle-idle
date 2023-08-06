@@ -16,12 +16,14 @@
 package org.doodle.idle.game.server.module.bag;
 
 import org.doodle.design.messaging.packet.PacketMapping;
+import org.doodle.idle.game.server.GameRoleContext;
 import org.doodle.idle.game.server.module.ModuleId;
 
 /**
  * 背包模块消息处理
  *
+ * @param <R> 玩家角色
  * @author tingyanshen
  */
 @PacketMapping(ModuleId.BAG)
-public class BagController {}
+public class BagController<R extends GameRoleContext> {}

@@ -31,20 +31,21 @@ public class FightModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public FightController fightController() {
-    return new FightController();
+  public FightController<? extends GameRoleContext> fightController() {
+    return new FightController<>();
   }
 
   @Bean
   @ConditionalOnMissingBean
   public FightServerModule<? extends GameServerContext> fightServerModule(
-      ServerBootstrapModule registry) {
+      ServerBootstrapModule<? extends GameServerContext> registry) {
     return registry.add(new FightServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public FightRoleModule<? extends GameRoleContext> fightRoleModule(RoleBootstrapModule registry) {
+  public FightRoleModule<? extends GameRoleContext> fightRoleModule(
+      RoleBootstrapModule<? extends GameRoleContext> registry) {
     return registry.add(new FightRoleModule<>());
   }
 }

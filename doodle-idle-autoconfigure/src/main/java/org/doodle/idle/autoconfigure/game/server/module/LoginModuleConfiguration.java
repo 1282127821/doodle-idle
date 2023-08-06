@@ -31,20 +31,21 @@ public class LoginModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public LoginController loginController() {
-    return new LoginController();
+  public LoginController<? extends GameRoleContext> loginController() {
+    return new LoginController<>();
   }
 
   @Bean
   @ConditionalOnMissingBean
   public LoginServerModule<? extends GameServerContext> loginServerModule(
-      ServerBootstrapModule registry) {
+      ServerBootstrapModule<? extends GameServerContext> registry) {
     return registry.add(new LoginServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public LoginRoleModule<? extends GameRoleContext> loginRoleModule(RoleBootstrapModule registry) {
+  public LoginRoleModule<? extends GameRoleContext> loginRoleModule(
+      RoleBootstrapModule<? extends GameRoleContext> registry) {
     return registry.add(new LoginRoleModule<>());
   }
 }

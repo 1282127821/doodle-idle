@@ -16,12 +16,14 @@
 package org.doodle.idle.game.server.activity.sign;
 
 import org.doodle.design.messaging.packet.PacketMapping;
+import org.doodle.idle.game.server.GameServerContext;
 import org.doodle.idle.game.server.activity.ActivityId;
 
 /**
  * 签到活动消息处理器
  *
+ * @param <R> 玩家角色
  * @author tingyanshen
  */
 @PacketMapping(ActivityId.SIGN)
-public class SignController {}
+public class SignController<R extends GameServerContext> {}

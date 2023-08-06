@@ -16,12 +16,14 @@
 package org.doodle.idle.game.server.module.login;
 
 import org.doodle.design.messaging.packet.PacketMapping;
+import org.doodle.idle.game.server.GameRoleContext;
 import org.doodle.idle.game.server.module.ModuleId;
 
 /**
  * 登录模块消息处理
  *
+ * @param <R> 玩家角色
  * @author tingyanshen
  */
 @PacketMapping(ModuleId.LOGIN)
-public class LoginController {}
+public class LoginController<R extends GameRoleContext> {}

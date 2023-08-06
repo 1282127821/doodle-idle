@@ -43,20 +43,21 @@ public class PaymentModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public PaymentController paymentController() {
-    return new PaymentController();
+  public PaymentController<? extends GameRoleContext> paymentController() {
+    return new PaymentController<>();
   }
 
   @Bean
   @ConditionalOnMissingBean
   public PaymentServerModule<? extends GameServerContext> paymentServerModule(
-      ServerBootstrapModule registry) {
+      ServerBootstrapModule<? extends GameServerContext> registry) {
     return registry.add(new PaymentServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public PaymentRoleModule<? extends GameRoleContext> paymentRoleModule(RoleBootstrapModule registry) {
+  public PaymentRoleModule<? extends GameRoleContext> paymentRoleModule(
+      RoleBootstrapModule<? extends GameRoleContext> registry) {
     return registry.add(new PaymentRoleModule<>());
   }
 }

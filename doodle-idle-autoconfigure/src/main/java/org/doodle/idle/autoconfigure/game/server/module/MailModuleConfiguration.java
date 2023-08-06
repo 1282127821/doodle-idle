@@ -31,20 +31,21 @@ public class MailModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public MailController mailController() {
-    return new MailController();
+  public MailController<? extends GameRoleContext> mailController() {
+    return new MailController<>();
   }
 
   @Bean
   @ConditionalOnMissingBean
   public MailServerModule<? extends GameServerContext> mailServerModule(
-      ServerBootstrapModule registry) {
+      ServerBootstrapModule<? extends GameServerContext> registry) {
     return registry.add(new MailServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public MailRoleModule<? extends GameRoleContext> mailRoleModule(RoleBootstrapModule registry) {
+  public MailRoleModule<? extends GameRoleContext> mailRoleModule(
+      RoleBootstrapModule<? extends GameRoleContext> registry) {
     return registry.add(new MailRoleModule<>());
   }
 }

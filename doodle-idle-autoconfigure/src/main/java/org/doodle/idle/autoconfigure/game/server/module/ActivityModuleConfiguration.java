@@ -56,21 +56,23 @@ public class ActivityModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public ActivityController activityController() {
-    return new ActivityController();
+  public ActivityController<? extends GameRoleContext> activityController() {
+    return new ActivityController<>();
   }
 
   @Bean
   @ConditionalOnMissingBean
   public ActivityServerModule<? extends GameServerContext> activityServerModule(
-      ServerActivityOperationHandler operationHandler, ServerBootstrapModule registry) {
+      ServerActivityOperationHandler operationHandler,
+      ServerBootstrapModule<? extends GameServerContext> registry) {
     return registry.add(new ActivityServerModule<>(new OperationRequester(operationHandler)));
   }
 
   @Bean
   @ConditionalOnMissingBean
   public ActivityRoleModule<? extends GameRoleContext> activityRoleModule(
-      RoleActivityOperationHandler operationHandler, RoleBootstrapModule registry) {
+      RoleActivityOperationHandler operationHandler,
+      RoleBootstrapModule<? extends GameRoleContext> registry) {
     return registry.add(new ActivityRoleModule<>(new OperationRequester(operationHandler)));
   }
 }
