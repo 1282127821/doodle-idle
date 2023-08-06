@@ -50,7 +50,7 @@ public class GameServerContext {
         .annotation(OnPrepare.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .natureOrder()
+        .naturalOrder()
         .block();
   }
 
@@ -59,7 +59,7 @@ public class GameServerContext {
         .annotation(OnOneIteration.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .natureOrder()
+        .naturalOrder()
         .block();
   }
 
@@ -68,7 +68,7 @@ public class GameServerContext {
         .annotation(OnStart.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .reversedOrder()
+        .reverseOrder()
         .block();
   }
 
@@ -77,7 +77,7 @@ public class GameServerContext {
         .annotation(OnStop.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .reversedOrder()
+        .naturalOrder()
         .block();
   }
 
@@ -86,7 +86,7 @@ public class GameServerContext {
         .annotation(OnSave.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .natureOrder()
+        .naturalOrder()
         .block();
   }
 
@@ -95,7 +95,7 @@ public class GameServerContext {
         .annotation(OnDayElapse.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .natureOrder()
+        .naturalOrder()
         .block();
   }
 
@@ -104,7 +104,7 @@ public class GameServerContext {
         .annotation(OnWeekElapse.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .natureOrder()
+        .naturalOrder()
         .block();
   }
 
@@ -113,7 +113,7 @@ public class GameServerContext {
         .annotation(OnMonthElapse.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .natureOrder()
+        .naturalOrder()
         .block();
   }
 
@@ -122,7 +122,7 @@ public class GameServerContext {
         .annotation(OnYearElapse.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .natureOrder()
+        .naturalOrder()
         .block();
   }
 }
