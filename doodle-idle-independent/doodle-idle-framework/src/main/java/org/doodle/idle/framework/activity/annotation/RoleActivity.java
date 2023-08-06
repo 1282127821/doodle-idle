@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module.annotation;
+package org.doodle.idle.framework.activity.annotation;
 
 import java.lang.annotation.*;
 
 /**
- * 跨年操作
+ * 玩家角色活动
  *
  * @author tingyanshen
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface OnYearElapse {}
+public @interface RoleActivity {}

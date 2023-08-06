@@ -16,6 +16,8 @@
 package org.doodle.idle.game.server.module.bag;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnStart;
+import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.annotation.*;
 
 /**

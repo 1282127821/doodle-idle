@@ -13,28 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.bag;
+package org.doodle.idle.game.server.module.activity;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.activity.ActivityRegistry;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
-import org.doodle.idle.framework.module.annotation.*;
+import org.doodle.idle.framework.lifecycle.annotation.OnStart;
+import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.framework.module.annotation.RoleModule;
 
 /**
- * 服务背包模块
+ * 玩家活动模块
  *
  * @author tingyanshen
  */
 @Slf4j
-@ServerModule
-public class BagServerModule {
+@RoleModule
+public class ActivityRoleModule extends ActivityRegistry {
 
   @OnPrepare
   public void onPrepare() {
-    log.info("OnPrepare: bag-server-module");
+    log.info("OnPrepare: activity-role-module");
   }
 
-  @ModuleExceptionHandler(Exception.class)
-  public void handleException(Exception e) {
-    log.error("未知错误", e);
+  @OnStart
+  public void onStart() {
+    log.info("OnStart: activity-role-module");
+  }
+
+  @OnStop
+  public void onStop() {
+    log.info("OnStop: activity-role-module");
   }
 }

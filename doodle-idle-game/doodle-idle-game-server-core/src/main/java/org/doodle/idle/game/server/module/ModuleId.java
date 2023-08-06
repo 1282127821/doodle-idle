@@ -22,17 +22,27 @@ package org.doodle.idle.game.server.module;
  */
 public interface ModuleId {
 
+  /** 登录 */
   short LOGIN = 1;
 
+  /** 角色 */
   short ROLE = 2;
 
+  /** 战斗 */
   short FIGHT = 3;
 
+  /** 背包 */
   short BAG = 4;
 
+  /** 邮件 */
   short MAIL = 5;
 
+  /** 任务 */
   short TASK = 6;
 
+  /** 支付 */
   short PAYMENT = 7;
+
+  /** 活动 */
+  short ACTIVITY = 100;
 }

@@ -22,7 +22,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
-import org.doodle.idle.framework.module.annotation.*;
+import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
+import org.doodle.idle.framework.lifecycle.annotation.OnSave;
+import org.doodle.idle.framework.lifecycle.annotation.OnStart;
+import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.framework.timer.annotation.*;
 import org.springframework.lang.NonNull;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 

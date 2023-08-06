@@ -17,7 +17,11 @@ package org.doodle.idle.framework.module.reactive;
 
 import java.util.List;
 import org.doodle.design.messaging.operation.reactive.OperationMessageHandler;
+import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
+import org.doodle.idle.framework.lifecycle.annotation.OnStart;
+import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.annotation.*;
+import org.doodle.idle.framework.timer.annotation.*;
 import org.springframework.messaging.handler.invocation.AbstractExceptionHandlerMethodResolver;
 
 /**

@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module.annotation;
+package org.doodle.idle.framework.timer.annotation;
 
 import java.lang.annotation.*;
 
 /**
- * 跨周操作
+ * 间隔调度操作
  *
  * @author tingyanshen
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface OnWeekElapse {}
+public @interface OnOneIteration {}

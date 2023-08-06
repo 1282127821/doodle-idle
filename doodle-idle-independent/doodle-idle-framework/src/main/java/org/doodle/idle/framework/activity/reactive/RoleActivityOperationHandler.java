@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module.reactive;
+package org.doodle.idle.framework.activity.reactive;
 
 import java.util.List;
 import org.doodle.design.messaging.operation.reactive.OperationMessageHandler;
+import org.doodle.idle.framework.activity.annotation.RoleActivity;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
-import org.doodle.idle.framework.module.annotation.*;
 import org.doodle.idle.framework.timer.annotation.*;
 import org.springframework.messaging.handler.invocation.AbstractExceptionHandlerMethodResolver;
 
 /**
- * 服务模块操作处理器
+ * 玩家活动操作处理器
  *
  * @author tingyanshen
  */
-public class ServerModuleOperationHandler extends OperationMessageHandler {
+public class RoleActivityOperationHandler extends OperationMessageHandler {
 
-  public ServerModuleOperationHandler() {
+  public RoleActivityOperationHandler() {
     super(
-        ServerModule.class,
+        RoleActivity.class,
         List.of(
             OnPrepare.class,
             OnOneIteration.class,
@@ -47,6 +47,6 @@ public class ServerModuleOperationHandler extends OperationMessageHandler {
   @Override
   protected AbstractExceptionHandlerMethodResolver createExceptionMethodResolverFor(
       Class<?> beanType) {
-    return new ModuleExceptionHandlerMethodResolver(beanType);
+    return new ActivityExceptionHandlerMethodResolver(beanType);
   }
 }

@@ -15,33 +15,42 @@
  */
 package org.doodle.idle.autoconfigure.game.server.module;
 
+import org.doodle.design.messaging.operation.reactive.OperationRequester;
+import org.doodle.idle.framework.activity.reactive.ServerActivityOperationHandler;
 import org.doodle.idle.game.server.bootstrap.RoleBootstrapModule;
 import org.doodle.idle.game.server.bootstrap.ServerBootstrapModule;
-import org.doodle.idle.game.server.module.bag.BagController;
-import org.doodle.idle.game.server.module.bag.BagRoleModule;
-import org.doodle.idle.game.server.module.bag.BagServerModule;
+import org.doodle.idle.game.server.module.activity.ActivityController;
+import org.doodle.idle.game.server.module.activity.ActivityRoleModule;
+import org.doodle.idle.game.server.module.activity.ActivityServerModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
-public class BagModuleConfiguration {
+public class ActivityModuleConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public BagController bagController() {
-    return new BagController();
+  public ServerActivityOperationHandler serverActivityOperationHandler() {
+    return new ServerActivityOperationHandler();
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public BagServerModule bagServerModule(ServerBootstrapModule registry) {
-    return registry.add(new BagServerModule());
+  public ActivityController activityController() {
+    return new ActivityController();
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public BagRoleModule bagRoleModule(RoleBootstrapModule registry) {
-    return registry.add(new BagRoleModule());
+  public ActivityServerModule activityServerModule(
+      ServerActivityOperationHandler operationHandler, ServerBootstrapModule registry) {
+    return registry.add(new ActivityServerModule(new OperationRequester(operationHandler)));
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public ActivityRoleModule activityRoleModule(RoleBootstrapModule registry) {
+    return registry.add(new ActivityRoleModule());
   }
 }

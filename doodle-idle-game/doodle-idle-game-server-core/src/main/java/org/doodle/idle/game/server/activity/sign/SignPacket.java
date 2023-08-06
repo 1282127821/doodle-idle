@@ -13,16 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module.annotation;
-
-import java.lang.annotation.*;
+package org.doodle.idle.game.server.activity.sign;
 
 /**
- * 跨天操作
+ * 签到活动消息ID
  *
  * @author tingyanshen
  */
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface OnDayElapse {}
+public interface SignPacket {}

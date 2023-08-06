@@ -13,28 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.bag;
+package org.doodle.idle.game.server.activity.sign;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.activity.annotation.ServerActivity;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
-import org.doodle.idle.framework.module.annotation.*;
+import org.doodle.idle.framework.lifecycle.annotation.OnStart;
+import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 
 /**
- * 服务背包模块
+ * 签到服务活动
  *
  * @author tingyanshen
  */
 @Slf4j
-@ServerModule
-public class BagServerModule {
+@ServerActivity
+public class SignServerActivity {
 
   @OnPrepare
   public void onPrepare() {
-    log.info("OnPrepare: bag-server-module");
+    log.info("OnPrepare: sign-server-activity");
   }
 
-  @ModuleExceptionHandler(Exception.class)
-  public void handleException(Exception e) {
-    log.error("未知错误", e);
+  @OnStart
+  public void onStart() {
+    log.info("OnStart: sign-server-activity");
+  }
+
+  @OnStop
+  public void onStop() {
+    log.info("OnStop: sign-server-activity");
   }
 }

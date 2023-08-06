@@ -13,35 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.autoconfigure.game.server.module;
+package org.doodle.idle.autoconfigure.game.server.activity;
 
-import org.doodle.idle.game.server.bootstrap.RoleBootstrapModule;
-import org.doodle.idle.game.server.bootstrap.ServerBootstrapModule;
-import org.doodle.idle.game.server.module.bag.BagController;
-import org.doodle.idle.game.server.module.bag.BagRoleModule;
-import org.doodle.idle.game.server.module.bag.BagServerModule;
+import org.doodle.idle.game.server.activity.sign.SignController;
+import org.doodle.idle.game.server.activity.sign.SignRoleActivity;
+import org.doodle.idle.game.server.activity.sign.SignServerActivity;
+import org.doodle.idle.game.server.module.activity.ActivityRoleModule;
+import org.doodle.idle.game.server.module.activity.ActivityServerModule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
-public class BagModuleConfiguration {
+public class SignActivityConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public BagController bagController() {
-    return new BagController();
+  public SignController signController() {
+    return new SignController();
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public BagServerModule bagServerModule(ServerBootstrapModule registry) {
-    return registry.add(new BagServerModule());
+  public SignServerActivity signServerActivity(ActivityServerModule registry) {
+    return registry.add(new SignServerActivity());
   }
 
   @Bean
   @ConditionalOnMissingBean
-  public BagRoleModule bagRoleModule(RoleBootstrapModule registry) {
-    return registry.add(new BagRoleModule());
+  public SignRoleActivity signRoleActivity(ActivityRoleModule registry) {
+    return registry.add(new SignRoleActivity());
   }
 }

@@ -22,6 +22,7 @@ import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
 import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
+import org.doodle.idle.autoconfigure.game.server.activity.SignActivityConfiguration;
 import org.doodle.idle.autoconfigure.game.server.module.*;
 import org.doodle.idle.framework.module.reactive.RoleModuleOperationHandler;
 import org.doodle.idle.framework.module.reactive.ServerModuleOperationHandler;
@@ -55,6 +56,8 @@ import org.springframework.context.annotation.Import;
 @ConditionalOnBean(BrokerClientRSocketRequester.class)
 @EnableConfigurationProperties(GameServerProperties.class)
 @Import({
+  SignActivityConfiguration.class,
+  ActivityModuleConfiguration.class,
   BagModuleConfiguration.class,
   FightModuleConfiguration.class,
   LoginModuleConfiguration.class,

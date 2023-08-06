@@ -16,9 +16,9 @@
 package org.doodle.idle.game.server.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnStart;
+import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.ModuleRegistry;
-import org.doodle.idle.framework.module.annotation.OnStart;
-import org.doodle.idle.framework.module.annotation.OnStop;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 
 /**

@@ -13,11 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module.annotation;
+package org.doodle.idle.framework.activity;
 
-import java.lang.annotation.*;
+import java.util.LinkedList;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface OnOneIteration {}
+@Getter
+@FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
+public class ActivityRegistry {
+  List<Object> activities = new LinkedList<>();
+
+  public <A> A add(A activity) {
+    activities.add(activity);
+    return activity;
+  }
+}

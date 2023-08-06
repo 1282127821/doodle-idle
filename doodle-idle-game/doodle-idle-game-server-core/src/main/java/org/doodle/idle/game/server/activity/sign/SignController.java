@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module.annotation;
+package org.doodle.idle.game.server.activity.sign;
 
-import java.lang.annotation.*;
+import org.doodle.design.messaging.packet.PacketMapping;
+import org.doodle.idle.game.server.activity.ActivityId;
 
 /**
- * 开始操作
+ * 签到活动消息处理器
  *
  * @author tingyanshen
  */
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface OnStart {}
+@PacketMapping(ActivityId.SIGN)
+public class SignController {}

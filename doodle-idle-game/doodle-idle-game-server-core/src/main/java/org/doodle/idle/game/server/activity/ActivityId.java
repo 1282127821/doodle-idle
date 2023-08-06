@@ -13,28 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.bag;
-
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
-import org.doodle.idle.framework.module.annotation.*;
+package org.doodle.idle.game.server.activity;
 
 /**
- * 服务背包模块
+ * 活动ID
  *
  * @author tingyanshen
  */
-@Slf4j
-@ServerModule
-public class BagServerModule {
+public interface ActivityId {
 
-  @OnPrepare
-  public void onPrepare() {
-    log.info("OnPrepare: bag-server-module");
-  }
-
-  @ModuleExceptionHandler(Exception.class)
-  public void handleException(Exception e) {
-    log.error("未知错误", e);
-  }
+  short SIGN = 101;
 }

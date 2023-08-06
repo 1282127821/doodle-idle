@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.framework.module.annotation;
+package org.doodle.idle.framework.lifecycle.annotation;
 
 import java.lang.annotation.*;
 
 /**
- * 关闭操作
+ * 开始操作
  *
  * @author tingyanshen
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface OnStop {}
+public @interface OnStart {}

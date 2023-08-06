@@ -16,7 +16,7 @@
 package org.doodle.idle.game.server.module.payment;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.module.annotation.OnPrepare;
+import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 
 /**
