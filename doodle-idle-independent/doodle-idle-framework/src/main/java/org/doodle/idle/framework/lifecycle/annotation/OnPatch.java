@@ -13,29 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.role;
+package org.doodle.idle.framework.lifecycle.annotation;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
-import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
-import org.doodle.idle.framework.module.annotation.ServerModule;
+import java.lang.annotation.*;
 
 /**
- * 服务角色模块
+ * 补丁操作
  *
  * @author tingyanshen
  */
-@Slf4j
-@ServerModule
-public class RoleServerModule {
-
-  @OnPrepare
-  public void onPrepare() {
-    log.info("OnPrepare: role-server-module");
-  }
-
-  @OnPatch
-  public void onPatch() {
-    log.info("OnPatch: role-server-module");
-  }
-}
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface OnPatch {}

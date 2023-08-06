@@ -36,6 +36,7 @@ public class GameServerBootstrap implements SmartLifecycle {
   public void start() {
     if (running.compareAndSet(false, true)) {
       serverContext.prepare();
+      serverContext.patch();
       serverContext.start();
     }
   }
