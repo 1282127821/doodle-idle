@@ -106,7 +106,8 @@ public class GameServerAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public GameServerContext gameServerContext(
-      ServerModuleOperationHandler operationHandler, ServerBootstrapModule registry) {
+      ServerModuleOperationHandler operationHandler,
+      ServerBootstrapModule<? extends GameServerContext> registry) {
     return new GameServerContext(new OperationRequester(operationHandler), registry.getModules());
   }
 
