@@ -23,7 +23,7 @@ import org.doodle.idle.framework.module.annotation.ServerModule;
 import org.doodle.idle.game.server.GameServerContext;
 
 /**
- * 服务任务模块
+ * 任务服务模块
  *
  * @author tingyanshen
  */
@@ -33,15 +33,17 @@ public class TaskServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("OnPrepare: task-server-module");
+    log.info("准备: 任务服务模块");
     //    throw new RuntimeException();
   }
 
   @OnPatch
-  public void onPatch(S server) {}
+  public void onPatch(S server) {
+    log.info("补丁: 任务服务模块");
+  }
 
   @ModuleExceptionHandler(Exception.class)
-  public void handleException(Exception e) {
-    log.info("任务模块未知异常", e);
+  public void onException(Exception e) {
+    log.info("异常: 任务服务模块", e);
   }
 }

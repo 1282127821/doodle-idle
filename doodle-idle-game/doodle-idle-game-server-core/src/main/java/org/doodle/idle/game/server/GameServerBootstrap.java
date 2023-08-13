@@ -19,13 +19,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.SmartLifecycle;
+import reactor.core.publisher.Mono;
 
 /**
  * 游戏服启动
  *
  * @author tingyanshen
  */
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class GameServerBootstrap implements SmartLifecycle {
@@ -35,16 +38,15 @@ public class GameServerBootstrap implements SmartLifecycle {
   @Override
   public void start() {
     if (running.compareAndSet(false, true)) {
-      serverContext.prepare();
-      serverContext.patch();
-      serverContext.start();
+      Mono.when(serverContext.prepare(), serverContext.patch(), serverContext.start())
+          .doFirst(() -> log.info("启动游戏服"))
+          .block();
     }
   }
 
   @Override
   public void stop() {
-    serverContext.stop();
-    serverContext.save();
+    Mono.when(serverContext.stop(), serverContext.save()).doFirst(() -> log.info("关闭游戏服")).block();
   }
 
   @Override

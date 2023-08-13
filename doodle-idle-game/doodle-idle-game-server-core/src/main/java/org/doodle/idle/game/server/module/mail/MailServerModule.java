@@ -18,11 +18,12 @@ package org.doodle.idle.game.server.module.mail;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
+import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 import org.doodle.idle.game.server.GameServerContext;
 
 /**
- * 服务邮件模块
+ * 邮件服务模块
  *
  * @author tingyanshen
  */
@@ -32,9 +33,16 @@ public class MailServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("OnPrepare: mail-server-module");
+    log.info("准备: 邮件服务模块");
   }
 
   @OnPatch
-  public void onPatch(S server) {}
+  public void onPatch(S server) {
+    log.info("补丁: 邮件服务模块");
+  }
+
+  @ModuleExceptionHandler(Exception.class)
+  public void onException(Exception e) {
+    log.error("异常: 邮件服务模块");
+  }
 }

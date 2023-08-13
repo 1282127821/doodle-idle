@@ -23,7 +23,7 @@ import org.doodle.idle.framework.module.annotation.ServerModule;
 import org.doodle.idle.game.server.GameServerContext;
 
 /**
- * 服务登录模块
+ * 背包服务模块
  *
  * @author tingyanshen
  */
@@ -33,16 +33,16 @@ public class LoginServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("OnPrepare: login-server-module");
+    log.info("准备: 背包服务模块");
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("OnPatch: login-server-module");
+    log.info("补丁: 背包服务模块");
   }
 
   @ModuleExceptionHandler(Exception.class)
   public void handleException(Exception e) {
-    log.info("登录模块未知异常", e);
+    log.info("异常: 背包服务模块", e);
   }
 }

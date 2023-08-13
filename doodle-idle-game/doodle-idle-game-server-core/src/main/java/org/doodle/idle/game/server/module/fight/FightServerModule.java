@@ -20,11 +20,12 @@ import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 import org.doodle.idle.game.server.GameServerContext;
 
 /**
- * 服务战斗模块
+ * 战斗服务模块
  *
  * @author tingyanshen
  */
@@ -34,21 +35,26 @@ public class FightServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("OnPrepare: fight-server-module");
+    log.info("准备: 战斗服务模块");
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("OnPatch: fight-server-module");
+    log.info("补丁: 战斗服务模块");
   }
 
   @OnStart
   public void onStart(S server) {
-    log.info("OnStart: fight-server-module");
+    log.info("启动: 战斗服务模块");
   }
 
   @OnStop
   public void onStop(S server) {
-    log.info("onStop: fight-server-module");
+    log.info("关闭: 战斗服务模块");
+  }
+
+  @ModuleExceptionHandler(Exception.class)
+  public void onException(Exception e) {
+    log.error("异常: 战斗服务模块", e);
   }
 }

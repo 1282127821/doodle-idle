@@ -30,6 +30,10 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
+      <artifactId>doodle-boot-starter-socket</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
       <artifactId>doodle-config-starter-client</artifactId>
     </dependency>
     <dependency>

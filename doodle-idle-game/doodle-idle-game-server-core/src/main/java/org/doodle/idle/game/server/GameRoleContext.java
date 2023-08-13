@@ -16,13 +16,9 @@
 package org.doodle.idle.game.server;
 
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
-import org.doodle.idle.framework.lifecycle.annotation.*;
-import org.doodle.idle.framework.timer.annotation.*;
+import org.doodle.idle.framework.context.BaseContext;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 
 /**
@@ -31,105 +27,15 @@ import org.springframework.messaging.support.MessageHeaderAccessor;
  * @author tingyanshen
  */
 @Slf4j
-@FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
-@RequiredArgsConstructor
-public class GameRoleContext {
+public class GameRoleContext extends BaseContext {
   public static final String GAME_ROLE_CONTEXT = "GAME_ROLE_CONTEXT";
 
-  OperationRequester requester;
-  List<Object> handlers;
+  public GameRoleContext(OperationRequester requester, List<Object> handlers) {
+    super(requester, handlers);
+  }
 
-  public void initHeaders(MessageHeaderAccessor headerAccessor) {
+  @Override
+  protected void initHeaders(MessageHeaderAccessor headerAccessor) {
     headerAccessor.setHeader(GAME_ROLE_CONTEXT, this);
-  }
-
-  public void prepare() {
-    this.requester
-        .annotation(OnPrepare.class)
-        .handlers(handlers)
-        .header(this::initHeaders)
-        .naturalOrder()
-        .block();
-  }
-
-  public void patch() {
-    this.requester
-        .annotation(OnPatch.class)
-        .handlers(handlers)
-        .header(this::initHeaders)
-        .naturalOrder()
-        .block();
-  }
-
-  public void oneIteration() {
-    this.requester
-        .annotation(OnOneIteration.class)
-        .handlers(handlers)
-        .header(this::initHeaders)
-        .naturalOrder()
-        .block();
-  }
-
-  public void start() {
-    this.requester
-        .annotation(OnStart.class)
-        .handlers(handlers)
-        .header(this::initHeaders)
-        .naturalOrder()
-        .block();
-  }
-
-  public void stop() {
-    this.requester
-        .annotation(OnStop.class)
-        .handlers(handlers)
-        .header(this::initHeaders)
-        .naturalOrder()
-        .block();
-  }
-
-  public void save() {
-    this.requester
-        .annotation(OnSave.class)
-        .handlers(handlers)
-        .header(this::initHeaders)
-        .naturalOrder()
-        .block();
-  }
-
-  public void dayElapse() {
-    this.requester
-        .annotation(OnDayElapse.class)
-        .handlers(handlers)
-        .header(this::initHeaders)
-        .naturalOrder()
-        .block();
-  }
-
-  public void weekElapse() {
-    this.requester
-        .annotation(OnWeekElapse.class)
-        .handlers(handlers)
-        .header(this::initHeaders)
-        .naturalOrder()
-        .block();
-  }
-
-  public void monthElapse() {
-    this.requester
-        .annotation(OnMonthElapse.class)
-        .handlers(handlers)
-        .header(this::initHeaders)
-        .naturalOrder()
-        .block();
-  }
-
-  public void yearElapse() {
-    this.requester
-        .annotation(OnYearElapse.class)
-        .handlers(handlers)
-        .header(this::initHeaders)
-        .naturalOrder()
-        .block();
   }
 }

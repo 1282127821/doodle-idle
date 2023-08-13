@@ -29,6 +29,7 @@ import org.doodle.idle.framework.module.annotation.RoleModule;
 import org.doodle.idle.framework.timer.annotation.*;
 import org.doodle.idle.game.server.GameRoleContext;
 import org.springframework.messaging.support.MessageHeaderInitializer;
+import reactor.core.publisher.Mono;
 
 /**
  * 玩家活动模块
@@ -49,17 +50,17 @@ public class ActivityRoleModule<R extends GameRoleContext> extends ActivityRegis
   @OnStart
   public void onStart(R role) {
     MessageHeaderInitializer headers = createHeaders(role);
-    this.requester
-        .annotation(OnPrepare.class)
-        .handlers(getActivities())
-        .header(headers)
-        .naturalOrder()
-        .block();
-    this.requester
-        .annotation(OnStart.class)
-        .handlers(getActivities())
-        .header(headers)
-        .naturalOrder()
+    Mono.when(
+            this.requester
+                .annotation(OnPrepare.class)
+                .handlers(getActivities())
+                .header(headers)
+                .naturalOrder(),
+            this.requester
+                .annotation(OnStart.class)
+                .handlers(getActivities())
+                .header(headers)
+                .naturalOrder())
         .block();
   }
 

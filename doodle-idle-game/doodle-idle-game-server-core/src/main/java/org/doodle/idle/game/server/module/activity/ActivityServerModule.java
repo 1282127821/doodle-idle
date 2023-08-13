@@ -29,6 +29,7 @@ import org.doodle.idle.framework.module.annotation.*;
 import org.doodle.idle.framework.timer.annotation.*;
 import org.doodle.idle.game.server.GameServerContext;
 import org.springframework.messaging.support.MessageHeaderInitializer;
+import reactor.core.publisher.Mono;
 
 /**
  * 活动服务模块
@@ -49,23 +50,27 @@ public class ActivityServerModule<S extends GameServerContext> extends ActivityR
 
   @OnStart
   public void onStart(S server) {
+    log.info("启动: 活动服务模块");
     MessageHeaderInitializer headers = createHeaders(server);
-    this.requester
-        .annotation(OnPrepare.class)
-        .handlers(getActivities())
-        .header(headers)
-        .naturalOrder()
-        .block();
-    this.requester
-        .annotation(OnStart.class)
-        .handlers(getActivities())
-        .header(headers)
-        .naturalOrder()
+    Mono.when(
+            this.requester
+                .annotation(OnPrepare.class)
+                .handlers(getActivities())
+                .header(headers)
+                .naturalOrder()
+                .doFirst(() -> log.info("准备: 服务活动")),
+            this.requester
+                .annotation(OnStart.class)
+                .handlers(getActivities())
+                .header(headers)
+                .naturalOrder()
+                .doFirst(() -> log.info("启动: 服务活动")))
         .block();
   }
 
   @OnStop
   public void onStop(S server) {
+    log.info("关闭: 活动服务模块");
     this.requester
         .annotation(OnStop.class)
         .handlers(getActivities())
@@ -76,6 +81,7 @@ public class ActivityServerModule<S extends GameServerContext> extends ActivityR
 
   @OnSave
   public void onSave(S server) {
+    log.info("保存: 活动服务模块");
     this.requester
         .annotation(OnSave.class)
         .handlers(getActivities())

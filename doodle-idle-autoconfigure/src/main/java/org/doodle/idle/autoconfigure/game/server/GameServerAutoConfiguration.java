@@ -16,6 +16,8 @@
 package org.doodle.idle.autoconfigure.game.server;
 
 import org.doodle.admin.autoconfigure.client.AdminClientAutoConfiguration;
+import org.doodle.boot.autoconfigure.socket.SocketServerAutoConfiguration;
+import org.doodle.boot.socket.context.SocketServerBootstrap;
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
@@ -45,6 +47,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 @AutoConfiguration(
+    before = SocketServerAutoConfiguration.class,
     after = {
       BrokerClientAutoConfiguration.class,
       ConfigClientAutoConfiguration.class,
@@ -73,8 +76,9 @@ public class GameServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public ServerBootstrapModule<? extends GameServerContext> serverBootstrapModule() {
-    return new ServerBootstrapModule<>();
+  public ServerBootstrapModule<? extends GameServerContext> serverBootstrapModule(
+      SocketServerBootstrap socketServerBootstrap) {
+    return new ServerBootstrapModule<>(socketServerBootstrap);
   }
 
   @Bean

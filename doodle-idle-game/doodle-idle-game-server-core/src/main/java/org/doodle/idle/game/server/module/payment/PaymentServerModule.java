@@ -18,11 +18,12 @@ package org.doodle.idle.game.server.module.payment;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
+import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 import org.doodle.idle.game.server.GameServerContext;
 
 /**
- * 服务支付模块
+ * 支付服务模块
  *
  * @author tingyanshen
  */
@@ -32,9 +33,16 @@ public class PaymentServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("OnPrepare: payment-server-module");
+    log.info("准备: 支付服务模块");
   }
 
   @OnPatch
-  public void onPatch(S server) {}
+  public void onPatch(S server) {
+    log.info("补丁: 支付服务模块");
+  }
+
+  @ModuleExceptionHandler(Exception.class)
+  public void onException(Exception e) {
+    log.error("异常: 支付服务模块", e);
+  }
 }

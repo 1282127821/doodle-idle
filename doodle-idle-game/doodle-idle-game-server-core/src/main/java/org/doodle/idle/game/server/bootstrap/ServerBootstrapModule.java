@@ -15,10 +15,15 @@
  */
 package org.doodle.idle.game.server.bootstrap;
 
+import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.boot.socket.context.SocketServerBootstrap;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.ModuleRegistry;
+import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 import org.doodle.idle.game.server.GameServerContext;
 
@@ -29,18 +34,29 @@ import org.doodle.idle.game.server.GameServerContext;
  */
 @Slf4j
 @ServerModule
+@FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
 public class ServerBootstrapModule<S extends GameServerContext> extends ModuleRegistry {
-  public ServerBootstrapModule() {
+  SocketServerBootstrap socketServerBootstrap;
+
+  public ServerBootstrapModule(SocketServerBootstrap socketServerBootstrap) {
     add(this);
+    this.socketServerBootstrap = Objects.requireNonNull(socketServerBootstrap);
   }
 
   @OnStart
   public void onStart(S server) {
-    log.info("OnStart: server-registry-module");
+    log.info("启动: 启动服务模块");
   }
 
   @OnStop
   public void onStop(S server) {
-    log.info("OnStop: server-registry-module");
+    log.info("关闭: 启动服务模块");
+    log.info("    | 关闭网络模块");
+    socketServerBootstrap.stop();
+  }
+
+  @ModuleExceptionHandler(Exception.class)
+  public void onException(Exception e) {
+    log.error("异常: 启动服务模块", e);
   }
 }

@@ -32,16 +32,16 @@ public class BagServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("OnPrepare: bag-server-module");
+    log.info("准备: 服务背包模块");
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("OnPatch: bag-server-module");
+    log.info("补丁: 服务背包模块");
   }
 
   @ModuleExceptionHandler(Exception.class)
-  public void handleException(Exception e) {
-    log.error("未知错误", e);
+  public void onException(Exception e) {
+    log.error("异常: 服务背包模块", e);
   }
 }

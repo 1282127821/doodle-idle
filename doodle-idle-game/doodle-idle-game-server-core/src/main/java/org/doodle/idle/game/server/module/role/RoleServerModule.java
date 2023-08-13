@@ -18,6 +18,7 @@ package org.doodle.idle.game.server.module.role;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
+import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
 import org.doodle.idle.framework.module.annotation.ServerModule;
 import org.doodle.idle.game.server.GameServerContext;
 
@@ -32,11 +33,16 @@ public class RoleServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("OnPrepare: role-server-module");
+    log.info("准备: 服务角色模块");
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("OnPatch: role-server-module");
+    log.info("补丁: 服务角色模块");
+  }
+
+  @ModuleExceptionHandler(Exception.class)
+  public void onException(Exception e) {
+    log.error("异常： 服务角色模块", e);
   }
 }
