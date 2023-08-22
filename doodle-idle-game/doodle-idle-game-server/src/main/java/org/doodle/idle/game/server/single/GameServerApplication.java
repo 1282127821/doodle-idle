@@ -16,7 +16,6 @@
 package org.doodle.idle.game.server.single;
 
 import io.rsocket.Socket;
-import io.rsocket.SocketConnectionSetupPayload;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.packet.PacketExceptionHandler;
 import org.doodle.design.socket.SocketConnectMapping;
