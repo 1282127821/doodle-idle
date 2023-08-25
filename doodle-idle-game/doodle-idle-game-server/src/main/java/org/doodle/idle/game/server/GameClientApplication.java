@@ -58,7 +58,7 @@ public class GameClientApplication implements CommandLineRunner {
             .connect(this::transport);
     Socket socket = connect.block();
     PooledByteBufAllocator allocator = PooledByteBufAllocator.DEFAULT;
-    while (!sendingSocket.isDisposed()) {
+    while (!socket.isDisposed()) {
       TimeUnit.SECONDS.sleep(1);
       CompositeByteBuf composited = allocator.compositeBuffer();
       ByteBuf encodedRoute =
@@ -66,13 +66,11 @@ public class GameClientApplication implements CommandLineRunner {
               .getContent();
       CompositeMetadataCodec.encodeAndAddMetadata(
           composited, allocator, WellKnownMimeType.MESSAGE_RSOCKET_ROUTING, encodedRoute);
-      sendingSocket
+      socket
           .oneway(DefaultPayload.create(DefaultPayload.create("hi").data(), composited))
           .subscribe();
     }
   }
-
-  Socket sendingSocket;
 
   private SocketClientTransport transport() {
     return new NettySocketClientTransport(
@@ -80,7 +78,6 @@ public class GameClientApplication implements CommandLineRunner {
   }
 
   private Mono<Socket> accept(SocketConnectionSetupPayload setupPayload, Socket socket) {
-    sendingSocket = socket;
     return Mono.just(
         new Socket() {
           @Override
