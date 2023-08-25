@@ -16,36 +16,23 @@
 package org.doodle.idle.game.server.single;
 
 import io.rsocket.Socket;
-import io.rsocket.util.DefaultPayload;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.packet.PacketExceptionHandler;
-import org.doodle.design.socket.SocketConnectMapping;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.doodle.design.messaging.packet.PacketMapping;
 import org.springframework.stereotype.Controller;
-import reactor.core.publisher.Mono;
 
 @Slf4j
 @Controller
-@SpringBootApplication
-public class GameServerApplication {
-  public static void main(String[] args) {
-    SpringApplication.run(GameServerApplication.class, args);
+@PacketMapping(1)
+public class SampleController {
+
+  @PacketMapping(1)
+  public void handleMsg(Socket socket, String payload) {
+    log.info("接收到客户端请求: {}", payload);
   }
 
-  @SocketConnectMapping
-  public Mono<Void> connect(Socket socket, String setup) {
-    socket.oneway(DefaultPayload.create("hi")).subscribe();
-    socket
-        .onClose()
-        .doFirst(() -> log.info("客户端链接,setup: {}", setup))
-        .doOnTerminate(() -> log.info("客户端关闭"))
-        .subscribe();
-    return Mono.empty();
-  }
-
-  @PacketExceptionHandler
+  @PacketExceptionHandler(Exception.class)
   public void onException(Exception e) {
-    log.error("", e);
+    log.error("异常", e);
   }
 }

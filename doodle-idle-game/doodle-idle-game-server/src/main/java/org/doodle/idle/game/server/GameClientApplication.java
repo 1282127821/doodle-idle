@@ -15,13 +15,22 @@
  */
 package org.doodle.idle.game.server;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.CompositeByteBuf;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.rsocket.Payload;
 import io.rsocket.Socket;
 import io.rsocket.SocketConnectionSetupPayload;
 import io.rsocket.core.SocketConnector;
+import io.rsocket.metadata.CompositeMetadataCodec;
+import io.rsocket.metadata.TaggingMetadataCodec;
+import io.rsocket.metadata.WellKnownMimeType;
 import io.rsocket.transport.SocketClientTransport;
 import io.rsocket.transport.netty.client.TcpClientTransport;
 import io.rsocket.util.DefaultPayload;
+import java.util.Collections;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.boot.autoconfigure.socket.SocketServerAutoConfiguration;
 import org.doodle.boot.socket.netty.NettySocketClientTransport;
@@ -42,10 +51,28 @@ public class GameClientApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    Mono<Socket> connect = SocketConnector.create().acceptor(this::accept).connect(this::transport);
+    Mono<Socket> connect =
+        SocketConnector.create()
+            .setupPayload(DefaultPayload.create(UUID.randomUUID().toString()))
+            .acceptor(this::accept)
+            .connect(this::transport);
     Socket socket = connect.block();
-    Thread.currentThread().join();
+    PooledByteBufAllocator allocator = PooledByteBufAllocator.DEFAULT;
+    while (!sendingSocket.isDisposed()) {
+      TimeUnit.SECONDS.sleep(1);
+      CompositeByteBuf composited = allocator.compositeBuffer();
+      ByteBuf encodedRoute =
+          TaggingMetadataCodec.createRoutingMetadata(allocator, Collections.singleton("1.1"))
+              .getContent();
+      CompositeMetadataCodec.encodeAndAddMetadata(
+          composited, allocator, WellKnownMimeType.MESSAGE_RSOCKET_ROUTING, encodedRoute);
+      sendingSocket
+          .oneway(DefaultPayload.create(DefaultPayload.create("hi").data(), composited))
+          .subscribe();
+    }
   }
+
+  Socket sendingSocket;
 
   private SocketClientTransport transport() {
     return new NettySocketClientTransport(
@@ -53,7 +80,7 @@ public class GameClientApplication implements CommandLineRunner {
   }
 
   private Mono<Socket> accept(SocketConnectionSetupPayload setupPayload, Socket socket) {
-    socket.oneway(DefaultPayload.create("hi")).subscribe();
+    sendingSocket = socket;
     return Mono.just(
         new Socket() {
           @Override
