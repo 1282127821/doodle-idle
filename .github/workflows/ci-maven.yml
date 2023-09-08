@@ -16,122 +16,16 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: Checkout doodle-build
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-build
-          path: org-doodle/doodle-build
-      - name: Install doodle-build
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-build
-
-      - name: Checkout doodle-socket
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-socket
-          path: org-doodle/doodle-socket
-      - name: Install doodle-socket
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-socket
-
-      - name: Checkout doodle-design
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-design
-          path: org-doodle/doodle-design
-      - name: Install doodle-design
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-design
-
-      - name: Checkout doodle-boot
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-boot
-          path: org-doodle/doodle-boot
-      - name: Install doodle-boot
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-boot
-
-      - name: Checkout doodle-broker
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-broker
-          path: org-doodle/doodle-broker
-      - name: Install doodle-broker
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-broker
-
-      - name: Checkout doodle-config
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-config
-          path: org-doodle/doodle-config
-      - name: Install doodle-config
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-config
-
-      - name: Checkout doodle-login
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-login
-          path: org-doodle/doodle-login
-      - name: Install doodle-login
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-login
-
-      - name: Checkout doodle-payment
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-payment
-          path: org-doodle/doodle-payment
-      - name: Install doodle-payment
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-payment
-
-      - name: Checkout doodle-console
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-console
-          path: org-doodle/doodle-console
-      - name: Install doodle-console
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-console
-
-      - name: Checkout doodle-admin
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-admin
-          path: org-doodle/doodle-admin
-      - name: Install doodle-admin
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-admin
-
-      - name: Checkout doodle-excel
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-excel
-          path: org-doodle/doodle-excel
-      - name: Install doodle-excel
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-excel
-
-      - name: Checkout doodle-chat
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-chat
-          path: org-doodle/doodle-chat
-      - name: Install doodle-chat
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-chat
-
-      - name: Checkout doodle-auction
-        uses: actions/checkout@v3
-        with:
-          repository: org-doodle/doodle-auction
-          path: org-doodle/doodle-auction
-      - name: Install doodle-auction
-        run: ./mvnw install
-        working-directory: org-doodle/doodle-auction
+      - name: Install Doodle Modules
+        run: |
+          cat << EOF > DOODLE
+            doodle-build doodle-socket doodle-design doodle-boot \
+            doodle-broker doodle-config doodle-login doodle-payment \
+            doodle-console doodle-admin doodle-excel doodle-chat \
+            doodle-auction doodle-pipeline doodle-security doodle-kvstore
+          EOF
+          curl https://raw.githubusercontent.com/org-doodle/doodle-design/main/Makefile -o Makefile
+          make DOODLE_GIT=https://github.com/org-doodle install
 
       - name: Checkout coding style
         run: ./mvnw spotless:check
