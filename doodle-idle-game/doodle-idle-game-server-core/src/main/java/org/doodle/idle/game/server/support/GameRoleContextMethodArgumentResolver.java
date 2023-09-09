@@ -25,7 +25,7 @@ public class GameRoleContextMethodArgumentResolver implements HandlerMethodArgum
 
   @Override
   public boolean supportsParameter(MethodParameter parameter) {
-    return parameter.getParameterType().equals(GameRoleContext.class);
+    return GameRoleContext.class.isAssignableFrom(parameter.getParameterType());
   }
 
   @Override

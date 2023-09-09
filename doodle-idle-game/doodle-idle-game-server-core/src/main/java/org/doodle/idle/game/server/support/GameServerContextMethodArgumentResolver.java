@@ -25,7 +25,7 @@ public class GameServerContextMethodArgumentResolver implements HandlerMethodArg
 
   @Override
   public boolean supportsParameter(MethodParameter parameter) {
-    return parameter.getParameterType().equals(GameServerContext.class);
+    return GameServerContext.class.isAssignableFrom(parameter.getParameterType());
   }
 
   @Override
