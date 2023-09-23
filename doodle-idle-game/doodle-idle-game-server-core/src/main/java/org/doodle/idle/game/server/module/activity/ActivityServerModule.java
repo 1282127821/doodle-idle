@@ -49,10 +49,9 @@ public class ActivityServerModule<S extends GameServerContext> extends ActivityR
   }
 
   @OnStart
-  public void onStart(S server) {
-    log.info("启动: 活动服务模块");
+  public Mono<Void> onStart(S server) {
     MessageHeaderInitializer headers = createHeaders(server);
-    Mono.when(
+    return Mono.when(
             this.requester
                 .annotation(OnPrepare.class)
                 .handlers(getActivities())
@@ -65,78 +64,71 @@ public class ActivityServerModule<S extends GameServerContext> extends ActivityR
                 .header(headers)
                 .naturalOrder()
                 .doFirst(() -> log.info("启动: 服务活动")))
-        .block();
+        .doFirst(() -> log.info("启动: 活动服务模块"));
   }
 
   @OnStop
-  public void onStop(S server) {
-    log.info("关闭: 活动服务模块");
-    this.requester
+  public Mono<Void> onStop(S server) {
+    return this.requester
         .annotation(OnStop.class)
         .handlers(getActivities())
         .header(createHeaders(server))
         .naturalOrder()
-        .block();
+        .doFirst(() -> log.info("关闭: 活动服务模块"));
   }
 
   @OnSave
-  public void onSave(S server) {
-    log.info("保存: 活动服务模块");
-    this.requester
+  public Mono<Void> onSave(S server) {
+    return this.requester
         .annotation(OnSave.class)
         .handlers(getActivities())
         .header(createHeaders(server))
         .naturalOrder()
-        .block();
+        .doFirst(() -> log.info("保存: 活动服务模块"));
   }
 
   @OnOneIteration
-  public void onOneIteration(S server) {
-    this.requester
+  public Mono<Void> onOneIteration(S server) {
+    return this.requester
         .annotation(OnOneIteration.class)
         .handlers(getActivities())
         .header(createHeaders(server))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 
   @OnDayElapse
-  public void onDayElapse(S server) {
-    this.requester
+  public Mono<Void> onDayElapse(S server) {
+    return this.requester
         .annotation(OnDayElapse.class)
         .handlers(getActivities())
         .header(createHeaders(server))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 
   @OnWeekElapse
-  public void onWeekElapse(S server) {
-    this.requester
+  public Mono<Void> onWeekElapse(S server) {
+    return this.requester
         .annotation(OnWeekElapse.class)
         .handlers(getActivities())
         .header(createHeaders(server))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 
   @OnMonthElapse
-  public void onMonthElapse(S server) {
-    this.requester
+  public Mono<Void> onMonthElapse(S server) {
+    return this.requester
         .annotation(OnMonthElapse.class)
         .handlers(getActivities())
         .header(createHeaders(server))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 
   @OnYearElapse
-  public void onYearElapse(S server) {
-    this.requester
+  public Mono<Void> onYearElapse(S server) {
+    return this.requester
         .annotation(OnYearElapse.class)
         .handlers(getActivities())
         .header(createHeaders(server))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 }

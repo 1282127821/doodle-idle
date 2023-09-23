@@ -48,89 +48,81 @@ public class ActivityRoleModule<R extends GameRoleContext> extends ActivityRegis
   }
 
   @OnStart
-  public void onStart(R role) {
+  public Mono<Void> onStart(R role) {
     MessageHeaderInitializer headers = createHeaders(role);
-    Mono.when(
-            this.requester
-                .annotation(OnPrepare.class)
-                .handlers(getActivities())
-                .header(headers)
-                .naturalOrder(),
-            this.requester
-                .annotation(OnStart.class)
-                .handlers(getActivities())
-                .header(headers)
-                .naturalOrder())
-        .block();
+    return Mono.when(
+        this.requester
+            .annotation(OnPrepare.class)
+            .handlers(getActivities())
+            .header(headers)
+            .naturalOrder(),
+        this.requester
+            .annotation(OnStart.class)
+            .handlers(getActivities())
+            .header(headers)
+            .naturalOrder());
   }
 
   @OnStop
-  public void onStop(R role) {
-    this.requester
+  public Mono<Void> onStop(R role) {
+    return this.requester
         .annotation(OnStop.class)
         .handlers(getActivities())
         .header(createHeaders(role))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 
   @OnSave
-  public void onSave(R role) {
-    this.requester
+  public Mono<Void> onSave(R role) {
+    return this.requester
         .annotation(OnSave.class)
         .handlers(getActivities())
         .header(createHeaders(role))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 
   @OnOneIteration
-  public void onOneIteration(R role) {
-    this.requester
+  public Mono<Void> onOneIteration(R role) {
+    return this.requester
         .annotation(OnOneIteration.class)
         .handlers(getActivities())
         .header(createHeaders(role))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 
   @OnDayElapse
-  public void onDayElapse(R role) {
-    this.requester
+  public Mono<Void> onDayElapse(R role) {
+    return this.requester
         .annotation(OnDayElapse.class)
         .handlers(getActivities())
         .header(createHeaders(role))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 
   @OnWeekElapse
-  public void onWeekElapse(R role) {
-    this.requester
+  public Mono<Void> onWeekElapse(R role) {
+    return this.requester
         .annotation(OnWeekElapse.class)
         .handlers(getActivities())
         .header(createHeaders(role))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 
   @OnMonthElapse
-  public void onMonthElapse(R role) {
-    this.requester
+  public Mono<Void> onMonthElapse(R role) {
+    return this.requester
         .annotation(OnMonthElapse.class)
         .handlers(getActivities())
         .header(createHeaders(role))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 
   @OnYearElapse
-  public void onYearElapse(R role) {
-    this.requester
+  public Mono<Void> onYearElapse(R role) {
+    return this.requester
         .annotation(OnYearElapse.class)
         .handlers(getActivities())
         .header(createHeaders(role))
-        .naturalOrder()
-        .block();
+        .naturalOrder();
   }
 }
