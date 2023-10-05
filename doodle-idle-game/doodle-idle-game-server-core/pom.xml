@@ -68,5 +68,17 @@
       <groupId>org.doodle</groupId>
       <artifactId>doodle-excel-client-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-giftpack-client-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-mail-client-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-notice-client-core</artifactId>
+    </dependency>
   </dependencies>
 </project>

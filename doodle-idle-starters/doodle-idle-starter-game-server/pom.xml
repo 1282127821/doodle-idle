@@ -60,5 +60,17 @@
       <groupId>org.doodle</groupId>
       <artifactId>doodle-excel-starter-client</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-giftpack-starter-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-mail-starter-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-notice-starter-client</artifactId>
+    </dependency>
   </dependencies>
 </project>
