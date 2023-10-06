@@ -78,6 +78,10 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
+      <artifactId>doodle-marquee-client-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
       <artifactId>doodle-notice-client-core</artifactId>
     </dependency>
   </dependencies>
