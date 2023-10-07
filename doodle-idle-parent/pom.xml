@@ -29,6 +29,7 @@
     <doodle-mail.version>0.0.1-SNAPSHOT</doodle-mail.version>
     <doodle-marquee.version>0.0.1-SNAPSHOT</doodle-marquee.version>
     <doodle-notice.version>0.0.1-SNAPSHOT</doodle-notice.version>
+    <doodle-role.version>0.0.1-SNAPSHOT</doodle-role.version>
     <spotless.license-header.file>
       ${project.basedir}/../../src/checkstyle/license-header.txt
     </spotless.license-header.file>
@@ -144,6 +145,13 @@
         <groupId>org.doodle</groupId>
         <artifactId>doodle-notice-dependencies</artifactId>
         <version>${doodle-notice.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-role-dependencies</artifactId>
+        <version>${doodle-role.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

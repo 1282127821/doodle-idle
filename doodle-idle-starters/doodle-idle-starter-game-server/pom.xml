@@ -76,5 +76,9 @@
       <groupId>org.doodle</groupId>
       <artifactId>doodle-notice-starter-client</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-role-starter-client</artifactId>
+    </dependency>
   </dependencies>
 </project>
