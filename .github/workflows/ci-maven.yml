@@ -21,9 +21,9 @@ jobs:
           cat << EOF > DOODLE
             doodle-build doodle-socket doodle-design doodle-boot \
             doodle-broker doodle-config doodle-login doodle-payment \
-            doodle-console doodle-excel doodle-chat doodle-auction \
-            doodle-pipeline doodle-security doodle-kvstore doodle-giftpack \
-            doodle-mail doodle-marquee doodle-notice doodle-role
+            doodle-excel doodle-chat doodle-auction doodle-pipeline \
+            doodle-security doodle-kvstore doodle-giftpack doodle-mail \
+            doodle-marquee doodle-notice doodle-role
           EOF
           curl https://raw.githubusercontent.com/org-doodle/doodle-design/main/Makefile -o Makefile
           make DOODLE_GIT=https://github.com/org-doodle install
