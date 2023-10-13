@@ -15,7 +15,6 @@
  */
 package org.doodle.idle.autoconfigure.game.server;
 
-import org.doodle.admin.autoconfigure.client.AdminClientAutoConfiguration;
 import org.doodle.boot.autoconfigure.socket.SocketServerAutoConfiguration;
 import org.doodle.boot.socket.context.SocketServerBootstrap;
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
@@ -54,7 +53,6 @@ import org.springframework.context.annotation.Import;
       ConsoleClientAutoConfiguration.class,
       LoginClientAutoConfiguration.class,
       PaymentClientAutoConfiguration.class,
-      AdminClientAutoConfiguration.class,
       ConsoleClientAutoConfiguration.class,
       ExcelClientAutoConfiguration.class
     })

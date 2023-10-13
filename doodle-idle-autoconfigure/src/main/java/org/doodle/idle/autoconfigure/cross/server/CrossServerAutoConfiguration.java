@@ -15,7 +15,6 @@
  */
 package org.doodle.idle.autoconfigure.cross.server;
 
-import org.doodle.admin.autoconfigure.client.AdminClientAutoConfiguration;
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
 import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
@@ -30,7 +29,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
       BrokerClientAutoConfiguration.class,
       ConfigClientAutoConfiguration.class,
       ConsoleClientAutoConfiguration.class,
-      AdminClientAutoConfiguration.class,
       ExcelClientAutoConfiguration.class
     })
 @ConditionalOnClass(CrossServerProperties.class)

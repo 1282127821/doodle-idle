@@ -49,10 +49,6 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
-      <artifactId>doodle-admin-autoconfigure</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.doodle</groupId>
       <artifactId>doodle-excel-autoconfigure</artifactId>
     </dependency>
     <dependency>

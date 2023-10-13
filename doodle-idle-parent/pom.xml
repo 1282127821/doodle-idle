@@ -21,7 +21,6 @@
     <doodle-login.version>0.0.1-SNAPSHOT</doodle-login.version>
     <doodle-payment.version>0.0.1-SNAPSHOT</doodle-payment.version>
     <doodle-console.version>0.0.1-SNAPSHOT</doodle-console.version>
-    <doodle-admin.version>0.0.1-SNAPSHOT</doodle-admin.version>
     <doodle-excel.version>0.0.1-SNAPSHOT</doodle-excel.version>
     <doodle-chat.version>0.0.1-SNAPSHOT</doodle-chat.version>
     <doodle-auction.version>0.0.1-SNAPSHOT</doodle-auction.version>
@@ -89,13 +88,6 @@
         <groupId>org.doodle</groupId>
         <artifactId>doodle-console-dependencies</artifactId>
         <version>${doodle-console.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.doodle</groupId>
-        <artifactId>doodle-admin-dependencies</artifactId>
-        <version>${doodle-admin.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
