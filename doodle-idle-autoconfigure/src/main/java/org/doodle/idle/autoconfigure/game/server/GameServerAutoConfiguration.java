@@ -20,7 +20,6 @@ import org.doodle.boot.socket.context.SocketServerBootstrap;
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
-import org.doodle.console.autoconfigure.client.ConsoleClientAutoConfiguration;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.autoconfigure.game.server.activity.SignActivityConfiguration;
@@ -50,10 +49,8 @@ import org.springframework.context.annotation.Import;
     after = {
       BrokerClientAutoConfiguration.class,
       ConfigClientAutoConfiguration.class,
-      ConsoleClientAutoConfiguration.class,
       LoginClientAutoConfiguration.class,
       PaymentClientAutoConfiguration.class,
-      ConsoleClientAutoConfiguration.class,
       ExcelClientAutoConfiguration.class
     })
 @ConditionalOnClass(GameServerProperties.class)
