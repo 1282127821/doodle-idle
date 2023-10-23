@@ -29,6 +29,31 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
+      <artifactId>doodle-idle-console-client-core</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-idle-console-server-core</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-idle-console-vaadin-core</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-idle-cross-server-core</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-idle-game-server-core</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
       <artifactId>doodle-config-autoconfigure</artifactId>
     </dependency>
     <dependency>
@@ -46,16 +71,6 @@
     <dependency>
       <groupId>org.doodle</groupId>
       <artifactId>doodle-excel-autoconfigure</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.doodle</groupId>
-      <artifactId>doodle-idle-cross-server-core</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.doodle</groupId>
-      <artifactId>doodle-idle-game-server-core</artifactId>
-      <optional>true</optional>
     </dependency>
   </dependencies>
 </project>

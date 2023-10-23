@@ -17,6 +17,7 @@
   </properties>
   <modules>
     <module>doodle-idle-autoconfigure</module>
+    <module>doodle-idle-console</module>
     <module>doodle-idle-cross</module>
     <module>doodle-idle-dependencies</module>
     <module>doodle-idle-game</module>

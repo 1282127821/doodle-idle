@@ -10,13 +10,13 @@
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../doodle-idle-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-idle-starters</artifactId>
+  <artifactId>doodle-idle-console</artifactId>
   <packaging>pom</packaging>
   <modules>
-    <module>doodle-idle-starter-console-client</module>
-    <module>doodle-idle-starter-console-server</module>
-    <module>doodle-idle-starter-console-vaadin</module>
-    <module>doodle-idle-starter-cross-server</module>
-    <module>doodle-idle-starter-game-server</module>
+    <module>doodle-idle-console-client-core</module>
+    <module>doodle-idle-console-server</module>
+    <module>doodle-idle-console-server-core</module>
+    <module>doodle-idle-console-vaadin</module>
+    <module>doodle-idle-console-vaadin-core</module>
   </modules>
 </project>

@@ -9,3 +9,6 @@
 target/
 
 agent/
+
+# Vaadin
+frontend/
