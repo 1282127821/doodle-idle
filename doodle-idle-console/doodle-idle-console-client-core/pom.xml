@@ -28,5 +28,9 @@
       <groupId>org.doodle</groupId>
       <artifactId>doodle-broker-client-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-design-idle-console</artifactId>
+    </dependency>
   </dependencies>
 </project>
