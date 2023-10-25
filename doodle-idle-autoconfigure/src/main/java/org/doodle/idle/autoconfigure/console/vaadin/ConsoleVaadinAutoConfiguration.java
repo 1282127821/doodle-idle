@@ -15,14 +15,38 @@
  */
 package org.doodle.idle.autoconfigure.console.vaadin;
 
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.sidenav.SideNavItem;
 import org.doodle.boot.vaadin.EnableVaadin;
+import org.doodle.boot.vaadin.views.VaadinSideNavItemSupplier;
 import org.doodle.idle.console.vaadin.ConsoleVaadinProperties;
+import org.doodle.idle.console.vaadin.views.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
 @ConditionalOnClass(ConsoleVaadinProperties.class)
 @EnableConfigurationProperties(ConsoleVaadinProperties.class)
 @EnableVaadin(ConsoleVaadinProperties.PREFIX_VIEWS)
-public class ConsoleVaadinAutoConfiguration {}
+public class ConsoleVaadinAutoConfiguration {
+
+  @Bean
+  public VaadinSideNavItemSupplier consoleVaadinSideNavItemSupplier() {
+    return authenticationContext -> {
+      SideNavItem item = new SideNavItem("运维组件");
+      item.setPrefixComponent(VaadinIcon.SERVER.create());
+      item.addItem(
+          new SideNavItem("ECS服务器", ConsoleVaadinEcsView.class, VaadinIcon.SERVER.create()));
+      item.addItem(new SideNavItem("数据库", ConsoleVaadinDbView.class, VaadinIcon.DATABASE.create()));
+      item.addItem(
+          new SideNavItem("组件", ConsoleVaadinComponentView.class, VaadinIcon.SERVER.create()));
+      item.addItem(
+          new SideNavItem("游戏服", ConsoleVaadinGameView.class, VaadinIcon.GAMEPAD.create()));
+      item.addItem(
+          new SideNavItem("跨服", ConsoleVaadinCrossView.class, VaadinIcon.CROSSHAIRS.create()));
+      return item;
+    };
+  }
+}

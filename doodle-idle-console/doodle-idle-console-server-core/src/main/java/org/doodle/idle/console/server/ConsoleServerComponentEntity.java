@@ -13,25 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.console.client;
+package org.doodle.idle.console.server;
 
-import java.util.Map;
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.doodle.design.idle.console.model.info.ConsoleArchiveInfo;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@ConfigurationProperties(prefix = ConsoleClientProperties.PREFIX)
-public class ConsoleClientProperties {
-  public static final String PREFIX = "doodle.idle.console.client";
-
-  Server server = new Server();
-
-  @Data
-  @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-  public static class Server {
-    Map<String, String> tags = Map.of("server-type", "idle-console");
-  }
+@Builder
+@ToString
+@Getter
+@Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+@Document(collection = ConsoleServerComponentEntity.COLLECTION)
+public class ConsoleServerComponentEntity {
+  public static final String COLLECTION = "console-components";
+  @MongoId ConsoleArchiveInfo archiveInfo;
 }

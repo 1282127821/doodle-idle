@@ -15,12 +15,42 @@
  */
 package org.doodle.idle.autoconfigure.console.client;
 
-import org.doodle.idle.console.client.ConsoleClientProperties;
+import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
+import org.doodle.broker.client.BrokerClientRSocketRequester;
+import org.doodle.idle.console.client.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 
-@AutoConfiguration
+@AutoConfiguration(after = BrokerClientAutoConfiguration.class)
 @ConditionalOnClass(ConsoleClientProperties.class)
 @EnableConfigurationProperties(ConsoleClientProperties.class)
-public class ConsoleClientAutoConfiguration {}
+public class ConsoleClientAutoConfiguration {
+
+  @AutoConfiguration
+  @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+  public static class ServletConfiguration {
+    @Bean
+    @ConditionalOnMissingBean
+    public ConsoleClientServlet consoleClientServlet(RestTemplateBuilder builder) {
+      return new ConsoleClientServletImpl(builder.build());
+    }
+  }
+
+  @AutoConfiguration
+  @ConditionalOnClass(BrokerClientRSocketRequester.class)
+  @ConditionalOnBean(BrokerClientRSocketRequester.class)
+  public static class RSocketConfiguration {
+    @Bean
+    @ConditionalOnMissingBean
+    public ConsoleClientRSocket consoleClientRSocket(
+        BrokerClientRSocketRequester requester, ConsoleClientProperties properties) {
+      return new BrokerConsoleClientRSocket(requester, properties);
+    }
+  }
+}

@@ -15,23 +15,16 @@
  */
 package org.doodle.idle.console.client;
 
-import java.util.Map;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.doodle.design.idle.console.*;
 
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@ConfigurationProperties(prefix = ConsoleClientProperties.PREFIX)
-public class ConsoleClientProperties {
-  public static final String PREFIX = "doodle.idle.console.client";
-
-  Server server = new Server();
-
-  @Data
-  @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-  public static class Server {
-    Map<String, String> tags = Map.of("server-type", "idle-console");
-  }
-}
+public interface ConsoleClientServlet
+    extends ConsoleEcsQueryOps.Servlet,
+        ConsoleEcsPageOps.Servlet,
+        ConsoleDbQueryOps.Servlet,
+        ConsoleDbPageOps.Servlet,
+        ConsoleComponentQueryOps.Servlet,
+        ConsoleComponentPageOps.Servlet,
+        ConsoleGameQueryOps.Servlet,
+        ConsoleGamePageOps.Servlet,
+        ConsoleCrossQueryOps.Servlet,
+        ConsoleCrossPageOps.Servlet {}

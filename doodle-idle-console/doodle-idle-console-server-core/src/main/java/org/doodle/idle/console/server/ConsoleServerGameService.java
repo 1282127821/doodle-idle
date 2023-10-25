@@ -13,25 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.console.client;
+package org.doodle.idle.console.server;
 
-import java.util.Map;
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Data
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@ConfigurationProperties(prefix = ConsoleClientProperties.PREFIX)
-public class ConsoleClientProperties {
-  public static final String PREFIX = "doodle.idle.console.client";
-
-  Server server = new Server();
-
-  @Data
-  @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-  public static class Server {
-    Map<String, String> tags = Map.of("server-type", "idle-console");
-  }
+@RequiredArgsConstructor
+public class ConsoleServerGameService {
+  ConsoleServerGameRepo gameRepo;
 }
