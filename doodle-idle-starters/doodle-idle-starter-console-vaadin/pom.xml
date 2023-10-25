@@ -22,11 +22,12 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
-      <artifactId>doodle-boot-starter</artifactId>
+      <artifactId>doodle-broker-starter-client</artifactId>
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
-      <artifactId>doodle-broker-starter-client</artifactId>
+      <artifactId>doodle-security-starter-client</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>

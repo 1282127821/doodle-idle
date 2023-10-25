@@ -1,0 +1,30 @@
+server:
+  port: ${SERVER_PORT:8083}
+spring:
+  application:
+    name: doodle-idle-console-vaadin
+
+doodle:
+  broker:
+    client:
+      enabled: true
+      auto-connected: true
+      tags:
+        server-type: vaadin
+        server-name: ${spring.application.name}
+
+  boot:
+    vaadin:
+      login:
+        title: ${PROJECT_TITLE:IDLE Console}
+        description: ${PROJECT_NAME:IDLE Doodle}
+      header:
+        title: ${PROJECT_TITLE:IDLE Console}
+
+  security:
+    client:
+      enabled: true
+
+  console:
+    client:
+      enabled: true

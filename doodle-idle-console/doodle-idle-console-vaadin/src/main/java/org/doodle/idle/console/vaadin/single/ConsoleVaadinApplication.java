@@ -15,11 +15,21 @@
  */
 package org.doodle.idle.console.vaadin.single;
 
+import com.vaadin.flow.spring.security.VaadinWebSecurity;
+import org.doodle.boot.vaadin.views.VaadinLoginView;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @SpringBootApplication
-public class ConsoleVaadinApplication {
+public class ConsoleVaadinApplication extends VaadinWebSecurity {
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    super.configure(http);
+    setLoginView(http, VaadinLoginView.class);
+  }
+
   public static void main(String[] args) {
     SpringApplication.run(ConsoleVaadinApplication.class, args);
   }
