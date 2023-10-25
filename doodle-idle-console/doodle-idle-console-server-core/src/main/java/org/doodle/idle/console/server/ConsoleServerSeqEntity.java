@@ -15,14 +15,8 @@
  */
 package org.doodle.idle.console.server;
 
-import java.time.LocalDateTime;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.idle.console.model.info.ConsoleArchiveInfo;
-import org.doodle.design.idle.console.model.info.ConsoleHostInfo;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -33,17 +27,11 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = ConsoleServerGameEntity.COLLECTION)
-public class ConsoleServerGameEntity {
-  public static final String COLLECTION = "console-games";
+@Document(collection = ConsoleServerSeqEntity.COLLECTION)
+public class ConsoleServerSeqEntity {
+  public static final String COLLECTION = "console-seqs";
 
-  @MongoId ConsoleArchiveInfo archiveInfo;
+  @MongoId String seqId;
 
-  ConsoleHostInfo hostInfo;
-
-  @Version byte dummy;
-
-  @CreatedDate LocalDateTime createdAt;
-
-  @LastModifiedDate LocalDateTime modifiedAt;
+  long seq;
 }

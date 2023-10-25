@@ -15,12 +15,51 @@
  */
 package org.doodle.idle.console.server;
 
+import java.util.Collections;
+import java.util.List;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.model.PageRequest;
+import org.doodle.design.idle.console.model.info.ConsoleComponentInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.util.CollectionUtils;
+import reactor.core.publisher.Mono;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
-public class ConsoleServerComponentService {
+public class ConsoleServerComponentService extends ConsoleServerSeqService {
+  ConsoleServerMapper mapper;
   ConsoleServerComponentRepo componentRepo;
+
+  public ConsoleServerComponentService(
+      MongoTemplate mongoTemplate,
+      ConsoleServerMapper mapper,
+      ConsoleServerComponentRepo componentRepo) {
+    super(mongoTemplate, ConsoleServerComponentEntity.COLLECTION);
+    this.mapper = mapper;
+    this.componentRepo = componentRepo;
+  }
+
+  public Mono<List<ConsoleComponentInfo>> pageMono(PageRequest pageRequest) {
+    return Mono.fromCallable(() -> page(pageRequest));
+  }
+
+  public List<ConsoleComponentInfo> page(PageRequest pageRequest) {
+    Page<ConsoleServerComponentEntity> page =
+        componentRepo.findAll(
+            Pageable.ofSize(pageRequest.getPageSize()).withPage(pageRequest.getPageNumber()));
+    List<ConsoleServerComponentEntity> content = page.getContent();
+    return CollectionUtils.isEmpty(content)
+        ? Collections.emptyList()
+        : content.stream().map(mapper::toPojo).toList();
+  }
+
+  public Mono<ConsoleComponentInfo> queryMono(long uniqueId) {
+    return Mono.fromCallable(() -> query(uniqueId));
+  }
+
+  public ConsoleComponentInfo query(long uniqueId) {
+    return componentRepo.findByArchiveInfoUniqueId(uniqueId).map(mapper::toPojo).orElse(null);
+  }
 }

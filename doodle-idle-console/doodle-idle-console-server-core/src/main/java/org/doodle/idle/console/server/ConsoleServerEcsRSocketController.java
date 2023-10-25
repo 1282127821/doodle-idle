@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.idle.console.*;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import reactor.core.publisher.Mono;
 
@@ -32,12 +33,31 @@ public class ConsoleServerEcsRSocketController
   @MessageMapping(ConsoleEcsPageOps.RSocket.PAGE_MAPPING)
   @Override
   public Mono<ConsoleEcsPageReply> page(ConsoleEcsPageRequest request) {
-    return Mono.empty();
+    return Mono.fromSupplier(request::getPage)
+        .map(mapper::fromProto)
+        .flatMap(ecsService::pageMono)
+        .map(mapper::toEcsInfoList)
+        .map(mapper::toEcsPageReply)
+        .onErrorMap(ConsoleServerExceptions.Page::new);
+  }
+
+  @MessageExceptionHandler(ConsoleServerExceptions.Page.class)
+  Mono<ConsoleEcsPageReply> onPageException(ConsoleServerExceptions.Page ignored) {
+    return Mono.just(mapper.toEcsPageError(ConsoleErrorCode.FAILURE));
   }
 
   @MessageMapping(ConsoleEcsQueryOps.RSocket.QUERY_MAPPING)
   @Override
   public Mono<ConsoleEcsQueryReply> query(ConsoleEcsQueryRequest request) {
-    return Mono.empty();
+    return Mono.fromSupplier(request::getUniqueId)
+        .flatMap(ecsService::queryMono)
+        .map(mapper::toProto)
+        .map(mapper::toEcsQueryReply)
+        .onErrorMap(ConsoleServerExceptions.Query::new);
+  }
+
+  @MessageExceptionHandler(ConsoleServerExceptions.Query.class)
+  Mono<ConsoleEcsQueryReply> onQueryException(ConsoleServerExceptions.Query ignored) {
+    return Mono.just(mapper.toEcsQueryError(ConsoleErrorCode.FAILURE));
   }
 }

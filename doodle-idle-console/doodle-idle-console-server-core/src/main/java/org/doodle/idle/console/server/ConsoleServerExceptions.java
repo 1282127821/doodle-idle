@@ -15,13 +15,20 @@
  */
 package org.doodle.idle.console.server;
 
-import java.util.Optional;
-import org.doodle.design.idle.console.model.info.ConsoleArchiveInfo;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import lombok.experimental.UtilityClass;
 
-@Repository
-public interface ConsoleServerCrossRepo
-    extends MongoRepository<ConsoleServerCrossEntity, ConsoleArchiveInfo> {
-  Optional<ConsoleServerCrossEntity> findByArchiveInfoUniqueId(long uniqueId);
+@UtilityClass
+public class ConsoleServerExceptions {
+
+  static class Query extends RuntimeException {
+    public Query(Throwable cause) {
+      super(cause);
+    }
+  }
+
+  static class Page extends RuntimeException {
+    public Page(Throwable cause) {
+      super(cause);
+    }
+  }
 }

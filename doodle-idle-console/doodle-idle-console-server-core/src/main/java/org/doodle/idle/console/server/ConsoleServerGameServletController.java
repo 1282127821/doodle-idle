@@ -15,16 +15,20 @@
  */
 package org.doodle.idle.console.server;
 
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.common.Result;
 import org.doodle.design.idle.console.ConsoleGamePageOps;
 import org.doodle.design.idle.console.ConsoleGameQueryOps;
+import org.doodle.design.idle.console.model.info.ConsoleGameInfo;
 import org.doodle.design.idle.console.model.payload.reply.ConsoleGamePageReply;
 import org.doodle.design.idle.console.model.payload.reply.ConsoleGameQueryReply;
 import org.doodle.design.idle.console.model.payload.request.ConsoleGamePageRequest;
 import org.doodle.design.idle.console.model.payload.request.ConsoleGameQueryRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -36,12 +40,21 @@ public class ConsoleServerGameServletController
   @PostMapping(ConsoleGamePageOps.Servlet.PAGE_MAPPING)
   @Override
   public Result<ConsoleGamePageReply> page(ConsoleGamePageRequest request) {
-    return Result.bad();
+    List<ConsoleGameInfo> gameInfos = gameService.page(request.getPage());
+    ConsoleGamePageReply reply = ConsoleGamePageReply.builder().gameInfos(gameInfos).build();
+    return Result.ok(reply);
   }
 
   @PostMapping(ConsoleGameQueryOps.Servlet.QUERY_MAPPING)
   @Override
   public Result<ConsoleGameQueryReply> query(ConsoleGameQueryRequest request) {
-    return Result.bad();
+    ConsoleGameInfo gameInfo = gameService.query(request.getUniqueId());
+    ConsoleGameQueryReply reply = ConsoleGameQueryReply.builder().gameInfo(gameInfo).build();
+    return Result.ok(reply);
+  }
+
+  @ExceptionHandler(Exception.class)
+  ResponseEntity<Result<Void>> onException(Exception ignored) {
+    return ResponseEntity.badRequest().body(Result.bad());
   }
 }

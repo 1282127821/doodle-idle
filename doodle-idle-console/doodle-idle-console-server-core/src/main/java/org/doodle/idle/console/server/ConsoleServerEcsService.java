@@ -15,12 +15,49 @@
  */
 package org.doodle.idle.console.server;
 
+import java.util.Collections;
+import java.util.List;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.model.PageRequest;
+import org.doodle.design.idle.console.model.info.ConsoleEcsInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.util.CollectionUtils;
+import reactor.core.publisher.Mono;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
-public class ConsoleServerEcsService {
+public class ConsoleServerEcsService extends ConsoleServerSeqService {
+  ConsoleServerMapper mapper;
   ConsoleServerEcsRepo ecsRepo;
+
+  public ConsoleServerEcsService(
+      MongoTemplate mongoTemplate, ConsoleServerMapper mapper, ConsoleServerEcsRepo ecsRepo) {
+    super(mongoTemplate, ConsoleServerEcsEntity.COLLECTION);
+    this.mapper = mapper;
+    this.ecsRepo = ecsRepo;
+  }
+
+  public Mono<List<ConsoleEcsInfo>> pageMono(PageRequest pageRequest) {
+    return Mono.fromCallable(() -> page(pageRequest));
+  }
+
+  public List<ConsoleEcsInfo> page(PageRequest pageRequest) {
+    Page<ConsoleServerEcsEntity> page =
+        ecsRepo.findAll(
+            Pageable.ofSize(pageRequest.getPageSize()).withPage(pageRequest.getPageNumber()));
+    List<ConsoleServerEcsEntity> content = page.getContent();
+    return CollectionUtils.isEmpty(content)
+        ? Collections.emptyList()
+        : content.stream().map(mapper::toPojo).toList();
+  }
+
+  public Mono<ConsoleEcsInfo> queryMono(long uniqueId) {
+    return Mono.fromCallable(() -> query(uniqueId));
+  }
+
+  public ConsoleEcsInfo query(long uniqueId) {
+    return ecsRepo.findByArchiveInfoUniqueId(uniqueId).map(mapper::toPojo).orElse(null);
+  }
 }

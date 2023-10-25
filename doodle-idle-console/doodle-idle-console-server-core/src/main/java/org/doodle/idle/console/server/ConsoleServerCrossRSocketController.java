@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.idle.console.*;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import reactor.core.publisher.Mono;
 
@@ -32,12 +33,30 @@ public class ConsoleServerCrossRSocketController
   @MessageMapping(ConsoleCrossPageOps.RSocket.PAGE_MAPPING)
   @Override
   public Mono<ConsoleCrossPageReply> page(ConsoleCrossPageRequest request) {
-    return Mono.empty();
+    return Mono.fromSupplier(request::getPage)
+        .map(mapper::fromProto)
+        .flatMap(crossService::pageMono)
+        .map(mapper::toCrossInfoList)
+        .map(mapper::toCrossPageReply)
+        .onErrorMap(ConsoleServerExceptions.Page::new);
+  }
+
+  @MessageExceptionHandler(ConsoleServerExceptions.Page.class)
+  Mono<ConsoleCrossPageReply> onPageException(ConsoleServerExceptions.Page ignored) {
+    return Mono.just(mapper.toCrossPageError(ConsoleErrorCode.FAILURE));
   }
 
   @MessageMapping(ConsoleCrossQueryOps.RSocket.QUERY_MAPPING)
   @Override
   public Mono<ConsoleCrossQueryReply> query(ConsoleCrossQueryRequest request) {
-    return Mono.empty();
+    return Mono.fromCallable(request::getUniqueId)
+        .flatMap(crossService::queryMono)
+        .map(mapper::toProto)
+        .map(mapper::toCrossQueryReply);
+  }
+
+  @MessageExceptionHandler(ConsoleServerExceptions.Query.class)
+  Mono<ConsoleCrossQueryReply> onQueryException(ConsoleServerExceptions.Query ignored) {
+    return Mono.just(mapper.toCrossQueryError(ConsoleErrorCode.FAILURE));
   }
 }

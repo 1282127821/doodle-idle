@@ -15,16 +15,20 @@
  */
 package org.doodle.idle.console.server;
 
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.common.Result;
 import org.doodle.design.idle.console.ConsoleComponentPageOps;
 import org.doodle.design.idle.console.ConsoleComponentQueryOps;
+import org.doodle.design.idle.console.model.info.ConsoleComponentInfo;
 import org.doodle.design.idle.console.model.payload.reply.ConsoleComponentPageReply;
 import org.doodle.design.idle.console.model.payload.reply.ConsoleComponentQueryReply;
 import org.doodle.design.idle.console.model.payload.request.ConsoleComponentPageRequest;
 import org.doodle.design.idle.console.model.payload.request.ConsoleComponentQueryRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -36,12 +40,23 @@ public class ConsoleServerComponentServletController
   @PostMapping(ConsoleComponentPageOps.Servlet.PAGE_MAPPING)
   @Override
   public Result<ConsoleComponentPageReply> page(ConsoleComponentPageRequest request) {
-    return Result.bad();
+    List<ConsoleComponentInfo> componentInfos = componentService.page(request.getPage());
+    ConsoleComponentPageReply reply =
+        ConsoleComponentPageReply.builder().componentInfos(componentInfos).build();
+    return Result.ok(reply);
   }
 
   @PostMapping(ConsoleComponentQueryOps.Servlet.QUERY_MAPPING)
   @Override
   public Result<ConsoleComponentQueryReply> query(ConsoleComponentQueryRequest request) {
-    return Result.bad();
+    ConsoleComponentInfo componentInfo = componentService.query(request.getUniqueId());
+    ConsoleComponentQueryReply reply =
+        ConsoleComponentQueryReply.builder().componentInfo(componentInfo).build();
+    return Result.ok(reply);
+  }
+
+  @ExceptionHandler(Exception.class)
+  ResponseEntity<Result<Void>> onException(Exception ignored) {
+    return ResponseEntity.badRequest().body(Result.bad());
   }
 }

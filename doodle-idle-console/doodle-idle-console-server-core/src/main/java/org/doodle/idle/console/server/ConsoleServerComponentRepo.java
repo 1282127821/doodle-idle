@@ -15,10 +15,14 @@
  */
 package org.doodle.idle.console.server;
 
+import java.util.Optional;
 import org.doodle.design.idle.console.model.info.ConsoleArchiveInfo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConsoleServerComponentRepo
-    extends MongoRepository<ConsoleServerComponentEntity, ConsoleArchiveInfo> {}
+    extends MongoRepository<ConsoleServerComponentEntity, ConsoleArchiveInfo> {
+
+  Optional<ConsoleServerComponentEntity> findByArchiveInfoUniqueId(long uniqueId);
+}

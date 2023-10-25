@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.idle.console.*;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import reactor.core.publisher.Mono;
 
@@ -32,12 +33,31 @@ public class ConsoleServerComponentRSocketController
   @MessageMapping(ConsoleComponentPageOps.RSocket.PAGE_MAPPING)
   @Override
   public Mono<ConsoleComponentPageReply> page(ConsoleComponentPageRequest request) {
-    return Mono.empty();
+    return Mono.fromSupplier(request::getPage)
+        .map(mapper::fromProto)
+        .flatMap(componentService::pageMono)
+        .map(mapper::toComponentInfoList)
+        .map(mapper::toComponentPageReply)
+        .onErrorMap(ConsoleServerExceptions.Page::new);
+  }
+
+  @MessageExceptionHandler(ConsoleServerExceptions.Page.class)
+  Mono<ConsoleComponentPageReply> onPageException(ConsoleServerExceptions.Page ignored) {
+    return Mono.just(mapper.toComponentPageError(ConsoleErrorCode.FAILURE));
   }
 
   @MessageMapping(ConsoleComponentQueryOps.RSocket.QUERY_MAPPING)
   @Override
   public Mono<ConsoleComponentQueryReply> query(ConsoleComponentQueryRequest request) {
-    return Mono.empty();
+    return Mono.fromSupplier(request::getUniqueId)
+        .flatMap(componentService::queryMono)
+        .map(mapper::toProto)
+        .map(mapper::toComponentQueryReply)
+        .onErrorMap(ConsoleServerExceptions.Query::new);
+  }
+
+  @MessageExceptionHandler(ConsoleServerExceptions.Query.class)
+  Mono<ConsoleComponentQueryReply> onQueryException(ConsoleServerExceptions.Query ignored) {
+    return Mono.just(mapper.toComponentQueryError(ConsoleErrorCode.FAILURE));
   }
 }

@@ -15,9 +15,16 @@
  */
 package org.doodle.idle.console.server;
 
+import java.time.LocalDateTime;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.idle.console.model.info.ConsoleArchiveInfo;
+import org.doodle.design.idle.console.model.info.ConsoleEcsIpInfo;
+import org.doodle.design.idle.console.model.info.ConsoleEcsPortInfo;
+import org.doodle.design.idle.console.model.info.ConsoleEcsSshInfo;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -33,4 +40,16 @@ public class ConsoleServerEcsEntity {
   public static final String COLLECTION = "console-ecs";
 
   @MongoId ConsoleArchiveInfo archiveInfo;
+
+  ConsoleEcsIpInfo ipInfo;
+
+  ConsoleEcsPortInfo portInfo;
+
+  ConsoleEcsSshInfo sshInfo;
+
+  @Version byte dummy;
+
+  @CreatedDate LocalDateTime createdAt;
+
+  @LastModifiedDate LocalDateTime modifiedAt;
 }

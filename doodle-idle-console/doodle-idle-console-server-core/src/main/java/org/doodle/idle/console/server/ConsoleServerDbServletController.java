@@ -15,16 +15,20 @@
  */
 package org.doodle.idle.console.server;
 
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.doodle.design.common.Result;
 import org.doodle.design.idle.console.ConsoleDbPageOps;
 import org.doodle.design.idle.console.ConsoleDbQueryOps;
+import org.doodle.design.idle.console.model.info.ConsoleDbInfo;
 import org.doodle.design.idle.console.model.payload.reply.ConsoleDbPageReply;
 import org.doodle.design.idle.console.model.payload.reply.ConsoleDbQueryReply;
 import org.doodle.design.idle.console.model.payload.request.ConsoleDbPageRequest;
 import org.doodle.design.idle.console.model.payload.request.ConsoleDbQueryRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -36,12 +40,21 @@ public class ConsoleServerDbServletController
   @PostMapping(ConsoleDbPageOps.Servlet.PAGE_MAPPING)
   @Override
   public Result<ConsoleDbPageReply> page(ConsoleDbPageRequest request) {
-    return Result.bad();
+    List<ConsoleDbInfo> dbInfos = dbService.page(request.getPage());
+    ConsoleDbPageReply reply = ConsoleDbPageReply.builder().dbInfos(dbInfos).build();
+    return Result.ok(reply);
   }
 
   @PostMapping(ConsoleDbQueryOps.Servlet.QUERY_MAPPING)
   @Override
   public Result<ConsoleDbQueryReply> query(ConsoleDbQueryRequest request) {
-    return Result.bad();
+    ConsoleDbInfo dbInfo = dbService.query(request.getUniqueId());
+    ConsoleDbQueryReply reply = ConsoleDbQueryReply.builder().dbInfo(dbInfo).build();
+    return Result.ok(reply);
+  }
+
+  @ExceptionHandler(Exception.class)
+  ResponseEntity<Result<Void>> onException(Exception ignored) {
+    return ResponseEntity.badRequest().body(Result.bad());
   }
 }

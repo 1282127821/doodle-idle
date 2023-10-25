@@ -15,6 +15,49 @@
  */
 package org.doodle.idle.console.server;
 
+import java.util.Objects;
 import org.doodle.design.idle.console.ConsoleMapper;
+import org.doodle.design.idle.console.model.info.*;
 
-public class ConsoleServerMapper extends ConsoleMapper {}
+public class ConsoleServerMapper extends ConsoleMapper {
+  public ConsoleComponentInfo toPojo(ConsoleServerComponentEntity componentEntity) {
+    return ConsoleComponentInfo.builder()
+        .archiveInfo(componentEntity.getArchiveInfo())
+        .hostInfo(componentEntity.getHostInfo())
+        .build();
+  }
+
+  public ConsoleCrossInfo toPojo(ConsoleServerCrossEntity crossEntity) {
+    return ConsoleCrossInfo.builder()
+        .archiveInfo(crossEntity.getArchiveInfo())
+        .hostInfo(crossEntity.getHostInfo())
+        .build();
+  }
+
+  public ConsoleDbInfo toPojo(ConsoleServerDbEntity dbEntity) {
+    ConsoleDbInfo.ConsoleDbInfoBuilder builder =
+        ConsoleDbInfo.builder()
+            .archiveInfo(dbEntity.getArchiveInfo())
+            .hostInfo(dbEntity.getHostInfo());
+    if (Objects.nonNull(dbEntity.getMongodbInfo())) {
+      builder.mongodbInfo(dbEntity.getMongodbInfo());
+    }
+    return builder.build();
+  }
+
+  public ConsoleEcsInfo toPojo(ConsoleServerEcsEntity ecsEntity) {
+    return ConsoleEcsInfo.builder()
+        .archiveInfo(ecsEntity.getArchiveInfo())
+        .ipInfo(ecsEntity.getIpInfo())
+        .portInfo(ecsEntity.getPortInfo())
+        .sshInfo(ecsEntity.getSshInfo())
+        .build();
+  }
+
+  public ConsoleGameInfo toPojo(ConsoleServerGameEntity gameEntity) {
+    return ConsoleGameInfo.builder()
+        .archiveInfo(gameEntity.getArchiveInfo())
+        .hostInfo(gameEntity.getHostInfo())
+        .build();
+  }
+}

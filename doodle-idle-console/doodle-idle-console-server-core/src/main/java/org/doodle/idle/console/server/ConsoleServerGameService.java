@@ -15,12 +15,49 @@
  */
 package org.doodle.idle.console.server;
 
+import java.util.Collections;
+import java.util.List;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.doodle.design.common.model.PageRequest;
+import org.doodle.design.idle.console.model.info.ConsoleGameInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.util.CollectionUtils;
+import reactor.core.publisher.Mono;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
-public class ConsoleServerGameService {
+public class ConsoleServerGameService extends ConsoleServerSeqService {
+  ConsoleServerMapper mapper;
   ConsoleServerGameRepo gameRepo;
+
+  public ConsoleServerGameService(
+      MongoTemplate mongoTemplate, ConsoleServerMapper mapper, ConsoleServerGameRepo gameRepo) {
+    super(mongoTemplate, ConsoleServerGameEntity.COLLECTION);
+    this.mapper = mapper;
+    this.gameRepo = gameRepo;
+  }
+
+  public Mono<List<ConsoleGameInfo>> pageMono(PageRequest pageRequest) {
+    return Mono.fromCallable(() -> page(pageRequest));
+  }
+
+  public List<ConsoleGameInfo> page(PageRequest pageRequest) {
+    Page<ConsoleServerGameEntity> page =
+        gameRepo.findAll(
+            Pageable.ofSize(pageRequest.getPageSize()).withPage(pageRequest.getPageNumber()));
+    List<ConsoleServerGameEntity> content = page.getContent();
+    return CollectionUtils.isEmpty(content)
+        ? Collections.emptyList()
+        : content.stream().map(mapper::toPojo).toList();
+  }
+
+  public Mono<ConsoleGameInfo> queryMono(long uniqueId) {
+    return Mono.fromCallable(() -> query(uniqueId));
+  }
+
+  public ConsoleGameInfo query(long uniqueId) {
+    return gameRepo.findByArchiveInfoUniqueId(uniqueId).map(mapper::toPojo).orElse(null);
+  }
 }
