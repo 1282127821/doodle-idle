@@ -22,7 +22,7 @@ import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.cross.server.CrossServerBootstrap;
 import org.doodle.idle.cross.server.CrossServerContext;
 import org.doodle.idle.cross.server.CrossServerProperties;
-import org.doodle.idle.cross.server.module.ServerBootstrapModule;
+import org.doodle.idle.cross.server.bootstrap.ServerBootstrapModule;
 import org.doodle.idle.cross.server.support.CrossServerContextMethodArgumentResolver;
 import org.doodle.idle.framework.module.reactive.ServerModuleOperationHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
