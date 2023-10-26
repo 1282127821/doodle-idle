@@ -13,19 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.cross.server.single;
+package org.doodle.idle.cross.server.module;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.doodle.idle.cross.server.CrossServerContext;
+import org.doodle.idle.framework.lifecycle.annotation.OnStart;
+import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.framework.module.ModuleRegistry;
+import org.doodle.idle.framework.module.annotation.ServerModule;
 
 @Slf4j
-@SpringBootApplication
-public class CrossServerApplication {
-  public static void main(String[] args) {
-    Thread.setDefaultUncaughtExceptionHandler(
-        (t, e) -> log.error("线程({})发生未捕获异常: {}", t.getName(), e.getMessage(), e));
+@ServerModule
+public class ServerBootstrapModule<S extends CrossServerContext> extends ModuleRegistry {
 
-    SpringApplication.run(CrossServerApplication.class, args);
+  @OnStart
+  public void onStart(S s) {
+    log.info("启动: 启动服务模块");
+  }
+
+  @OnStop
+  public void onStop(S s) {
+    log.info("关闭: 关闭服务模块");
   }
 }
