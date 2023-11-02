@@ -44,6 +44,11 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
+      <artifactId>doodle-idle-cross-rank-core</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
       <artifactId>doodle-idle-cross-server-core</artifactId>
       <optional>true</optional>
     </dependency>

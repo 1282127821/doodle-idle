@@ -13,39 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module;
+package org.doodle.idle.game.server.cross.rank;
+
+import org.doodle.design.messaging.packet.PacketMapping;
+import org.doodle.idle.game.server.GameRoleContext;
+import org.doodle.idle.game.server.cross.CrossId;
 
 /**
- * 模块ID
+ * 跨服排行榜消息处理器
  *
- * @author tingyanshen
+ * @param <R>
  */
-public interface ModuleId {
-
-  /** 登录 */
-  short LOGIN = 1;
-
-  /** 角色 */
-  short ROLE = 2;
-
-  /** 战斗 */
-  short FIGHT = 3;
-
-  /** 背包 */
-  short BAG = 4;
-
-  /** 邮件 */
-  short MAIL = 5;
-
-  /** 任务 */
-  short TASK = 6;
-
-  /** 支付 */
-  short PAYMENT = 7;
-
-  /** 活动 */
-  short ACTIVITY = 100;
-
-  /** 跨服 */
-  short CROSS = 200;
-}
+@PacketMapping(CrossId.RANK)
+public class RankController<R extends GameRoleContext> {}

@@ -13,39 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module;
+package org.doodle.idle.game.server.cross.rank;
 
-/**
- * 模块ID
- *
- * @author tingyanshen
- */
-public interface ModuleId {
+import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.cross.annotation.RoleCross;
+import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
+import org.doodle.idle.game.server.GameRoleContext;
 
-  /** 登录 */
-  short LOGIN = 1;
+@Slf4j
+@RoleCross
+public class RankRoleCross<R extends GameRoleContext> {
 
-  /** 角色 */
-  short ROLE = 2;
-
-  /** 战斗 */
-  short FIGHT = 3;
-
-  /** 背包 */
-  short BAG = 4;
-
-  /** 邮件 */
-  short MAIL = 5;
-
-  /** 任务 */
-  short TASK = 6;
-
-  /** 支付 */
-  short PAYMENT = 7;
-
-  /** 活动 */
-  short ACTIVITY = 100;
-
-  /** 跨服 */
-  short CROSS = 200;
+  @OnPatch
+  public void onPatch(R role) {
+    log.info("补丁: 玩家跨服排行榜");
+  }
 }

@@ -23,6 +23,7 @@ import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
 import org.doodle.idle.autoconfigure.game.server.activity.SignActivityConfiguration;
+import org.doodle.idle.autoconfigure.game.server.cross.RankCrossConfiguration;
 import org.doodle.idle.autoconfigure.game.server.module.*;
 import org.doodle.idle.framework.module.reactive.RoleModuleOperationHandler;
 import org.doodle.idle.framework.module.reactive.ServerModuleOperationHandler;
@@ -58,8 +59,10 @@ import org.springframework.context.annotation.Import;
 @EnableConfigurationProperties(GameServerProperties.class)
 @Import({
   SignActivityConfiguration.class,
+  RankCrossConfiguration.class,
   ActivityModuleConfiguration.class,
   BagModuleConfiguration.class,
+  CrossModuleConfiguration.class,
   FightModuleConfiguration.class,
   LoginModuleConfiguration.class,
   MailModuleConfiguration.class,

@@ -6,19 +6,23 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.doodle</groupId>
-    <artifactId>doodle-idle-starters</artifactId>
+    <artifactId>doodle-idle-cross</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-idle-starter-cross-server</artifactId>
+  <artifactId>doodle-idle-cross-rank-core</artifactId>
+  <properties>
+    <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
+  </properties>
   <dependencies>
     <dependency>
-      <groupId>org.doodle</groupId>
-      <artifactId>doodle-idle-autoconfigure</artifactId>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
-      <artifactId>doodle-idle-cross-rank-core</artifactId>
+      <artifactId>doodle-idle-framework</artifactId>
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
@@ -26,19 +30,19 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
-      <artifactId>doodle-boot-starter</artifactId>
+      <artifactId>doodle-boot-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
-      <artifactId>doodle-config-starter-client</artifactId>
+      <artifactId>doodle-config-client-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
-      <artifactId>doodle-broker-starter-client</artifactId>
+      <artifactId>doodle-broker-client-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
-      <artifactId>doodle-excel-starter-client</artifactId>
+      <artifactId>doodle-excel-client-core</artifactId>
     </dependency>
   </dependencies>
 </project>

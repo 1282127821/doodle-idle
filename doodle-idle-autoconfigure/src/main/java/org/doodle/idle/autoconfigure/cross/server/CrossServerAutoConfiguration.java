@@ -19,6 +19,7 @@ import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.config.autoconfigure.client.ConfigClientAutoConfiguration;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.excel.autoconfigure.client.ExcelClientAutoConfiguration;
+import org.doodle.idle.autoconfigure.cross.server.module.CrossModuleConfiguration;
 import org.doodle.idle.cross.server.CrossServerBootstrap;
 import org.doodle.idle.cross.server.CrossServerContext;
 import org.doodle.idle.cross.server.CrossServerProperties;
@@ -30,6 +31,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 @AutoConfiguration(
     after = {
@@ -39,6 +41,7 @@ import org.springframework.context.annotation.Bean;
     })
 @ConditionalOnClass(CrossServerProperties.class)
 @EnableConfigurationProperties(CrossServerProperties.class)
+@Import(CrossModuleConfiguration.class)
 public class CrossServerAutoConfiguration {
 
   @Bean

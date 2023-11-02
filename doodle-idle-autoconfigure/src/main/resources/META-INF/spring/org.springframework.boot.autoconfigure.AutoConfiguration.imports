@@ -1,5 +1,6 @@
 org.doodle.idle.autoconfigure.console.client.ConsoleClientAutoConfiguration
 org.doodle.idle.autoconfigure.console.server.ConsoleServerAutoConfiguration
 org.doodle.idle.autoconfigure.console.vaadin.ConsoleVaadinAutoConfiguration
+org.doodle.idle.autoconfigure.cross.server.rank.CrossRankAutoConfiguration
 org.doodle.idle.autoconfigure.cross.server.CrossServerAutoConfiguration
 org.doodle.idle.autoconfigure.game.server.GameServerAutoConfiguration

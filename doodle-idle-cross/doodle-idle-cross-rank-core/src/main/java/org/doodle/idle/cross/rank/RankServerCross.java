@@ -13,30 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.cross.server.bootstrap;
+package org.doodle.idle.cross.rank;
 
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.cross.server.CrossServerContext;
+import org.doodle.idle.framework.cross.annotation.ServerCross;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
-import org.doodle.idle.framework.module.ModuleRegistry;
-import org.doodle.idle.framework.module.annotation.ServerModule;
 
 @Slf4j
-@ServerModule
-public class ServerBootstrapModule<S extends CrossServerContext> extends ModuleRegistry {
-
-  public ServerBootstrapModule() {
-    add(this);
-  }
+@ServerCross
+public class RankServerCross<S extends CrossServerContext> {
 
   @OnStart
-  public void onStart(S s) {
-    log.info("启动: 启动跨服服务模块");
+  public void onStart(S server) {
+    log.info("启动: 跨服排行榜");
   }
 
   @OnStop
-  public void onStop(S s) {
-    log.info("关闭: 关闭跨服服务模块");
+  public void onStop(S server) {
+    log.info("关闭: 跨服排行榜");
   }
 }

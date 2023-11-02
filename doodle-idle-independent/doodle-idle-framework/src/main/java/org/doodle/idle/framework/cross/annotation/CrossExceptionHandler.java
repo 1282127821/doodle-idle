@@ -13,39 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module;
+package org.doodle.idle.framework.cross.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * 模块ID
+ * 活动操作异常处理，阻止因活动未处理异常导致操作流程中断
  *
  * @author tingyanshen
  */
-public interface ModuleId {
-
-  /** 登录 */
-  short LOGIN = 1;
-
-  /** 角色 */
-  short ROLE = 2;
-
-  /** 战斗 */
-  short FIGHT = 3;
-
-  /** 背包 */
-  short BAG = 4;
-
-  /** 邮件 */
-  short MAIL = 5;
-
-  /** 任务 */
-  short TASK = 6;
-
-  /** 支付 */
-  short PAYMENT = 7;
-
-  /** 活动 */
-  short ACTIVITY = 100;
-
-  /** 跨服 */
-  short CROSS = 200;
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface CrossExceptionHandler {
+  Class<? extends Throwable>[] value() default {};
 }

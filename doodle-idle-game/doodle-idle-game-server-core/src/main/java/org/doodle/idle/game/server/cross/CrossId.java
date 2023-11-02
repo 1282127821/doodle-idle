@@ -13,39 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module;
+package org.doodle.idle.game.server.cross;
 
 /**
- * 模块ID
+ * 跨服ID
  *
  * @author tingyanshen
  */
-public interface ModuleId {
-
-  /** 登录 */
-  short LOGIN = 1;
-
-  /** 角色 */
-  short ROLE = 2;
-
-  /** 战斗 */
-  short FIGHT = 3;
-
-  /** 背包 */
-  short BAG = 4;
-
-  /** 邮件 */
-  short MAIL = 5;
-
-  /** 任务 */
-  short TASK = 6;
-
-  /** 支付 */
-  short PAYMENT = 7;
-
-  /** 活动 */
-  short ACTIVITY = 100;
-
-  /** 跨服 */
-  short CROSS = 200;
+public interface CrossId {
+  short RANK = 201;
 }

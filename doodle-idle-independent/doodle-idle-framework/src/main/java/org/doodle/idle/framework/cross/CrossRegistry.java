@@ -13,39 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module;
+package org.doodle.idle.framework.cross;
 
-/**
- * 模块ID
- *
- * @author tingyanshen
- */
-public interface ModuleId {
+import java.util.LinkedList;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
-  /** 登录 */
-  short LOGIN = 1;
+@Getter
+@FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
+public class CrossRegistry {
+  List<Object> activities = new LinkedList<>();
 
-  /** 角色 */
-  short ROLE = 2;
-
-  /** 战斗 */
-  short FIGHT = 3;
-
-  /** 背包 */
-  short BAG = 4;
-
-  /** 邮件 */
-  short MAIL = 5;
-
-  /** 任务 */
-  short TASK = 6;
-
-  /** 支付 */
-  short PAYMENT = 7;
-
-  /** 活动 */
-  short ACTIVITY = 100;
-
-  /** 跨服 */
-  short CROSS = 200;
+  public <A> A add(A activity) {
+    activities.add(activity);
+    return activity;
+  }
 }

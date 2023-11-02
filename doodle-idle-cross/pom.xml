@@ -13,6 +13,7 @@
   <artifactId>doodle-idle-cross</artifactId>
   <packaging>pom</packaging>
   <modules>
+    <module>doodle-idle-cross-rank-core</module>
     <module>doodle-idle-cross-server</module>
     <module>doodle-idle-cross-server-core</module>
   </modules>
