@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.autoconfigure.cross.server.rank;
+package org.doodle.idle.autoconfigure.cross.rank;
 
 import org.doodle.idle.autoconfigure.cross.server.CrossServerAutoConfiguration;
 import org.doodle.idle.cross.rank.RankServerCross;
