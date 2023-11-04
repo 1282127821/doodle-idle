@@ -13,18 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.cross;
+package org.doodle.idle.game.server.cross.space;
 
-/**
- * 跨服ID
- *
- * @author tingyanshen
- */
-public interface CrossId {
+import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.cross.annotation.ServerCross;
+import org.doodle.idle.framework.lifecycle.annotation.OnStart;
+import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.game.server.GameServerContext;
 
-  /** 跨服时空 */
-  short SPACE = 201;
+@Slf4j
+@ServerCross
+public class SpaceServerCross<S extends GameServerContext> {
 
-  /** 跨服排行榜 */
-  short RANK = 202;
+  @OnStart
+  public void onStart(S server) {
+    log.info("启动: 跨服时空服务模块");
+  }
+
+  @OnStop
+  public void onStop(S server) {
+    log.info("关闭: 跨服时空服务模块");
+  }
 }

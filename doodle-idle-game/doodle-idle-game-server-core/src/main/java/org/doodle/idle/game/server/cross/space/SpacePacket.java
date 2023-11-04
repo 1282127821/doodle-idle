@@ -13,18 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.cross;
+package org.doodle.idle.game.server.cross.space;
 
 /**
- * 跨服ID
+ * 跨服时空消息ID
  *
  * @author tingyanshen
  */
-public interface CrossId {
-
-  /** 跨服时空 */
-  short SPACE = 201;
-
-  /** 跨服排行榜 */
-  short RANK = 202;
-}
+public interface SpacePacket {}

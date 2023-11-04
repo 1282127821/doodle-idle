@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.cross;
+package org.doodle.idle.game.server.cross.space;
+
+import org.doodle.design.messaging.packet.PacketMapping;
+import org.doodle.idle.game.server.GameRoleContext;
+import org.doodle.idle.game.server.cross.CrossId;
 
 /**
- * 跨服ID
+ * 跨服时空消息处理器
  *
  * @author tingyanshen
  */
-public interface CrossId {
-
-  /** 跨服时空 */
-  short SPACE = 201;
-
-  /** 跨服排行榜 */
-  short RANK = 202;
-}
+@PacketMapping(CrossId.SPACE)
+public class SpaceController<R extends GameRoleContext> {}
