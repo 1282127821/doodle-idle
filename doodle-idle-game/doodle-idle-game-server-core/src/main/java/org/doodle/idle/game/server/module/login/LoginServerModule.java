@@ -33,16 +33,16 @@ public class LoginServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("准备: 背包服务模块");
+    log.info("登录模块 [服务]");
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("补丁: 背包服务模块");
+    log.info("登录模块 [服务]");
   }
 
   @ModuleExceptionHandler(Exception.class)
   public void handleException(Exception e) {
-    log.info("异常: 背包服务模块", e);
+    log.info("登录模块 [服务]", e);
   }
 }

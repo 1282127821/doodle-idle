@@ -33,17 +33,17 @@ public class TaskServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("准备: 任务服务模块");
-    throw new RuntimeException();
+    log.info("任务模块 [服务]");
+    //    throw new RuntimeException();
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("补丁: 任务服务模块");
+    log.info("任务模块 [服务]");
   }
 
   @ModuleExceptionHandler(Exception.class)
   public void onException(Exception e) {
-    log.info("异常: 任务服务模块", e);
+    log.info("任务模块 [服务]", e);
   }
 }

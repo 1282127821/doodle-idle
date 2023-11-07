@@ -21,10 +21,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.idle.framework.activity.ActivityRegistry;
-import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
-import org.doodle.idle.framework.lifecycle.annotation.OnSave;
-import org.doodle.idle.framework.lifecycle.annotation.OnStart;
-import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.framework.lifecycle.annotation.*;
 import org.doodle.idle.framework.module.annotation.RoleModule;
 import org.doodle.idle.framework.timer.annotation.*;
 import org.doodle.idle.game.server.GameRoleContext;
@@ -47,20 +44,31 @@ public class ActivityRoleModule<R extends GameRoleContext> extends ActivityRegis
     return headerAccessor -> headerAccessor.setHeader(GameRoleContext.GAME_ROLE_CONTEXT, role);
   }
 
+  @OnPrepare
+  public Mono<Void> onPrepare(R role) {
+    return this.requester
+        .annotation(OnPrepare.class)
+        .handlers(getActivities())
+        .header(createHeaders(role))
+        .naturalOrder();
+  }
+
+  @OnPatch
+  public Mono<Void> onPatch(R role) {
+    return this.requester
+        .annotation(OnPatch.class)
+        .handlers(getActivities())
+        .header(createHeaders(role))
+        .naturalOrder();
+  }
+
   @OnStart
   public Mono<Void> onStart(R role) {
-    MessageHeaderInitializer headers = createHeaders(role);
-    return Mono.when(
-        this.requester
-            .annotation(OnPrepare.class)
-            .handlers(getActivities())
-            .header(headers)
-            .naturalOrder(),
-        this.requester
-            .annotation(OnStart.class)
-            .handlers(getActivities())
-            .header(headers)
-            .naturalOrder());
+    return this.requester
+        .annotation(OnStart.class)
+        .handlers(getActivities())
+        .header(createHeaders(role))
+        .naturalOrder();
   }
 
   @OnStop

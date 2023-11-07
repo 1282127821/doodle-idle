@@ -33,16 +33,16 @@ public class MailServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("准备: 邮件服务模块");
+    log.info("邮件模块 [服务]");
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("补丁: 邮件服务模块");
+    log.info("邮件模块 [服务]");
   }
 
   @ModuleExceptionHandler(Exception.class)
   public void onException(Exception e) {
-    log.error("异常: 邮件服务模块");
+    log.error("邮件模块 [服务]");
   }
 }

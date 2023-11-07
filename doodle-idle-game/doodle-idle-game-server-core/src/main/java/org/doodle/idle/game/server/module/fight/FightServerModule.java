@@ -35,26 +35,26 @@ public class FightServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("准备: 战斗服务模块");
+    log.info("战斗模块 [服务]");
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("补丁: 战斗服务模块");
+    log.info("战斗模块 [服务]");
   }
 
   @OnStart
   public void onStart(S server) {
-    log.info("启动: 战斗服务模块");
+    log.info("战斗模块 [服务]");
   }
 
   @OnStop
   public void onStop(S server) {
-    log.info("关闭: 战斗服务模块");
+    log.info("战斗模块 [服务]");
   }
 
   @ModuleExceptionHandler(Exception.class)
   public void onException(Exception e) {
-    log.error("异常: 战斗服务模块", e);
+    log.error("战斗模块 [服务]", e);
   }
 }

@@ -17,6 +17,8 @@ package org.doodle.idle.cross.server.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.cross.server.CrossServerContext;
+import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
+import org.doodle.idle.framework.lifecycle.annotation.OnSave;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 import org.doodle.idle.framework.module.ModuleRegistry;
@@ -30,13 +32,23 @@ public class ServerBootstrapModule<S extends CrossServerContext> extends ModuleR
     add(this);
   }
 
+  @OnPrepare
+  public void onPrepare(S server) {
+    log.info("准备: 在所有模块之前，适合执行驱动模块准备");
+  }
+
   @OnStart
-  public void onStart(S s) {
-    log.info("启动: 启动跨服服务模块");
+  public void onStart(S server) {
+    log.info("启动: 在所有模块之后, 适合执行驱动模块启动");
   }
 
   @OnStop
-  public void onStop(S s) {
-    log.info("关闭: 关闭跨服服务模块");
+  public void onStop(S server) {
+    log.info("关闭: 在所有模块之前， 适合执行驱动模块关闭");
+  }
+
+  @OnSave
+  public void onSave(S server) {
+    log.info("保存: 在所有模块之后，适合执行驱动模块保存");
   }
 }

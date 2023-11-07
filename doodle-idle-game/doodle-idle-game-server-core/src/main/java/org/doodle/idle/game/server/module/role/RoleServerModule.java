@@ -33,16 +33,16 @@ public class RoleServerModule<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("准备: 服务角色模块");
+    log.info("角色模块 [服务]");
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("补丁: 服务角色模块");
+    log.info("角色模块 [服务]");
   }
 
   @ModuleExceptionHandler(Exception.class)
   public void onException(Exception e) {
-    log.error("异常： 服务角色模块", e);
+    log.error("角色模块 [服务]", e);
   }
 }

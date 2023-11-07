@@ -21,10 +21,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.idle.framework.activity.ActivityRegistry;
-import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
-import org.doodle.idle.framework.lifecycle.annotation.OnSave;
-import org.doodle.idle.framework.lifecycle.annotation.OnStart;
-import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.framework.lifecycle.annotation.*;
 import org.doodle.idle.framework.module.annotation.*;
 import org.doodle.idle.framework.timer.annotation.*;
 import org.doodle.idle.game.server.GameServerContext;
@@ -48,23 +45,31 @@ public class ActivityServerModule<S extends GameServerContext> extends ActivityR
         headerAccessor.setHeader(GameServerContext.GAME_SERVER_CONTEXT, server);
   }
 
+  @OnPrepare
+  public Mono<Void> onPrepare(S server) {
+    return this.requester
+        .annotation(OnPrepare.class)
+        .handlers(getActivities())
+        .header(createHeaders(server))
+        .naturalOrder();
+  }
+
+  @OnPatch
+  public Mono<Void> onPatch(S server) {
+    return this.requester
+        .annotation(OnPatch.class)
+        .handlers(getActivities())
+        .header(createHeaders(server))
+        .naturalOrder();
+  }
+
   @OnStart
   public Mono<Void> onStart(S server) {
-    MessageHeaderInitializer headers = createHeaders(server);
-    return Mono.when(
-            this.requester
-                .annotation(OnPrepare.class)
-                .handlers(getActivities())
-                .header(headers)
-                .naturalOrder()
-                .doFirst(() -> log.info("准备: 服务活动")),
-            this.requester
-                .annotation(OnStart.class)
-                .handlers(getActivities())
-                .header(headers)
-                .naturalOrder()
-                .doFirst(() -> log.info("启动: 服务活动")))
-        .doFirst(() -> log.info("启动: 活动服务模块"));
+    return this.requester
+        .annotation(OnStart.class)
+        .handlers(getActivities())
+        .header(createHeaders(server))
+        .naturalOrder();
   }
 
   @OnStop
@@ -73,8 +78,7 @@ public class ActivityServerModule<S extends GameServerContext> extends ActivityR
         .annotation(OnStop.class)
         .handlers(getActivities())
         .header(createHeaders(server))
-        .naturalOrder()
-        .doFirst(() -> log.info("关闭: 活动服务模块"));
+        .naturalOrder();
   }
 
   @OnSave
@@ -83,8 +87,7 @@ public class ActivityServerModule<S extends GameServerContext> extends ActivityR
         .annotation(OnSave.class)
         .handlers(getActivities())
         .header(createHeaders(server))
-        .naturalOrder()
-        .doFirst(() -> log.info("保存: 活动服务模块"));
+        .naturalOrder();
   }
 
   @OnOneIteration

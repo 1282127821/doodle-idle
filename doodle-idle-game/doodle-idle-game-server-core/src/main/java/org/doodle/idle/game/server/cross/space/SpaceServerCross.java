@@ -27,11 +27,11 @@ public class SpaceServerCross<S extends GameServerContext> {
 
   @OnStart
   public void onStart(S server) {
-    log.info("启动: 跨服时空服务模块");
+    log.info("时空跨服 [服务]");
   }
 
   @OnStop
   public void onStop(S server) {
-    log.info("关闭: 跨服时空服务模块");
+    log.info("时空跨服 [服务]");
   }
 }

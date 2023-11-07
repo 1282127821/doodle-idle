@@ -18,6 +18,8 @@ package org.doodle.idle.cross.rank;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.cross.server.CrossServerContext;
 import org.doodle.idle.framework.cross.annotation.ServerCross;
+import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
+import org.doodle.idle.framework.lifecycle.annotation.OnSave;
 import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 
@@ -25,13 +27,23 @@ import org.doodle.idle.framework.lifecycle.annotation.OnStop;
 @ServerCross
 public class RankServerCross<S extends CrossServerContext> {
 
+  @OnPrepare
+  public void onPrepare(S server) {
+    log.info("跨服排行榜");
+  }
+
   @OnStart
   public void onStart(S server) {
-    log.info("启动: 跨服排行榜");
+    log.info("跨服排行榜");
   }
 
   @OnStop
   public void onStop(S server) {
-    log.info("关闭: 跨服排行榜");
+    log.info("跨服排行榜");
+  }
+
+  @OnSave
+  public void onSave(S server) {
+    log.info("跨服排行榜");
   }
 }

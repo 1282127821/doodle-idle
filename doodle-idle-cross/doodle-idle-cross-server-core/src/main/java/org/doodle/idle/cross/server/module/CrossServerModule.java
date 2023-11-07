@@ -22,10 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.idle.cross.server.CrossServerContext;
 import org.doodle.idle.framework.cross.CrossRegistry;
-import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
-import org.doodle.idle.framework.lifecycle.annotation.OnSave;
-import org.doodle.idle.framework.lifecycle.annotation.OnStart;
-import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.framework.lifecycle.annotation.*;
 import org.doodle.idle.framework.module.annotation.*;
 import org.doodle.idle.framework.timer.annotation.*;
 import org.springframework.messaging.support.MessageHeaderInitializer;
@@ -48,50 +45,56 @@ public class CrossServerModule<S extends CrossServerContext> extends CrossRegist
         headerAccessor.setHeader(CrossServerContext.CROSS_SERVER_CONTEXT, server);
   }
 
+  @OnPrepare
+  public Mono<Void> onPrepare(S server) {
+    return this.requester
+        .annotation(OnPrepare.class)
+        .handlers(getCross())
+        .header(createHeaders(server))
+        .naturalOrder();
+  }
+
+  @OnPatch
+  public Mono<Void> onPatch(S server) {
+    return this.requester
+        .annotation(OnPatch.class)
+        .handlers(getCross())
+        .header(createHeaders(server))
+        .naturalOrder();
+  }
+
   @OnStart
   public Mono<Void> onStart(S server) {
-    MessageHeaderInitializer headers = createHeaders(server);
-    return Mono.when(
-            this.requester
-                .annotation(OnPrepare.class)
-                .handlers(getActivities())
-                .header(headers)
-                .naturalOrder()
-                .doFirst(() -> log.info("准备: 服务跨服")),
-            this.requester
-                .annotation(OnStart.class)
-                .handlers(getActivities())
-                .header(headers)
-                .naturalOrder()
-                .doFirst(() -> log.info("启动: 服务跨服")))
-        .doFirst(() -> log.info("启动: 跨服服务模块"));
+    return this.requester
+        .annotation(OnStart.class)
+        .handlers(getCross())
+        .header(createHeaders(server))
+        .naturalOrder();
   }
 
   @OnStop
   public Mono<Void> onStop(S server) {
     return this.requester
         .annotation(OnStop.class)
-        .handlers(getActivities())
+        .handlers(getCross())
         .header(createHeaders(server))
-        .naturalOrder()
-        .doFirst(() -> log.info("关闭: 跨服服务模块"));
+        .naturalOrder();
   }
 
   @OnSave
   public Mono<Void> onSave(S server) {
     return this.requester
         .annotation(OnSave.class)
-        .handlers(getActivities())
+        .handlers(getCross())
         .header(createHeaders(server))
-        .naturalOrder()
-        .doFirst(() -> log.info("保存: 跨服服务模块"));
+        .naturalOrder();
   }
 
   @OnOneIteration
   public Mono<Void> onOneIteration(S server) {
     return this.requester
         .annotation(OnOneIteration.class)
-        .handlers(getActivities())
+        .handlers(getCross())
         .header(createHeaders(server))
         .naturalOrder();
   }
@@ -100,7 +103,7 @@ public class CrossServerModule<S extends CrossServerContext> extends CrossRegist
   public Mono<Void> onDayElapse(S server) {
     return this.requester
         .annotation(OnDayElapse.class)
-        .handlers(getActivities())
+        .handlers(getCross())
         .header(createHeaders(server))
         .naturalOrder();
   }
@@ -109,7 +112,7 @@ public class CrossServerModule<S extends CrossServerContext> extends CrossRegist
   public Mono<Void> onWeekElapse(S server) {
     return this.requester
         .annotation(OnWeekElapse.class)
-        .handlers(getActivities())
+        .handlers(getCross())
         .header(createHeaders(server))
         .naturalOrder();
   }
@@ -118,7 +121,7 @@ public class CrossServerModule<S extends CrossServerContext> extends CrossRegist
   public Mono<Void> onMonthElapse(S server) {
     return this.requester
         .annotation(OnMonthElapse.class)
-        .handlers(getActivities())
+        .handlers(getCross())
         .header(createHeaders(server))
         .naturalOrder();
   }
@@ -127,7 +130,7 @@ public class CrossServerModule<S extends CrossServerContext> extends CrossRegist
   public Mono<Void> onYearElapse(S server) {
     return this.requester
         .annotation(OnYearElapse.class)
-        .handlers(getActivities())
+        .handlers(getCross())
         .header(createHeaders(server))
         .naturalOrder();
   }

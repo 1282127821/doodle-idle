@@ -21,6 +21,7 @@ import org.doodle.design.messaging.operation.reactive.OperationRequester;
 import org.doodle.idle.framework.context.BaseContext;
 import org.springframework.lang.NonNull;
 import org.springframework.messaging.support.MessageHeaderAccessor;
+import reactor.core.publisher.Mono;
 
 /**
  * 游戏服上下文
@@ -38,5 +39,55 @@ public class GameServerContext extends BaseContext {
   @Override
   protected void initHeaders(@NonNull MessageHeaderAccessor headerAccessor) {
     headerAccessor.setHeader(GAME_SERVER_CONTEXT, this);
+  }
+
+  @Override
+  public Mono<Void> prepare() {
+    return super.prepare().doFirst(() -> log.info(">>> 游戏服 [准备]"));
+  }
+
+  @Override
+  public Mono<Void> patch() {
+    return super.patch().doFirst(() -> log.info(">>> 游戏服 [补丁]"));
+  }
+
+  @Override
+  public Mono<Void> oneIteration() {
+    return super.oneIteration().doFirst(() -> log.info(">>> 游戏服 [TICK]"));
+  }
+
+  @Override
+  public Mono<Void> start() {
+    return super.start().doFirst(() -> log.info(">>> 游戏服 [启动]"));
+  }
+
+  @Override
+  public Mono<Void> stop() {
+    return super.stop().doFirst(() -> log.info(">>> 游戏服 [关闭]"));
+  }
+
+  @Override
+  public Mono<Void> save() {
+    return super.save().doFirst(() -> log.info(">>> 游戏服 [保存]"));
+  }
+
+  @Override
+  public Mono<Void> dayElapse() {
+    return super.dayElapse().doFirst(() -> log.info(">>> 游戏服 [跨天]"));
+  }
+
+  @Override
+  public Mono<Void> weekElapse() {
+    return super.weekElapse().doFirst(() -> log.info(">>> 游戏服 [跨周]"));
+  }
+
+  @Override
+  public Mono<Void> monthElapse() {
+    return super.monthElapse().doFirst(() -> log.info(">>> 游戏服 [跨月]"));
+  }
+
+  @Override
+  public Mono<Void> yearElapse() {
+    return super.yearElapse().doFirst(() -> log.info(">>> 游戏服 [跨年]"));
   }
 }

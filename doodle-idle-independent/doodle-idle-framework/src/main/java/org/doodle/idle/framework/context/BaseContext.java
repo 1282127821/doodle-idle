@@ -64,7 +64,7 @@ public abstract class BaseContext {
         .annotation(OnStart.class)
         .handlers(handlers)
         .header(this::initHeaders)
-        .naturalOrder();
+        .reverseOrder();
   }
 
   public Mono<Void> stop() {

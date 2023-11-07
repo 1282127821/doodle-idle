@@ -24,10 +24,10 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
 public class CrossRegistry {
-  List<Object> activities = new LinkedList<>();
+  List<Object> cross = new LinkedList<>();
 
   public <A> A add(A activity) {
-    activities.add(activity);
+    cross.add(activity);
     return activity;
   }
 }

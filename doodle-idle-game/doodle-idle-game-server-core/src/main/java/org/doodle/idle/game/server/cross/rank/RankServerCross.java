@@ -29,21 +29,21 @@ public class RankServerCross<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("准备: 排行榜服务跨服");
+    log.info("排行榜跨服 [服务]");
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("补丁: 排行榜服务跨服");
+    log.info("排行榜跨服 [服务]");
   }
 
   @OnStart
   public void onStart(S server) {
-    log.info("启动: 排行榜服务跨服");
+    log.info("排行榜跨服 [服务]");
   }
 
   @OnStop
   public void onStop(S server) {
-    log.info("关闭: 排行榜服务跨服");
+    log.info("排行榜跨服 [服务]");
   }
 }

@@ -18,10 +18,7 @@ package org.doodle.idle.framework.activity.reactive;
 import java.util.List;
 import org.doodle.design.messaging.operation.reactive.OperationMessageHandler;
 import org.doodle.idle.framework.activity.annotation.RoleActivity;
-import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
-import org.doodle.idle.framework.lifecycle.annotation.OnPrepare;
-import org.doodle.idle.framework.lifecycle.annotation.OnStart;
-import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.framework.lifecycle.annotation.*;
 import org.doodle.idle.framework.timer.annotation.*;
 import org.springframework.messaging.handler.invocation.AbstractExceptionHandlerMethodResolver;
 
@@ -41,6 +38,7 @@ public class RoleActivityOperationHandler extends OperationMessageHandler {
             OnOneIteration.class,
             OnStart.class,
             OnStop.class,
+            OnSave.class,
             OnDayElapse.class,
             OnMonthElapse.class,
             OnYearElapse.class));

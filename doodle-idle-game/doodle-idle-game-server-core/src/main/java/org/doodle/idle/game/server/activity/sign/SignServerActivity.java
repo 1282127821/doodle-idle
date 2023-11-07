@@ -34,21 +34,21 @@ public class SignServerActivity<S extends GameServerContext> {
 
   @OnPrepare
   public void onPrepare(S server) {
-    log.info("准备: 签到服务活动");
+    log.info("签到活动 [服务]");
   }
 
   @OnPatch
   public void onPatch(S server) {
-    log.info("补丁: 签到服务活动");
+    log.info("签到活动 [服务]");
   }
 
   @OnStart
   public void onStart(S server) {
-    log.info("启动: 签到服务活动");
+    log.info("签到活动 [服务]");
   }
 
   @OnStop
   public void onStop(S server) {
-    log.info("关闭: 签到服务活动");
+    log.info("签到活动 [服务]");
   }
 }
