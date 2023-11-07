@@ -38,14 +38,14 @@ public class TaskModuleConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public TaskServerModule<? extends GameServerContext> taskServerModule(
-      RoleBootstrapModule<? extends GameRoleContext> registry) {
+      ServerBootstrapModule<? extends GameServerContext> registry) {
     return registry.add(new TaskServerModule<>());
   }
 
   @Bean
   @ConditionalOnMissingBean
   public TaskRoleModule<? extends GameRoleContext> taskRoleModule(
-      ServerBootstrapModule<? extends GameServerContext> registry) {
+      RoleBootstrapModule<? extends GameRoleContext> registry) {
     return registry.add(new TaskRoleModule<>());
   }
 }

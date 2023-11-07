@@ -34,7 +34,7 @@ public class TaskServerModule<S extends GameServerContext> {
   @OnPrepare
   public void onPrepare(S server) {
     log.info("准备: 任务服务模块");
-    //    throw new RuntimeException();
+    throw new RuntimeException();
   }
 
   @OnPatch
