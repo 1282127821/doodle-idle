@@ -29,7 +29,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @FieldDefaults(level = AccessLevel.PROTECTED, makeFinal = true)
 @RequiredArgsConstructor
-public abstract class BaseContext {
+public abstract class BaseRoleContext {
   OperationRequester requester;
   List<Object> handlers;
 
@@ -59,17 +59,17 @@ public abstract class BaseContext {
         .naturalOrder();
   }
 
-  public Mono<Void> start() {
+  public Mono<Void> online() {
     return this.requester
-        .annotation(OnStart.class)
+        .annotation(OnOnline.class)
         .handlers(handlers)
         .header(this::initHeaders)
         .reverseOrder();
   }
 
-  public Mono<Void> stop() {
+  public Mono<Void> offline() {
     return this.requester
-        .annotation(OnStop.class)
+        .annotation(OnOffline.class)
         .handlers(handlers)
         .header(this::initHeaders)
         .naturalOrder();

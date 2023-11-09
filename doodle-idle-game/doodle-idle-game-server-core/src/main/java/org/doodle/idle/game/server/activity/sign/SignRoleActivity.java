@@ -31,6 +31,6 @@ public class SignRoleActivity<R extends GameRoleContext> {
 
   @OnPatch
   public void onPatch(R role) {
-    log.info("OnPatch: sign-role-activity");
+    log.info("签到活动 [角色]");
   }
 }

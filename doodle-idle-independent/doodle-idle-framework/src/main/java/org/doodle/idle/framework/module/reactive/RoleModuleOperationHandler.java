@@ -36,10 +36,11 @@ public class RoleModuleOperationHandler extends OperationMessageHandler {
             OnPrepare.class,
             OnPatch.class,
             OnOneIteration.class,
-            OnStart.class,
-            OnStop.class,
+            OnOnline.class,
+            OnOffline.class,
             OnSave.class,
             OnDayElapse.class,
+            OnWeekElapse.class,
             OnMonthElapse.class,
             OnYearElapse.class));
   }

@@ -16,8 +16,8 @@
 package org.doodle.idle.game.server.module.payment;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnOnline;
 import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
-import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.module.annotation.RoleModule;
 import org.doodle.idle.game.server.GameRoleContext;
 
@@ -30,11 +30,13 @@ import org.doodle.idle.game.server.GameRoleContext;
 @RoleModule
 public class PaymentRoleModule<R extends GameRoleContext> {
 
-  @OnStart
-  public void onStart(R role) {
-    log.info("onStart: payment-module");
+  @OnPatch
+  public void onPatch(R role) {
+    log.info("支付模块 [角色]");
   }
 
-  @OnPatch
-  public void onPatch(R role) {}
+  @OnOnline
+  public void onOnline(R role) {
+    log.info("支付模块 [角色]");
+  }
 }

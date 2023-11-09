@@ -16,8 +16,8 @@
 package org.doodle.idle.game.server.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.lifecycle.annotation.OnStart;
-import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.framework.lifecycle.annotation.OnOffline;
+import org.doodle.idle.framework.lifecycle.annotation.OnOnline;
 import org.doodle.idle.framework.module.ModuleRegistry;
 import org.doodle.idle.framework.module.annotation.RoleModule;
 import org.doodle.idle.game.server.GameRoleContext;
@@ -34,13 +34,13 @@ public class RoleBootstrapModule<R extends GameRoleContext> extends ModuleRegist
     add(this);
   }
 
-  @OnStart
-  public void onStart(R role) {
-    log.info("OnStart: role-bootstrap-module");
+  @OnOnline
+  public void onOnline(R role) {
+    log.info("启动模块 [角色]");
   }
 
-  @OnStop
-  public void onStop(R role) {
-    log.info("OnStop: role-bootstrap-module");
+  @OnOffline
+  public void onOffline(R role) {
+    log.info("启动模块 [角色]");
   }
 }

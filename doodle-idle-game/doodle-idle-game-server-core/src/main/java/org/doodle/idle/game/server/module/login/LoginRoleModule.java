@@ -16,8 +16,8 @@
 package org.doodle.idle.game.server.module.login;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.idle.framework.lifecycle.annotation.OnOnline;
 import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
-import org.doodle.idle.framework.lifecycle.annotation.OnStart;
 import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
 import org.doodle.idle.framework.module.annotation.RoleModule;
 import org.doodle.idle.game.server.GameRoleContext;
@@ -31,19 +31,19 @@ import org.doodle.idle.game.server.GameRoleContext;
 @RoleModule
 public class LoginRoleModule<R extends GameRoleContext> {
 
-  @OnStart
-  public void onStart(R role) {
-    log.info("onStart: login-role-module");
-    throw new RuntimeException();
-  }
-
   @OnPatch
   public void onPatch(R role) {
-    log.info("OnPatch: login-role-module");
+    log.info("登录模块 [角色]");
+  }
+
+  @OnOnline
+  public void onOnline(R role) {
+    log.info("登录模块 [角色]");
+    throw new RuntimeException();
   }
 
   @ModuleExceptionHandler(Exception.class)
   public void handleException(Exception e) {
-    log.info("登录模块未知异常", e);
+    log.info("登录模块 [角色]", e);
   }
 }

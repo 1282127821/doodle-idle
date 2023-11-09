@@ -40,6 +40,7 @@ public class ServerCrossOperationHandler extends OperationMessageHandler {
             OnStop.class,
             OnSave.class,
             OnDayElapse.class,
+            OnWeekElapse.class,
             OnMonthElapse.class,
             OnYearElapse.class));
   }

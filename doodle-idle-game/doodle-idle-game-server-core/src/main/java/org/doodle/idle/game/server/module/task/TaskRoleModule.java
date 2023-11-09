@@ -16,7 +16,7 @@
 package org.doodle.idle.game.server.module.task;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.lifecycle.annotation.OnStart;
+import org.doodle.idle.framework.lifecycle.annotation.OnOnline;
 import org.doodle.idle.framework.module.annotation.ModuleExceptionHandler;
 import org.doodle.idle.framework.module.annotation.RoleModule;
 import org.doodle.idle.game.server.GameRoleContext;
@@ -30,14 +30,13 @@ import org.doodle.idle.game.server.GameRoleContext;
 @RoleModule
 public class TaskRoleModule<R extends GameRoleContext> {
 
-  @OnStart
-  public void onStart(R role) {
-    log.info("onStart: task-module");
-    //    throw new RuntimeException();
+  @OnOnline
+  public void onOnline(R role) {
+    log.info("任务模块 [角色]");
   }
 
   @ModuleExceptionHandler(Exception.class)
   public void handleException(Exception e) {
-    log.info("任务模块未知异常", e);
+    log.info("任务模块 [角色]", e);
   }
 }

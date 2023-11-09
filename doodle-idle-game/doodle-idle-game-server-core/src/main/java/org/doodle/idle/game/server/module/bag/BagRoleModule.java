@@ -16,9 +16,7 @@
 package org.doodle.idle.game.server.module.bag;
 
 import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
-import org.doodle.idle.framework.lifecycle.annotation.OnStart;
-import org.doodle.idle.framework.lifecycle.annotation.OnStop;
+import org.doodle.idle.framework.lifecycle.annotation.*;
 import org.doodle.idle.framework.module.annotation.*;
 import org.doodle.idle.game.server.GameRoleContext;
 
@@ -31,24 +29,23 @@ import org.doodle.idle.game.server.GameRoleContext;
 @RoleModule
 public class BagRoleModule<R extends GameRoleContext> {
 
-  @OnStart
-  public void onStart(R role) {
-    log.info("onStart: bag-role-module");
-    //    throw new RuntimeException("测试"); // 测试
-  }
-
   @OnPatch
   public void onPatch(R role) {
-    log.info("OnPath: bag-role-module");
+    log.info("背包模块 [角色]");
   }
 
-  @OnStop
+  @OnOnline
+  public void onStart(R role) {
+    log.info("背包模块 [角色]");
+  }
+
+  @OnOffline
   public void onStop(R role) {
-    log.info("onStop: bag-role-module");
+    log.info("背包模块 [角色]");
   }
 
   @ModuleExceptionHandler(Exception.class)
   public void handleException(Exception e) {
-    log.error("未知错误", e);
+    log.error("背包模块 [角色]", e);
   }
 }

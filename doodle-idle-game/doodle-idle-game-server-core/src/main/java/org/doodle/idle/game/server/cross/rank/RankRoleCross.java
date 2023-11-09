@@ -17,6 +17,7 @@ package org.doodle.idle.game.server.cross.rank;
 
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.idle.framework.cross.annotation.RoleCross;
+import org.doodle.idle.framework.lifecycle.annotation.OnOnline;
 import org.doodle.idle.framework.lifecycle.annotation.OnPatch;
 import org.doodle.idle.game.server.GameRoleContext;
 
@@ -26,6 +27,11 @@ public class RankRoleCross<R extends GameRoleContext> {
 
   @OnPatch
   public void onPatch(R role) {
-    log.info("补丁: 玩家跨服排行榜");
+    log.info("跨服排行榜 [角色]");
+  }
+
+  @OnOnline
+  public void onOnline(R role) {
+    log.info("跨服排行榜 [角色]");
   }
 }

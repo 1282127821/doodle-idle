@@ -63,18 +63,18 @@ public class ActivityRoleModule<R extends GameRoleContext> extends ActivityRegis
   }
 
   @OnStart
-  public Mono<Void> onStart(R role) {
+  public Mono<Void> onOnline(R role) {
     return this.requester
-        .annotation(OnStart.class)
+        .annotation(OnOnline.class)
         .handlers(getActivities())
         .header(createHeaders(role))
         .naturalOrder();
   }
 
   @OnStop
-  public Mono<Void> onStop(R role) {
+  public Mono<Void> onOffline(R role) {
     return this.requester
-        .annotation(OnStop.class)
+        .annotation(OnOffline.class)
         .handlers(getActivities())
         .header(createHeaders(role))
         .naturalOrder();

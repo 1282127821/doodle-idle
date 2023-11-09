@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.idle.game.server.module.role;
+package org.doodle.idle.framework.lifecycle.annotation;
 
-import lombok.extern.slf4j.Slf4j;
-import org.doodle.idle.framework.lifecycle.annotation.OnOnline;
-import org.doodle.idle.framework.module.annotation.RoleModule;
-import org.doodle.idle.game.server.GameRoleContext;
+import java.lang.annotation.*;
 
 /**
- * 玩家角色模块
+ * 下线操作
  *
  * @author tingyanshen
  */
-@Slf4j
-@RoleModule
-public class RoleRoleModule<R extends GameRoleContext> {
-
-  @OnOnline
-  public void onOnline(R role) {
-    log.info("角色模块 [角色]");
-  }
-}
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface OnOffline {}

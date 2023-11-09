@@ -18,7 +18,7 @@ package org.doodle.idle.game.server;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.doodle.design.messaging.operation.reactive.OperationRequester;
-import org.doodle.idle.framework.context.BaseContext;
+import org.doodle.idle.framework.context.BaseServerContext;
 import org.springframework.lang.NonNull;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import reactor.core.publisher.Mono;
@@ -29,7 +29,7 @@ import reactor.core.publisher.Mono;
  * @author tingyanshen
  */
 @Slf4j
-public class GameServerContext extends BaseContext {
+public class GameServerContext extends BaseServerContext {
   public static final String GAME_SERVER_CONTEXT = "GAME_SERVER_CONTEXT";
 
   public GameServerContext(OperationRequester requester, List<Object> handlers) {
